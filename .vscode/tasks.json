@@ -13,29 +13,13 @@
                 "$haxe-trace"
             ],
             "presentation": {
-                "reveal": "never",
+                "reveal": "never"
             },
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
             "label": "HaxeActiveConf"
-        },
-        {
-            "label": "Lang",
-            "type": "hxml",
-            "file": "langParser.hxml",
-            "presentation": {
-                "reveal": "always",
-                "panel": "shared",
-                "clear": true
-            },
-            "problemMatcher": [
-                "$haxe-absolute",
-                "$haxe",
-                "$haxe-error",
-                "$haxe-trace"
-            ]
         }
     ]
 }

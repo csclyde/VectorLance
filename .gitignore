@@ -1,4 +1,5 @@
 .tmp
 redist
 bin
+working
 .vscode/settings.json
