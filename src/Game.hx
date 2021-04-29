@@ -11,6 +11,7 @@ class Game extends Process {
 	public var level : Level;
 	public var hud : ui.Hud;
 	public var e : EventRouter;
+	public var g : h2d.Graphics;
 
 	public var player : en.Player;
 
@@ -32,7 +33,10 @@ class Game extends Process {
 		hud = new ui.Hud();
 		e = new EventRouter();
 
-		player = new en.Player(100, 100);
+		g = new h2d.Graphics();
+		Game.inst.view_layers.add(g, Const.MIDGROUND_OBJECTS);
+
+		player = new en.Player(500, 500);
 
 		camera.trackEntity(player);
 
@@ -72,6 +76,11 @@ class Game extends Process {
 
 	override function preUpdate() {
 		super.preUpdate();
+
+		g.clear();
+		
+		g.beginFill(0x000000);
+		g.drawRect(0, 0, camera.pxWidth, camera.pxHeight);
 
 		for(e in Entity.ALL) if(!e.destroyed) e.preUpdate();
 	}

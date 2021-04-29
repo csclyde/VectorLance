@@ -7,7 +7,7 @@ class Player extends Entity {
 		super(sx, sy);
 
 		// Some default rendering for our character
-		g = new h2d.Graphics(spr);
+		g = new h2d.Graphics();
 		Game.inst.view_layers.add(g, Const.MIDGROUND_OBJECTS);
 	}
 
@@ -19,8 +19,10 @@ class Player extends Entity {
 		var mouseX = Boot.inst.s2d.mouseX;
 		var mouseY = Boot.inst.s2d.mouseY;
 
-		// g.beginFill(0xff0000);
-		// g.drawRect(1000, 500, 16, 16);
+		g.clear();
+		
+		g.beginFill(0xff0000);
+		g.drawRect(centerX, centerY, 16, 16);
 
 		g.lineStyle(1, 0xFF00FF);
 		g.moveTo(centerX, centerY);
