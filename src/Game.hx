@@ -11,6 +11,8 @@ class Game extends Process {
 	public var level : Level;
 	public var hud : ui.Hud;
 
+	public var player : en.Player;
+
 	public function new() {
 		super(Main.ME);
 		ME = this;
@@ -27,6 +29,8 @@ class Game extends Process {
 		level = new Level();
 		fx = new Fx();
 		hud = new ui.Hud();
+
+		player = new en.Player(100, 100);
 
 		Process.resizeAll();
 		trace("Game is ready.");

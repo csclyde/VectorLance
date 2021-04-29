@@ -11,9 +11,6 @@ class Entity {
 	public var tmod(get,never) : Float; inline function get_tmod() return Game.ME.tmod;
 	public var hud(get,never) : ui.Hud; inline function get_hud() return Game.ME.hud;
 
-	/** Cooldowns **/
-	public var cd : dn.Cooldown;
-
 	/** Unique identifier **/
 	public var uid(default,null) : Int;
 
@@ -27,15 +24,9 @@ class Entity {
     public var spr : HSprite;
 	var debugLabel : Null<h2d.Text>;
 
-    public function new() {
+    public function new(x, y) {
         uid = Const.NEXT_UNIQ;
 		ALL.push(this);
-
-		cd = new dn.Cooldown(Const.FPS);
-
-        spr = new HSprite();
-        Game.ME.view_layers.add(spr, Const.DP_MAIN);
-		spr.setCenterRatio(0.5,1);
     }
 
 	public inline function isAlive() {
@@ -63,24 +54,17 @@ class Entity {
     public function dispose() {
         ALL.remove(this);
 
-		spr.remove();
-		spr = null;
-
 		if( debugLabel!=null ) {
 			debugLabel.remove();
 			debugLabel = null;
 		}
-
-		cd.destroy();
-		cd = null;
     }
 
     public function preUpdate() {
-		cd.update(tmod);
     }
 
     public function postUpdate() {
-		spr.visible = entityVisible;
+
 	}
 
 	public function fixedUpdate() {
