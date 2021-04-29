@@ -57,8 +57,8 @@ class Camera extends dn.Process {
 		}
 	}
 
-	public inline function levelToGlobalX(v:Float) return v*Const.SCALE + Game.inst.view_layers.x;
-	public inline function levelToGlobalY(v:Float) return v*Const.SCALE + Game.inst.view_layers.y;
+	public inline function levelToGlobalX(v:Float) return v*Const.SCALE + Game.inst.root.x;
+	public inline function levelToGlobalY(v:Float) return v*Const.SCALE + Game.inst.root.y;
 
 	var shakePower = 1.0;
 	public function shakeS(t:Float, ?pow=1.0) {
@@ -67,29 +67,26 @@ class Camera extends dn.Process {
 	}
 
 
-	/** Apply camera values to Game view_layers **/
+	/** Apply camera values to Game root scene **/
 	function apply() {
-		//return;
-		
-		var level = Game.inst.level;
-		var view_layers = Game.inst.view_layers;
+		var rootScene = Game.inst.root;
 
-		view_layers.x = -focus.x + pxWidth*0.5;
-		view_layers.y = -focus.y + pxHeight*0.5;
+		rootScene.x = -focus.x + pxWidth*0.5;
+		rootScene.y = -focus.y + pxHeight*0.5;
 
 		// Shakes
 		if(cd.has("shaking")) {
-			view_layers.x += Math.cos(ftime*1.1)*2.5*shakePower * cd.getRatio("shaking");
-			view_layers.y += Math.sin(0.3+ftime*1.7)*2.5*shakePower * cd.getRatio("shaking");
+			rootScene.x += Math.cos(ftime*1.1)*2.5*shakePower * cd.getRatio("shaking");
+			rootScene.y += Math.sin(0.3+ftime*1.7)*2.5*shakePower * cd.getRatio("shaking");
 		}
 
 		// Scaling
-		view_layers.x*=Const.SCALE;
-		view_layers.y*=Const.SCALE;
+		rootScene.x*=Const.SCALE;
+		rootScene.y*=Const.SCALE;
 
 		// Rounding
-		view_layers.x = M.round(view_layers.x);
-		view_layers.y = M.round(view_layers.y);
+		rootScene.x = M.round(rootScene.x);
+		rootScene.y = M.round(rootScene.y);
 	}
 
 

@@ -8,25 +8,22 @@ class Game extends Process {
 	public var input: Input;
 	public var fx : Fx;
 	public var camera : Camera;
-	public var view_layers : h2d.Layers;
 	public var level : Level;
 	public var hud : ui.Hud;
 	public var e : EventRouter;
-	public var g : h2d.Graphics;
-
 	public var player : en.Player;
 
-	public var bgTile: h2d.Tile;
-
-	public function new() {
-		super(Main.inst);
+	public function new(s:h2d.Scene) {
+		super();
 		inst = this;
-		
-		createRootInLayers(Main.inst.root, Const.BACKGROUND_OBJECTS);
 
-		view_layers = new h2d.Layers();
-		root.add(view_layers, Const.BACKGROUND_OBJECTS);
-		view_layers.filter = new h2d.filter.ColorMatrix(); // force rendering for pixel perfect
+        createRoot(s);
+
+		// Engine settings
+		engine.backgroundColor = 0x000000;
+        engine.fullScreen = true;
+
+		root.filter = new h2d.filter.ColorMatrix(); // force rendering for pixel perfect
 
 		input = new Input();
 		camera = new Camera();
@@ -35,14 +32,9 @@ class Game extends Process {
 		hud = new ui.Hud();
 		e = new EventRouter();
 
-		g = new h2d.Graphics();
-		Game.inst.view_layers.add(g, Const.MIDGROUND_OBJECTS);
-
 		player = new en.Player(0, 0);
 
 		camera.trackEntity(player);
-
-		bgTile = hxd.Res.space.toTile();
 
 		Process.resizeAll();
 		trace("Game is ready.");
@@ -52,7 +44,7 @@ class Game extends Process {
 
 	override function onResize() {
 		super.onResize();
-		view_layers.setScale(Const.SCALE);
+		root.setScale(Const.SCALE);
 	}
 
 	function gc() {
@@ -80,15 +72,6 @@ class Game extends Process {
 
 	override function preUpdate() {
 		super.preUpdate();
-
-		g.clear();
-
-		// g.beginFill(0x000000);
-		// g.drawRect(camera.focus.x - camera.pxWidth * 0.5, camera.focus.y - camera.pxHeight * 0.5, camera.pxWidth, camera.pxHeight);
-
-		g.tileWrap = true;
-		g.beginTileFill(camera.levelToGlobalX(camera.left), camera.levelToGlobalY(camera.top), 1, 1, bgTile);        
-        g.drawRect(camera.left, camera.top, camera.pxWidth, camera.pxHeight); 
 
 		for(e in Entity.ALL) if(!e.destroyed) e.preUpdate();
 	}
@@ -121,9 +104,6 @@ class Game extends Process {
 					hxd.System.exit();
 			#end
 
-			// Restart
-			if(input.ca.selectPressed())
-				Main.inst.startGame();
 		}
 	}
 }

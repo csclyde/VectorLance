@@ -10,6 +10,8 @@ class Entity {
 	public var ftime(get,never) : Float; inline function get_ftime() return game.ftime;
 	public var tmod(get,never) : Float; inline function get_tmod() return Game.inst.tmod;
 	public var hud(get,never) : ui.Hud; inline function get_hud() return Game.inst.hud;
+	public var camera(get,never) : Camera; inline function get_camera() return Game.inst.camera;
+	public var input(get,never) : Input; inline function get_input() return Game.inst.input;
 
 	/** Unique identifier **/
 	public var uid(default,null) : Int;
@@ -18,8 +20,8 @@ class Entity {
 	public var sprScaleX = 1.0;
 	public var sprScaleY = 1.0;
 	public var entityVisible = true;
-	public var centerX = 0;
-	public var centerY = 0;
+	public var centerX = 0.0;
+	public var centerY = 0.0;
 
     public var spr : HSprite;
 	var debugLabel : Null<h2d.Text>;
