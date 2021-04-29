@@ -1,5 +1,6 @@
 package en;
 
+import hxmath.math.Vector2;
 import echo.Body;
 import echo.data.Options.BodyOptions;
 
@@ -28,11 +29,20 @@ class Player extends Entity {
 		level.world.add(body);
 
 		body.velocity.x = 1;
+
+		game.e.subscribe('launch_vector', launchVector);
 	}
 
 	public override function preUpdate() {}
     public override function postUpdate() {}
 	public override function fixedUpdate() {}
+
+	function launchVector(params: Dynamic) {
+		body.velocity.x = 2;
+
+		var newVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
+		body.velocity = newVec.normal * 3;
+	}
 
     public override function update() {
 		centerX = body.x;

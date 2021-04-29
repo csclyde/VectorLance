@@ -26,6 +26,16 @@ class Input extends dn.Process {
 		ca = controller.createAccess("game");
 		ca.setLeftDeadZone(0.2);
 		ca.setRightDeadZone(0.2);
+
+		hxd.Window.getInstance().addEventTarget(onEvent);
+	}
+
+	function onEvent(event : hxd.Event) {
+		//trace(event.toString());
+
+		if(event.kind == ERelease && event.button == 0) {
+			Game.inst.e.send('launch_vector', {});
+		}
 	}
 
 	override function preUpdate() {

@@ -28,7 +28,10 @@ class Level extends dn.Process {
 		});
 
 		g = new h2d.Graphics();
-		game.root.add(g, Const.MIDGROUND_OBJECTS);
+		//game.root.add(g, Const.BACKGROUND_OBJECTS);
+		createRootInLayers(game.root, Const.MIDGROUND_OBJECTS);
+
+		root.add(g, Const.BACKGROUND_OBJECTS);
 
 		bgTile = hxd.Res.space.toTile();
 	}
