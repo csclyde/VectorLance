@@ -22,9 +22,8 @@ class World extends dn.Process {
 		super(Game.inst);
 
 		physWorld = new echo.World({
-			width: engine.width,
-			height: engine.height,
-			gravity_y: 0
+			width: 9999999,
+			height: 9999999,
 		});
 
 		g = new h2d.Graphics();

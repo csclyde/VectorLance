@@ -12,6 +12,7 @@ class Game extends Process {
 	public var hud : ui.Hud;
 	public var e : EventRouter;
 	public var player : en.Player;
+	public var orbs: Array<en.Orb>;
 
 	public function new(s:h2d.Scene) {
 		super();
@@ -33,8 +34,13 @@ class Game extends Process {
 		e = new EventRouter();
 
 		player = new en.Player(0, 0);
-
 		camera.trackEntity(player);
+
+		orbs = [];
+
+		var testOrb = new en.Orb(100, 100);
+		testOrb.setupCollision(world.physWorld, player);
+		orbs.push(testOrb);
 
 		Process.resizeAll();
 		trace("Game is ready.");

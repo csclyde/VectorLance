@@ -21,9 +21,10 @@ class Player extends Entity {
 		Game.inst.root.add(g, Const.MIDGROUND_OBJECTS);
 
 		body = new Body({
-			x: 0,
-			y: 0,
+			x: sx,
+			y: sy,
 			elasticity: 0.2,
+			drag_length: 0.05,
 			shape: {
 				type: CIRCLE,
 				radius: 16,
