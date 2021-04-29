@@ -1,10 +1,12 @@
+package proc;
+
 import dn.Process;
 import hxd.Key;
 
 class Game extends Process {
 	public static var inst : Game;
 
-	public var ca : dn.heaps.Controller.ControllerAccess;
+	public var input: Input;
 	public var fx : Fx;
 	public var camera : Camera;
 	public var view_layers : h2d.Layers;
@@ -18,15 +20,14 @@ class Game extends Process {
 	public function new() {
 		super(Main.inst);
 		inst = this;
-		ca = Main.inst.controller.createAccess("game");
-		ca.setLeftDeadZone(0.2);
-		ca.setRightDeadZone(0.2);
+		
 		createRootInLayers(Main.inst.root, Const.BACKGROUND_OBJECTS);
 
 		view_layers = new h2d.Layers();
 		root.add(view_layers, Const.BACKGROUND_OBJECTS);
 		view_layers.filter = new h2d.filter.ColorMatrix(); // force rendering for pixel perfect
 
+		input = new Input();
 		camera = new Camera();
 		level = new Level();
 		fx = new Fx();
@@ -36,7 +37,7 @@ class Game extends Process {
 		g = new h2d.Graphics();
 		Game.inst.view_layers.add(g, Const.MIDGROUND_OBJECTS);
 
-		player = new en.Player(500, 500);
+		player = new en.Player(0, 0);
 
 		camera.trackEntity(player);
 
@@ -78,9 +79,9 @@ class Game extends Process {
 		super.preUpdate();
 
 		g.clear();
-		
+
 		g.beginFill(0x000000);
-		g.drawRect(0, 0, camera.pxWidth, camera.pxHeight);
+		g.drawRect(camera.focus.x - camera.pxWidth * 0.5, camera.focus.y - camera.pxHeight * 0.5, camera.pxWidth, camera.pxHeight);
 
 		for(e in Entity.ALL) if(!e.destroyed) e.preUpdate();
 	}
@@ -106,7 +107,7 @@ class Game extends Process {
 		if(!ui.Console.ME.isActive() && !ui.Modal.hasAny()) {
 			#if hl
 			// Exit
-			if(ca.isKeyboardPressed(Key.ESCAPE))
+			if(input.ca.isKeyboardPressed(Key.ESCAPE))
 				if(!cd.hasSetS("exitWarn",3))
 					trace("Press ESCAPE again to exit.");
 				else
@@ -114,7 +115,7 @@ class Game extends Process {
 			#end
 
 			// Restart
-			if(ca.selectPressed())
+			if(input.ca.selectPressed())
 				Main.inst.startGame();
 		}
 	}

@@ -1,6 +1,9 @@
 package en;
 
 class Player extends Entity {
+	var camera(get,never) : Camera; inline function get_camera() return Game.inst.camera;
+	var input(get,never) : Input; inline function get_input() return Game.inst.input;
+
 	public var g : h2d.Graphics;
 
 	public function new(sx, sy) {
@@ -16,16 +19,13 @@ class Player extends Entity {
 	public override function fixedUpdate() {}
 
     public override function update() {
-		var mouseX = Boot.inst.s2d.mouseX;
-		var mouseY = Boot.inst.s2d.mouseY;
-
 		g.clear();
-		
+
 		g.beginFill(0xff0000);
-		g.drawRect(centerX, centerY, 16, 16);
+		g.drawCircle(centerX, centerY, 16);
 
 		g.lineStyle(1, 0xFF00FF);
 		g.moveTo(centerX, centerY);
-		g.lineTo(mouseX, mouseY);
+		g.lineTo(input.mouseWorldX, input.mouseWorldY);
 	}
 }

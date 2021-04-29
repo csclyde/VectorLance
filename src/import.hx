@@ -10,3 +10,9 @@ import tools.*;
 // Aliases
 import dn.Color as C;
 import hxd.Key as K;
+
+import proc.Camera;
+import proc.Fx;
+import proc.Game;
+import proc.Input;
+import proc.Level;

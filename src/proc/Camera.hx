@@ -1,29 +1,27 @@
+package proc;
+
 class Camera extends dn.Process {
 	public var focus = { x: 0.0, y: 0.0 };
 
 	var target : Null<Entity>;
 
-    public var pxWidth(get,never) : Int;
-	public var pxHeight(get,never) : Int;
+    public var pxWidth: Int;
+	public var pxHeight: Int;
 
 	var dx : Float;
 	var dy : Float;
 
 	public var clampToLevelBounds = false;
 
-	/** Left camera bound in level pixels **/
 	public var left(get,never) : Int;
-		inline function get_left() return M.imax(M.floor(focus.x-pxWidth*0.5), clampToLevelBounds ? 0 : -Const.INFINITE);
+		inline function get_left() return M.floor(focus.x-pxWidth*0.5);
 
-	/** Right camera bound in level pixels **/
 	public var right(get,never) : Int;
 		inline function get_right() return left + pxWidth - 1;
 
-	/** Upper camera bound in level pixels **/
 	public var top(get,never) : Int;
-		inline function get_top() return M.imax(M.floor(focus.y-pxHeight*0.5), clampToLevelBounds ? 0 : -Const.INFINITE);
+		inline function get_top() return M.floor(focus.y-pxHeight*0.5);
 
-	/** Lower camera bound in level pixels **/
 	public var bottom(get,never) : Int;
 		inline function get_bottom() return top + pxHeight - 1;
 
@@ -32,19 +30,14 @@ class Camera extends dn.Process {
 		super(Game.inst);
 		dx = dy = 0;
 		//apply();
+
+		pxWidth = M.ceil(Game.inst.w() / Const.SCALE);
+		pxHeight = M.ceil(Game.inst.h() / Const.SCALE);
 	}
 
 	@:keep
 	override function toString() {
 		return 'Camera@${focus.x},${focus.y}';
-	}
-
-	function get_pxWidth() {
-		return M.ceil(Game.inst.w() / Const.SCALE);
-	}
-
-	function get_pxHeight() {
-		return M.ceil(Game.inst.h() / Const.SCALE);
 	}
 
 	public function trackEntity(e:Entity, immediate:Bool = true) {
@@ -58,8 +51,10 @@ class Camera extends dn.Process {
 	}
 
 	public function recenter() {
-		focus.x = target.centerX;
-		focus.y = target.centerY;
+		if(target != null) {
+			focus.x = target.centerX;
+			focus.y = target.centerY;
+		}
 	}
 
 	public inline function levelToGlobalX(v:Float) return v*Const.SCALE + Game.inst.view_layers.x;
@@ -74,29 +69,13 @@ class Camera extends dn.Process {
 
 	/** Apply camera values to Game view_layers **/
 	function apply() {
-		return;
+		//return;
 		
 		var level = Game.inst.level;
 		var view_layers = Game.inst.view_layers;
 
-		// Update view_layers
-		if(!clampToLevelBounds || pxWidth<level.pxWidth)
-			view_layers.x = -focus.x + pxWidth*0.5;
-		else
-			view_layers.x = pxWidth*0.5 - level.pxWidth*0.5;
-
-		if(!clampToLevelBounds || pxHeight<level.pxHeight)
-			view_layers.y = -focus.x + pxHeight*0.5;
-		else
-			view_layers.y = pxHeight*0.5 - level.pxHeight*0.5;
-
-		// Clamp
-		if(clampToLevelBounds) {
-			if(pxWidth<level.pxWidth)
-				view_layers.x = M.fclamp(view_layers.x, pxWidth-level.pxWidth, 0);
-			if(pxHeight<level.pxHeight)
-				view_layers.y = M.fclamp(view_layers.y, pxHeight-level.pxHeight, 0);
-		}
+		view_layers.x = -focus.x + pxWidth*0.5;
+		view_layers.y = -focus.y + pxHeight*0.5;
 
 		// Shakes
 		if(cd.has("shaking")) {

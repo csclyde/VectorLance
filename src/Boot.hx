@@ -9,7 +9,6 @@ class Boot extends hxd.App {
 		inst = this;
 		new Main(s2d);
 		onResize();
-		trace(s2d.height);
 	}
 
 	override function onResize() {

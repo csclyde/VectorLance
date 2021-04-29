@@ -1,5 +1,6 @@
 import Data;
 import hxd.Key;
+import proc.*;
 
 class Main extends dn.Process {
 	public static var inst : Main;
@@ -19,13 +20,13 @@ class Main extends dn.Process {
         createRoot(s);
 
 		// Engine settings
-		engine.backgroundColor = 0xff<<24|0x111133;
-        #if( hl && !debug )
+		engine.backgroundColor = 0x000000;
+        #if(hl && !debug)
         engine.fullScreen = true;
         #end
 
 		// Heaps resources
-		#if( hl && debug )
+		#if(hl && debug)
 			hxd.Res.initLocal();
         #else
       		hxd.Res.initEmbed();
@@ -38,8 +39,8 @@ class Main extends dn.Process {
             delayer.cancelById("cdb");
             delayer.addS("cdb", function() {
 				// Only reload actual updated file from disk after a short delay, to avoid reading a file being written
-            	Data.load( hxd.Res.data.entry.getBytes().toString() );
-            	if( Game.inst!=null )
+            	Data.load(hxd.Res.data.entry.getBytes().toString());
+            	if(Game.inst!=null)
                     Game.inst.onCdbReload();
             }, 0.2);
         });
@@ -49,7 +50,7 @@ class Main extends dn.Process {
 		hxd.snd.Manager.get(); // force sound manager init on startup instead of first sound play
 		Assets.init(); // init assets
 		new ui.Console(Assets.fontTiny, s); // init debug console
-		Data.load( hxd.Res.data.entry.getText() ); // read castleDB json
+		Data.load(hxd.Res.data.entry.getText()); // read castleDB json
 
 		// Game controller & default key bindings
 		controller = new dn.heaps.Controller(s);
@@ -70,12 +71,12 @@ class Main extends dn.Process {
 		// Start with 1 frame delay, to avoid 1st frame freezing from the game perspective
 		hxd.Timer.wantedFPS = Const.FPS;
 		hxd.Timer.skip();
-		delayer.addF( startGame, 1 );
+		delayer.addF(startGame, 1);
 	}
 
 	/** Start game process **/
 	public function startGame() {
-		if( Game.inst!=null ) {
+		if(Game.inst!=null) {
 			Game.inst.destroy();
 			delayer.addF(function() {
 				new Game();

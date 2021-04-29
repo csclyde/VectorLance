@@ -1,6 +1,10 @@
+package proc;
+
 class Level extends dn.Process {
 	var game(get,never) : Game; inline function get_game() return Game.inst;
 	var fx(get,never) : Fx; inline function get_fx() return Game.inst.fx;
+	var camera(get,never) : Camera; inline function get_camera() return Game.inst.camera;
+	var input(get,never) : Input; inline function get_input() return Game.inst.input;
 
 	public var pxWidth : Int;
 	public var pxHeight : Int; 
