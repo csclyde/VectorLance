@@ -10,6 +10,7 @@ class Game extends Process {
 	public var view_layers : h2d.Layers;
 	public var level : Level;
 	public var hud : ui.Hud;
+	public var e : EventRouter;
 
 	public var player : en.Player;
 
@@ -29,6 +30,7 @@ class Game extends Process {
 		level = new Level();
 		fx = new Fx();
 		hud = new ui.Hud();
+		e = new EventRouter();
 
 		player = new en.Player(100, 100);
 
