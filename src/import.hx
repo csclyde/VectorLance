@@ -10,4 +10,3 @@ import tools.*;
 // Aliases
 import dn.Color as C;
 import hxd.Key as K;
-import tools.LPoint as P;

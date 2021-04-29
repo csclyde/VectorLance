@@ -47,7 +47,6 @@ class Main extends dn.Process {
 		hxd.snd.Manager.get(); // force sound manager init on startup instead of first sound play
 		Assets.init(); // init assets
 		new ui.Console(Assets.fontTiny, s); // init debug console
-		Lang.init("en"); // init Lang
 		Data.load( hxd.Res.data.entry.getText() ); // read castleDB json
 
 		// Game controller & default key bindings
@@ -86,7 +85,6 @@ class Main extends dn.Process {
 
 
     override function update() {
-		Assets.tiles.tmod = tmod;
         super.update();
     }
 }

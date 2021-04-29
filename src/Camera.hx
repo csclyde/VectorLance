@@ -1,63 +1,57 @@
 class Camera extends dn.Process {
-	/** Camera focus coord in level pixels. This is the raw camera location: the displayed camera location might be clamped to level bounds. **/
-	public var focus : LPoint;
+	public var focus = { x: 0.0, y: 0.0 };
 
 	var target : Null<Entity>;
 
-	/** Width of viewport in level pixels **/
-	public var pxWid(get,never) : Int;
-
-	/** Height of viewport in level pixels **/
-	public var pxHei(get,never) : Int;
+    public var pxWidth(get,never) : Int;
+	public var pxHeight(get,never) : Int;
 
 	var dx : Float;
 	var dy : Float;
 	var bumpOffX = 0.;
 	var bumpOffY = 0.;
 
-	/** If TRUE (default), the camera will try to stay inside level bounds. It cannot be done if level is smaller than actual viewport. In such case, the camera will be centered. **/
-	public var clampToLevelBounds = true;
+	public var clampToLevelBounds = false;
 
 	/** Left camera bound in level pixels **/
 	public var left(get,never) : Int;
-		inline function get_left() return M.imax( M.floor( focus.levelX-pxWid*0.5 ), clampToLevelBounds ? 0 : -Const.INFINITE );
+		inline function get_left() return M.imax( M.floor( focus.x-pxWidth*0.5 ), clampToLevelBounds ? 0 : -Const.INFINITE );
 
 	/** Right camera bound in level pixels **/
 	public var right(get,never) : Int;
-		inline function get_right() return left + pxWid - 1;
+		inline function get_right() return left + pxWidth - 1;
 
 	/** Upper camera bound in level pixels **/
 	public var top(get,never) : Int;
-		inline function get_top() return M.imax( M.floor( focus.levelY-pxHei*0.5 ), clampToLevelBounds ? 0 : -Const.INFINITE );
+		inline function get_top() return M.imax( M.floor( focus.y-pxHeight*0.5 ), clampToLevelBounds ? 0 : -Const.INFINITE );
 
 	/** Lower camera bound in level pixels **/
 	public var bottom(get,never) : Int;
-		inline function get_bottom() return top + pxHei - 1;
+		inline function get_bottom() return top + pxHeight - 1;
 
 
 	public function new() {
 		super(Game.ME);
-		focus = LPoint.fromCase(0,0);
 		dx = dy = 0;
 		apply();
 	}
 
 	@:keep
 	override function toString() {
-		return 'Camera@${focus.levelX},${focus.levelY}';
+		return 'Camera@${focus.x},${focus.y}';
 	}
 
-	function get_pxWid() {
+	function get_pxWidth() {
 		return M.ceil( Game.ME.w() / Const.SCALE );
 	}
 
-	function get_pxHei() {
+	function get_pxHeight() {
 		return M.ceil( Game.ME.h() / Const.SCALE );
 	}
 
 	public function trackEntity(e:Entity, immediate:Bool) {
 		target = e;
-		if( immediate )
+		if(immediate )
 			recenter();
 	}
 
@@ -66,14 +60,14 @@ class Camera extends dn.Process {
 	}
 
 	public function recenter() {
-		if( target!=null ) {
-			focus.levelX = target.centerX;
-			focus.levelY = target.centerY;
+		if(target!=null ) {
+			focus.x = target.centerX;
+			focus.y = target.centerY;
 		}
 	}
 
-	public inline function levelToGlobalX(v:Float) return v*Const.SCALE + Game.ME.scroller.x;
-	public inline function levelToGlobalY(v:Float) return v*Const.SCALE + Game.ME.scroller.y;
+	public inline function levelToGlobalX(v:Float) return v*Const.SCALE + Game.ME.view_layers.x;
+	public inline function levelToGlobalY(v:Float) return v*Const.SCALE + Game.ME.view_layers.y;
 
 	var shakePower = 1.0;
 	public function shakeS(t:Float, ?pow=1.0) {
@@ -92,28 +86,28 @@ class Camera extends dn.Process {
 	}
 
 
-	/** Apply camera values to Game scroller **/
+	/** Apply camera values to Game view_layers **/
 	function apply() {
 		var level = Game.ME.level;
-		var scroller = Game.ME.scroller;
+		var view_layers = Game.ME.view_layers;
 
-		// Update scroller
-		if( !clampToLevelBounds || pxWid<level.pxWid)
-			scroller.x = -focus.levelX + pxWid*0.5;
+		// Update view_layers
+		if(!clampToLevelBounds || pxWidth<level.pxWidth)
+			view_layers.x = -focus.x + pxWidth*0.5;
 		else
-			scroller.x = pxWid*0.5 - level.pxWid*0.5;
+			view_layers.x = pxWidth*0.5 - level.pxWidth*0.5;
 
-		if( !clampToLevelBounds || pxHei<level.pxHei)
-			scroller.y = -focus.levelY + pxHei*0.5;
+		if(!clampToLevelBounds || pxHeight<level.pxHeight)
+			view_layers.y = -focus.x + pxHeight*0.5;
 		else
-			scroller.y = pxHei*0.5 - level.pxHei*0.5;
+			view_layers.y = pxHeight*0.5 - level.pxHeight*0.5;
 
 		// Clamp
-		if( clampToLevelBounds ) {
-			if( pxWid<level.cWid*Const.GRID)
-				scroller.x = M.fclamp(scroller.x, pxWid-level.pxWid, 0);
-			if( pxHei<level.cHei*Const.GRID)
-				scroller.y = M.fclamp(scroller.y, pxHei-level.pxHei, 0);
+		if(clampToLevelBounds ) {
+			if(pxWidth<level.pxWidth)
+				view_layers.x = M.fclamp(view_layers.x, pxWidth-level.pxWidth, 0);
+			if(pxHeight<level.pxHeight)
+				view_layers.y = M.fclamp(view_layers.y, pxHeight-level.pxHeight, 0);
 		}
 
 		// Bumps friction
@@ -121,29 +115,29 @@ class Camera extends dn.Process {
 		bumpOffY *= Math.pow(0.75, tmod);
 
 		// Bump
-		scroller.x += bumpOffX;
-		scroller.y += bumpOffY;
+		view_layers.x += bumpOffX;
+		view_layers.y += bumpOffY;
 
 		// Shakes
-		if( cd.has("shaking") ) {
-			scroller.x += Math.cos(ftime*1.1)*2.5*shakePower * cd.getRatio("shaking");
-			scroller.y += Math.sin(0.3+ftime*1.7)*2.5*shakePower * cd.getRatio("shaking");
+		if(cd.has("shaking") ) {
+			view_layers.x += Math.cos(ftime*1.1)*2.5*shakePower * cd.getRatio("shaking");
+			view_layers.y += Math.sin(0.3+ftime*1.7)*2.5*shakePower * cd.getRatio("shaking");
 		}
 
 		// Scaling
-		scroller.x*=Const.SCALE;
-		scroller.y*=Const.SCALE;
+		view_layers.x*=Const.SCALE;
+		view_layers.y*=Const.SCALE;
 
 		// Rounding
-		scroller.x = M.round(scroller.x);
-		scroller.y = M.round(scroller.y);
+		view_layers.x = M.round(view_layers.x);
+		view_layers.y = M.round(view_layers.y);
 	}
 
 
 	override function postUpdate() {
 		super.postUpdate();
 
-		if( !ui.Console.ME.hasFlag("scroll") )
+		if(!ui.Console.ME.hasFlag("scroll") )
 			apply();
 	}
 
@@ -152,15 +146,15 @@ class Camera extends dn.Process {
 		super.update();
 
 		// Follow target entity
-		if( target!=null ) {
+		if(target!=null ) {
 			var s = 0.006;
 			var deadZone = 5;
-			var tx = target.footX;
-			var ty = target.footY;
+			var tx = target.centerX;
+			var ty = target.centerY;
 
-			var d = focus.distPx(tx,ty);
-			if( d>=deadZone ) {
-				var a = focus.angTo(tx,ty);
+			var d = M.dist(focus.x, focus.y, tx, ty);
+			if(d>=deadZone ) {
+				var a = Math.atan2(ty-focus.y, tx-focus.x);
 				dx += Math.cos(a) * (d-deadZone) * s * tmod;
 				dy += Math.sin(a) * (d-deadZone) * s * tmod;
 			}
@@ -168,10 +162,10 @@ class Camera extends dn.Process {
 
 		// Movements
 		var frict = 0.89;
-		focus.levelX += dx*tmod;
+		focus.x += dx*tmod;
 		dx *= Math.pow(frict,tmod);
 
-		focus.levelY += dy*tmod;
+		focus.x += dy*tmod;
 		dy *= Math.pow(frict,tmod);
 	}
 
