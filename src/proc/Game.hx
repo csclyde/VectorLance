@@ -1,7 +1,6 @@
 package proc;
 
 import dn.Process;
-import hxd.Key;
 
 class Game extends Process {
 	public static var inst : Game;
@@ -16,6 +15,8 @@ class Game extends Process {
 	public var g : h2d.Graphics;
 
 	public var player : en.Player;
+
+	public var bgTile: h2d.Tile;
 
 	public function new() {
 		super(Main.inst);
@@ -40,6 +41,8 @@ class Game extends Process {
 		player = new en.Player(0, 0);
 
 		camera.trackEntity(player);
+
+		bgTile = hxd.Res.space.toTile();
 
 		Process.resizeAll();
 		trace("Game is ready.");
@@ -80,8 +83,12 @@ class Game extends Process {
 
 		g.clear();
 
-		g.beginFill(0x000000);
-		g.drawRect(camera.focus.x - camera.pxWidth * 0.5, camera.focus.y - camera.pxHeight * 0.5, camera.pxWidth, camera.pxHeight);
+		// g.beginFill(0x000000);
+		// g.drawRect(camera.focus.x - camera.pxWidth * 0.5, camera.focus.y - camera.pxHeight * 0.5, camera.pxWidth, camera.pxHeight);
+
+		g.tileWrap = true;
+		g.beginTileFill(camera.levelToGlobalX(camera.left), camera.levelToGlobalY(camera.top), 1, 1, bgTile);        
+        g.drawRect(camera.left, camera.top, camera.pxWidth, camera.pxHeight); 
 
 		for(e in Entity.ALL) if(!e.destroyed) e.preUpdate();
 	}
@@ -107,7 +114,7 @@ class Game extends Process {
 		if(!ui.Console.ME.isActive() && !ui.Modal.hasAny()) {
 			#if hl
 			// Exit
-			if(input.ca.isKeyboardPressed(Key.ESCAPE))
+			if(input.ca.isKeyboardPressed(K.ESCAPE))
 				if(!cd.hasSetS("exitWarn",3))
 					trace("Press ESCAPE again to exit.");
 				else

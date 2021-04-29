@@ -19,6 +19,8 @@ class Player extends Entity {
 	public override function fixedUpdate() {}
 
     public override function update() {
+		centerX -= 1;
+
 		g.clear();
 
 		g.beginFill(0xff0000);
