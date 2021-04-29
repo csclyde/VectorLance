@@ -23,6 +23,11 @@ class EventRouter {
     public function send(eventName: String, params: Dynamic) {
         var callbacks = events[eventName];
 
+        if(callbacks == null) {
+            trace('Event (' + eventName + ') called with no listeners');
+            return;
+        }
+
         for(c in callbacks) {
             c(params);
         }

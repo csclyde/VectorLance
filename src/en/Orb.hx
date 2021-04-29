@@ -10,7 +10,7 @@ class Orb extends Entity {
 
 	public var radius = 32.0;
 
-	public function new(sx, sy) {
+	public function new(sx, sy, physWorld: echo.World) {
 		super(sx, sy);
 
 		// Some default rendering for our character
@@ -20,7 +20,7 @@ class Orb extends Entity {
 		body = new Body({
 			x: sx,
 			y: sy,
-			elasticity: 0.2,
+			elasticity: 1,
 			drag_length: 0.0,
 			shape: {
 				type: CIRCLE,
@@ -29,16 +29,14 @@ class Orb extends Entity {
 		});
     	//body.entity = this;
 
-		body.velocity.x = -1;
+		//body.velocity.x = -1;
 
-		world.physWorld.add(body);
-	}
+		var initialVel = new Vector2(M.frandRange(-100, 100), M.frandRange(-100, 100));
+		initialVel = initialVel.normal * 2;
 
-	public function setupCollision(world: echo.World, player: en.Player) {
-		world.listen(player.body, this.body, {
-			separate: true,
-			enter: collidePlayer
-		});
+		body.velocity = initialVel;
+
+		physWorld.add(body);
 	}
 
 	public function collidePlayer(a:Body, b:Body, c:Array<echo.data.Data.CollisionData>) {

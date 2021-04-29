@@ -13,7 +13,7 @@ class Player extends Entity {
 	public var chargeRate = 0.25;
 	public var chargeMax = 10;
 
-	public function new(sx, sy) {
+	public function new(sx, sy, physWorld) {
 		super(sx, sy);
 
 		// Some default rendering for our character
@@ -32,7 +32,7 @@ class Player extends Entity {
 		});
     	//body.entity = this;
 
-		world.physWorld.add(body);
+		physWorld.add(body);
 
 		charge = 1;
 		game.e.subscribe('charge_vector', chargeVector);

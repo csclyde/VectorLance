@@ -1,5 +1,6 @@
 package proc;
 
+import h2d.filter.Bloom;
 import dn.Process;
 
 class Game extends Process {
@@ -8,11 +9,9 @@ class Game extends Process {
 	public var input: Input;
 	public var fx : Fx;
 	public var camera : Camera;
-	public var world : World;
+	public var world : proc.World;
 	public var hud : ui.Hud;
 	public var e : EventRouter;
-	public var player : en.Player;
-	public var orbs: Array<en.Orb>;
 
 	public function new(s:h2d.Scene) {
 		super();
@@ -24,23 +23,15 @@ class Game extends Process {
 		engine.backgroundColor = 0x000000;
         engine.fullScreen = true;
 
-		root.filter = new h2d.filter.ColorMatrix(); // force rendering for pixel perfect
+		root.filter = new h2d.filter.Bloom(); // force rendering for pixel perfect
 
 		input = new Input();
 		camera = new Camera();
-		world = new World();
 		fx = new Fx();
 		hud = new ui.Hud();
 		e = new EventRouter();
 
-		player = new en.Player(0, 0);
-		camera.trackEntity(player);
-
-		orbs = [];
-
-		var testOrb = new en.Orb(100, 100);
-		testOrb.setupCollision(world.physWorld, player);
-		orbs.push(testOrb);
+		world = new World();
 
 		Process.resizeAll();
 		trace("Game is ready.");
