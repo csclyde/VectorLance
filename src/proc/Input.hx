@@ -36,6 +36,9 @@ class Input extends dn.Process {
 		if(event.kind == ERelease && event.button == 0) {
 			Game.inst.e.send('launch_vector', {});
 		}
+		else if(event.kind == EPush && event.button == 0) {
+			Game.inst.e.send('charge_vector', {});
+		}
 	}
 
 	override function preUpdate() {

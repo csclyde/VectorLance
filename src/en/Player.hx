@@ -8,6 +8,11 @@ class Player extends Entity {
 	public var body:Body;
 	public var g : h2d.Graphics;
 
+	public var charge : Float;
+	public var charging : Bool;
+	public var chargeRate = 0.25;
+	public var chargeMax = 10;
+
 	public function new(sx, sy) {
 		super(sx, sy);
 
@@ -26,10 +31,10 @@ class Player extends Entity {
 		});
     	//body.entity = this;
 
-		level.world.add(body);
+		world.physWorld.add(body);
 
-		body.velocity.x = 1;
-
+		charge = 1;
+		game.e.subscribe('charge_vector', chargeVector);
 		game.e.subscribe('launch_vector', launchVector);
 	}
 
@@ -37,24 +42,41 @@ class Player extends Entity {
     public override function postUpdate() {}
 	public override function fixedUpdate() {}
 
-	function launchVector(params: Dynamic) {
-		body.velocity.x = 2;
+	function chargeVector(params: Dynamic) {
+		charging = true;
+	}
 
+	function launchVector(params: Dynamic) {
+		charging = false;
+		trace(charge);
 		var newVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
-		body.velocity = newVec.normal * 3;
+		body.velocity = newVec.normal * charge;
+
+		charge = 1;
 	}
 
     public override function update() {
 		centerX = body.x;
 		centerY = body.y;
 
+		if(charging) {
+			charge += chargeRate * tmod;
+		}
+
+		if(charge > chargeMax) {
+			charge = chargeMax;
+		}
+
 		g.clear();
 
 		g.beginFill(0xff0000);
 		g.drawCircle(centerX, centerY, 16);
 
-		g.lineStyle(1, 0xFF00FF);
+		var aimVec = new Vector2(input.mouseWorldX, input.mouseWorldY);
+
+
+		g.lineStyle(2, 0xFF0000);
 		g.moveTo(centerX, centerY);
-		g.lineTo(input.mouseWorldX, input.mouseWorldY);
+		g.lineTo(aimVec.x, aimVec.y);
 	}
 }

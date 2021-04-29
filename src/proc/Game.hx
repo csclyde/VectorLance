@@ -8,7 +8,7 @@ class Game extends Process {
 	public var input: Input;
 	public var fx : Fx;
 	public var camera : Camera;
-	public var level : Level;
+	public var world : World;
 	public var hud : ui.Hud;
 	public var e : EventRouter;
 	public var player : en.Player;
@@ -27,7 +27,7 @@ class Game extends Process {
 
 		input = new Input();
 		camera = new Camera();
-		level = new Level();
+		world = new World();
 		fx = new Fx();
 		hud = new ui.Hud();
 		e = new EventRouter();

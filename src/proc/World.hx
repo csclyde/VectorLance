@@ -3,7 +3,7 @@ package proc;
 import echo.util.Debug.HeapsDebug;
 import echo.World;
 
-class Level extends dn.Process {
+class World extends dn.Process {
 	var game(get,never) : Game; inline function get_game() return Game.inst;
 	var fx(get,never) : Fx; inline function get_fx() return Game.inst.fx;
 	var camera(get,never) : Camera; inline function get_camera() return Game.inst.camera;
@@ -12,7 +12,7 @@ class Level extends dn.Process {
 	public var pxWidth : Int;
 	public var pxHeight : Int; 
 	
-	public var world:World;
+	public var physWorld:echo.World;
 	public var bgTile: h2d.Tile;
 	public var g : h2d.Graphics;
 
@@ -21,7 +21,7 @@ class Level extends dn.Process {
 	public function new() {
 		super(Game.inst);
 
-		world = new World({
+		physWorld = new echo.World({
 			width: engine.width,
 			height: engine.height,
 			gravity_y: 0
@@ -49,7 +49,7 @@ class Level extends dn.Process {
 	}
 
 	override function preUpdate() {
-		world.step(tmod);
+		physWorld.step(tmod);
 	}
 
 	override function postUpdate() {

@@ -104,7 +104,7 @@ class Camera extends dn.Process {
 		// Follow target entity
 		if(target!=null) {
 			var s = 0.006;
-			var deadZone = 5;
+			var deadZone = 1;
 			var tx = target.centerX;
 			var ty = target.centerY;
 
@@ -121,7 +121,7 @@ class Camera extends dn.Process {
 		focus.x += dx*tmod;
 		dx *= Math.pow(frict,tmod);
 
-		focus.x += dy*tmod;
+		focus.y += dy*tmod;
 		dy *= Math.pow(frict,tmod);
 	}
 
