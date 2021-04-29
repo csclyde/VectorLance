@@ -2,7 +2,8 @@ import Data;
 import hxd.Key;
 
 class Main extends dn.Process {
-	public static var ME : Main;
+	public static var inst : Main;
+	public static var s2d: h2d.Scene;
 
 	/** Used to create "Access" instances that allow controller checks (keyboard or gamepad) **/
 	public var controller : dn.heaps.Controller;
@@ -12,7 +13,8 @@ class Main extends dn.Process {
 
 	public function new(s:h2d.Scene) {
 		super();
-		ME = this;
+		inst = this;
+		s2d = s;
 
         createRoot(s);
 
@@ -37,8 +39,8 @@ class Main extends dn.Process {
             delayer.addS("cdb", function() {
 				// Only reload actual updated file from disk after a short delay, to avoid reading a file being written
             	Data.load( hxd.Res.data.entry.getBytes().toString() );
-            	if( Game.ME!=null )
-                    Game.ME.onCdbReload();
+            	if( Game.inst!=null )
+                    Game.inst.onCdbReload();
             }, 0.2);
         });
 		#end
@@ -62,7 +64,7 @@ class Main extends dn.Process {
 
 		#if js
 		// Optional helper that shows a "Click to start/continue" message when the game looses focus
-		new dn.heaps.GameFocusHelper(Boot.ME.s2d, Assets.fontMedium);
+		new dn.heaps.GameFocusHelper(Boot.inst.s2d, Assets.fontMedium);
 		#end
 
 		// Start with 1 frame delay, to avoid 1st frame freezing from the game perspective
@@ -73,8 +75,8 @@ class Main extends dn.Process {
 
 	/** Start game process **/
 	public function startGame() {
-		if( Game.ME!=null ) {
-			Game.ME.destroy();
+		if( Game.inst!=null ) {
+			Game.inst.destroy();
 			delayer.addF(function() {
 				new Game();
 			}, 1);

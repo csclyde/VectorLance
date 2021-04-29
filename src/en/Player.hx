@@ -1,14 +1,29 @@
 package en;
 
 class Player extends Entity {
-	public function new(x,y) {
-		super(x,y);
+	public var g : h2d.Graphics;
+
+	public function new(sx, sy) {
+		super(sx, sy);
 
 		// Some default rendering for our character
-		var g = new h2d.Graphics(spr);
-		g.beginFill(0xff0000);
-		g.drawRect(0,0,16,16);
+		g = new h2d.Graphics(spr);
+		Game.inst.view_layers.add(g, Const.MIDGROUND_OBJECTS);
+	}
 
-		Game.ME.view_layers.add(g, Const.DP_MAIN);
+	public override function preUpdate() {}
+    public override function postUpdate() {}
+	public override function fixedUpdate() {}
+
+    public override function update() {
+		var mouseX = Boot.inst.s2d.mouseX;
+		var mouseY = Boot.inst.s2d.mouseY;
+
+		// g.beginFill(0xff0000);
+		// g.drawRect(1000, 500, 16, 16);
+
+		g.lineStyle(1, 0xFF00FF);
+		g.moveTo(centerX, centerY);
+		g.lineTo(mouseX, mouseY);
 	}
 }

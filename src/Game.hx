@@ -2,7 +2,7 @@ import dn.Process;
 import hxd.Key;
 
 class Game extends Process {
-	public static var ME : Game;
+	public static var inst : Game;
 
 	public var ca : dn.heaps.Controller.ControllerAccess;
 	public var fx : Fx;
@@ -15,15 +15,15 @@ class Game extends Process {
 	public var player : en.Player;
 
 	public function new() {
-		super(Main.ME);
-		ME = this;
-		ca = Main.ME.controller.createAccess("game");
+		super(Main.inst);
+		inst = this;
+		ca = Main.inst.controller.createAccess("game");
 		ca.setLeftDeadZone(0.2);
 		ca.setRightDeadZone(0.2);
-		createRootInLayers(Main.ME.root, Const.DP_BG);
+		createRootInLayers(Main.inst.root, Const.BACKGROUND_OBJECTS);
 
 		view_layers = new h2d.Layers();
-		root.add(view_layers, Const.DP_BG);
+		root.add(view_layers, Const.BACKGROUND_OBJECTS);
 		view_layers.filter = new h2d.filter.ColorMatrix(); // force rendering for pixel perfect
 
 		camera = new Camera();
@@ -33,6 +33,8 @@ class Game extends Process {
 		e = new EventRouter();
 
 		player = new en.Player(100, 100);
+
+		camera.trackEntity(player);
 
 		Process.resizeAll();
 		trace("Game is ready.");
@@ -104,7 +106,7 @@ class Game extends Process {
 
 			// Restart
 			if(ca.selectPressed())
-				Main.ME.startGame();
+				Main.inst.startGame();
 		}
 	}
 }

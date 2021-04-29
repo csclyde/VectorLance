@@ -1,6 +1,6 @@
 class Level extends dn.Process {
-	var game(get,never) : Game; inline function get_game() return Game.ME;
-	var fx(get,never) : Fx; inline function get_fx() return Game.ME.fx;
+	var game(get,never) : Game; inline function get_game() return Game.inst;
+	var fx(get,never) : Fx; inline function get_fx() return Game.inst.fx;
 
 	public var pxWidth : Int;
 	public var pxHeight : Int; 
@@ -8,8 +8,8 @@ class Level extends dn.Process {
 	var invalidated = true;
 
 	public function new() {
-		super(Game.ME);
-		createRootInLayers(Game.ME.view_layers, Const.DP_BG);
+		super(Game.inst);
+		createRootInLayers(Game.inst.view_layers, Const.BACKGROUND_OBJECTS);
 	}
 
 	/** TRUE if given coords are in level bounds **/

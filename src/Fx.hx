@@ -4,10 +4,10 @@ import dn.Tweenie;
 
 
 class Fx extends dn.Process {
-	var game(get,never) : Game; inline function get_game() return Game.ME;
+	var game(get,never) : Game; inline function get_game() return Game.inst;
 
 	public function new() {
-		super(Game.ME);
+		super(Game.inst);
 	}
 
 	override public function onDispose() {

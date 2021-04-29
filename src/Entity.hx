@@ -3,13 +3,13 @@ class Entity {
     public static var GC : Array<Entity> = [];
 
 	// Various getters to access all important stuff easily
-	public var game(get,never) : Game; inline function get_game() return Game.ME;
-	public var fx(get,never) : Fx; inline function get_fx() return Game.ME.fx;
-	public var level(get,never) : Level; inline function get_level() return Game.ME.level;
+	public var game(get,never) : Game; inline function get_game() return Game.inst;
+	public var fx(get,never) : Fx; inline function get_fx() return Game.inst.fx;
+	public var level(get,never) : Level; inline function get_level() return Game.inst.level;
 	public var destroyed(default,null) = false;
 	public var ftime(get,never) : Float; inline function get_ftime() return game.ftime;
-	public var tmod(get,never) : Float; inline function get_tmod() return Game.ME.tmod;
-	public var hud(get,never) : ui.Hud; inline function get_hud() return Game.ME.hud;
+	public var tmod(get,never) : Float; inline function get_tmod() return Game.inst.tmod;
+	public var hud(get,never) : ui.Hud; inline function get_hud() return Game.inst.hud;
 
 	/** Unique identifier **/
 	public var uid(default,null) : Int;
@@ -27,6 +27,9 @@ class Entity {
     public function new(x, y) {
         uid = Const.NEXT_UNIQ;
 		ALL.push(this);
+
+		centerX = x;
+		centerY = y;
     }
 
 	public inline function isAlive() {
@@ -60,18 +63,8 @@ class Entity {
 		}
     }
 
-    public function preUpdate() {
-    }
-
-    public function postUpdate() {
-
-	}
-
-	public function fixedUpdate() {
-
-	}
-
-    public function update() {
-
-    }
+    public function preUpdate() {}
+    public function postUpdate() {}
+	public function fixedUpdate() {}
+    public function update() {}
 }

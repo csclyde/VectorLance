@@ -1,14 +1,15 @@
 class Boot extends hxd.App {
-	public static var ME : Boot;
+	public static var inst : Boot;
 
 	static function main() {
 		new Boot();
 	}
 
 	override function init() {
-		ME = this;
+		inst = this;
 		new Main(s2d);
 		onResize();
+		trace(s2d.height);
 	}
 
 	override function onResize() {

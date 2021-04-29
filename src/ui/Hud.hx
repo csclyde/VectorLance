@@ -1,17 +1,17 @@
 package ui;
 
 class Hud extends dn.Process {
-	public var game(get,never) : Game; inline function get_game() return Game.ME;
-	public var fx(get,never) : Fx; inline function get_fx() return Game.ME.fx;
-	public var level(get,never) : Level; inline function get_level() return Game.ME.level;
+	public var game(get,never) : Game; inline function get_game() return Game.inst;
+	public var fx(get,never) : Fx; inline function get_fx() return Game.inst.fx;
+	public var level(get,never) : Level; inline function get_level() return Game.inst.level;
 
 	var flow : h2d.Flow;
 	var invalidated = true;
 
 	public function new() {
-		super(Game.ME);
+		super(Game.inst);
 
-		createRootInLayers(game.root, Const.DP_UI);
+		createRootInLayers(game.root, Const.UI_LAYER);
 		root.filter = new h2d.filter.ColorMatrix(); // force pixel perfect rendering
 
 		flow = new h2d.Flow(root);
