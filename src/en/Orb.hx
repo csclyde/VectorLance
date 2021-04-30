@@ -30,7 +30,7 @@ class Orb extends Entity {
 				}
 			]
 		});
-    	//body.entity = this;
+    	body.entity = this;
 
 		//body.velocity.x = -1;
 

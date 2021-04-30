@@ -95,13 +95,30 @@ class World extends dn.Process {
 				var orbVec = new Vector2(lanceTip.x - orbTarget.x, lanceTip.y - orbTarget.y);
 				var lanceVec = new Vector2(lanceTip.x - a.x, lanceTip.y - a.y);
 				var angleDiff = orbVec.angleWith(lanceVec) * (180 / Math.PI);
+
 				
-				if(angleDiff > 156 && angleDiff < 205) {
+				if(angleDiff > 170 && angleDiff < 190) {
+					trace('Dead on at ' + angleDiff);
+					var orb = findOrbFromCollision(a, b);
+					if(orb != null) orb.explode();
+				}
+				else if(angleDiff > 155 && angleDiff < 205) {
 					trace('Hit at ' + angleDiff);
+
+					orbTarget.mass = 0;
+					a.mass = 0;
+
+					tw.createMs(worldSpeed, 0.1, TEaseIn, 100);
+					delayer.addMs('speed_up', () -> {
+						tw.createMs(worldSpeed, 1.0, TEaseOut, 200);
+						orbTarget.mass = 1;
+						a.mass = 1;
+					}, 200);
+
 					delayer.addMs('explode_orb', () -> {
 						var orb = findOrbFromCollision(a, b);
 						if(orb != null) orb.explode();
-					}, 10);
+					}, 300);
 				}
 				else if(angleDiff > 140 && angleDiff < 220) {
 					trace('Near glance at ' + angleDiff);
@@ -112,6 +129,8 @@ class World extends dn.Process {
 					player.alignToVelocity();
 
 				}
+
+				//orbTarget.mass = 0;
 			}
 
 			// 	tw.createMs(worldSpeed, 0.2, TEaseIn, 100);
@@ -147,10 +166,10 @@ class World extends dn.Process {
 	override function postUpdate() {
 		super.postUpdate();
 
-		g.clear();
-		g.tileWrap = true;
-		g.beginTileFill(camera.levelToGlobalX(camera.left), camera.levelToGlobalY(camera.top), 1, 1, bgTile);        
-        g.drawRect(camera.left, camera.top, camera.pxWidth, camera.pxHeight); 
+		// g.clear();
+		// g.tileWrap = true;
+		// g.beginTileFill(camera.levelToGlobalX(camera.left), camera.levelToGlobalY(camera.top), 1, 1, bgTile);        
+        // g.drawRect(camera.left, camera.top, camera.pxWidth, camera.pxHeight); 
 
 		debug.draw(physWorld);
 
