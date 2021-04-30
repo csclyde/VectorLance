@@ -1,3 +1,4 @@
+--macro echo.Macros.add_data("entity", "Entity")
 -cp src
 -lib castle
 -lib heaps

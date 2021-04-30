@@ -1,5 +1,6 @@
 package proc;
 
+import hxmath.math.Vector2;
 import echo.util.Debug;
 import echo.data.Data.CollisionData;
 import echo.Body;
@@ -78,32 +79,35 @@ class World extends dn.Process {
 
 	function onCollision(a:Body, b:Body, c:Array<CollisionData>) {
 		
-		if(a == player.body) {
-			var slowCollide = false;
-			var trueCollision = false;
+		if(a.entity == player) {
+			var lanceTip = null;
+			var orbTarget = null;
 
 			//if one of the coliding shapes is not solid, we are hitting the buffer around that shape
 			for(cd in c) {
-				if(!cd.sa.solid || !cd.sb.solid) {
-					slowCollide = true;
-				}
-
-				if(cd.sa.solid && cd.sb.solid) {
-					trueCollision = true;
+				if(cd.sa.solid && cd.sa.type == CIRCLE) {
+					lanceTip = cd.sa;
+					orbTarget = b;
 				}
 			}
 
-			if(slowCollide) {
-				tw.createMs(worldSpeed, 0.2, TEaseIn, 150);
-				delayer.addMs('speed_up', () -> tw.createMs(worldSpeed, 1.0, TEaseOut, 200), 600);
-			} 
+			//if the lance tip was involved in the collision
+			if(lanceTip != null) {
+				var orbVec = new Vector2(lanceTip.x - orbTarget.x, lanceTip.y - orbTarget.y);
+				var lanceVec = new Vector2(lanceTip.x - a.x, lanceTip.y - a.y);
+				var angleDiff = Math.abs(orbVec.angle - lanceVec.angle) * 100;
+				trace('Angle diff: ' + angleDiff);
 
-			if(trueCollision) {
-				delayer.addMs('explode_orb', () -> {
-					var orb = findOrbFromCollision(a, b);
-					if(orb != null) orb.explode();
-				}, 600);
+				if(angleDiff > 275 && angleDiff < 375) {
+					delayer.addMs('explode_orb', () -> {
+						var orb = findOrbFromCollision(a, b);
+						if(orb != null) orb.explode();
+					}, 200);
+				}
 			}
+
+			// 	tw.createMs(worldSpeed, 0.2, TEaseIn, 100);
+			// 	delayer.addMs('speed_up', () -> tw.createMs(worldSpeed, 1.0, TEaseOut, 200), 200);
 		}
 	}
 

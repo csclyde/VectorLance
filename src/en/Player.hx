@@ -27,31 +27,32 @@ class Player extends Entity {
 			x: sx,
 			y: sy,
 			elasticity: 0.2,
-			drag_length: 0.045,
+			drag_length: 0.01,
 			shapes: [
 				{
 					type: CIRCLE,
 					radius: 2,
-					offset_y: -30,
+					offset_y: -40,
 				},
 				{
 					type: POLYGON,
 					vertices: [
-						new Vector2(0, -30),
-						new Vector2(-10, 30),
+						new Vector2(0, -40),
+						new Vector2(-10, 40),
 						new Vector2(0, 15),
-						new Vector2(10, 30),
+						new Vector2(10, 40),
 					]
 				},
-				{
-					type: CIRCLE,
-					radius: 16,
-					offset_y: -30,
-					solid: false
-				}
+				// {
+				// 	type: CIRCLE,
+				// 	radius: 16,
+				// 	offset_y: -40,
+				// 	solid: false
+				// }
 			]
 		});
-    	//body.entity = this;
+
+    	body.entity = this;
 
 		charge = 1;
 		game.e.subscribe('charge_vector', chargeVector);
@@ -68,7 +69,6 @@ class Player extends Entity {
 
 	function launchVector(params: Dynamic) {
 		charging = false;
-		trace(charge);
 		var newVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
 		body.velocity = newVec.normal * charge;
 		body.rotation = Math.atan2(body.velocity.y, body.velocity.x) * (180 / Math.PI) + 90;
