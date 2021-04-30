@@ -73,10 +73,28 @@ class Player extends Entity {
 		g.beginFill(0xff0000);
 		//g.drawCircle(centerX, centerY, 16);
 
-		g.addVertex(centerX, centerY - 25, 1.0, 0.0, 0.0, 1.0);
-		g.addVertex(centerX - 10, centerY + 25, 0.5, 0.0, 0.5, 1.0);
-		g.addVertex(centerX, centerY + 15, 0.5, 0.0, 0.5, 1.0);
-		g.addVertex(centerX + 10, centerY + 25, 0.5, 0.0, 0.5, 1.0);
+		var ang = body.velocity.angle + (Math.PI / 2);
+
+		// lance tip: 0, -25
+		var tipRotX = (0) * Math.cos(ang) - (-25) * Math.sin(ang);
+		var tipRotY = (-25) * Math.cos(ang) + (0) * Math.sin(ang);
+
+		// left wing: -10, 25
+		var leftRotX = (-10) * Math.cos(ang) - (25) * Math.sin(ang);
+		var leftRotY = (25) * Math.cos(ang) + (-10) * Math.sin(ang);
+
+		// bottom: 0, 15
+		var botRotX = (0) * Math.cos(ang) - (15) * Math.sin(ang);
+		var botRotY = (15) * Math.cos(ang) + (0) * Math.sin(ang);
+
+		// right wing: 10, 25
+		var rightRotX = (10) * Math.cos(ang) - (25) * Math.sin(ang);
+		var rightRotY = (25) * Math.cos(ang) + (10) * Math.sin(ang);
+
+		g.addVertex(centerX + tipRotX, centerY + tipRotY, 1.0, 0.0, 0.0, 1.0);
+		g.addVertex(centerX + leftRotX, centerY + leftRotY, 0.5, 0.0, 0.5, 1.0);
+		g.addVertex(centerX + botRotX, centerY + botRotY, 0.5, 0.0, 0.5, 1.0);
+		g.addVertex(centerX + rightRotX, centerY + rightRotY, 0.5, 0.0, 0.5, 1.0);
 
 		var mouseVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
 		var aimVec = mouseVec.normal * charge * 10;
