@@ -31,8 +31,6 @@ class World extends dn.Process {
 		super(Game.inst);
 
 		worldSpeed = 1.0;
-
-		debug = new HeapsDebug(Game.inst.root);
 		
 		physWorld = new echo.World({
 			width: 1,
@@ -45,9 +43,10 @@ class World extends dn.Process {
 
 		g = new h2d.Graphics();
 		//game.root.add(g, Const.BACKGROUND_OBJECTS);
-		createRootInLayers(game.root, Const.MIDGROUND_OBJECTS);
+		createRoot(game.root);
 
 		root.add(g, Const.BACKGROUND_OBJECTS);
+		debug = new HeapsDebug(root);
 
 		bgTile = hxd.Res.space.toTile();
 
@@ -95,14 +94,23 @@ class World extends dn.Process {
 			if(lanceTip != null) {
 				var orbVec = new Vector2(lanceTip.x - orbTarget.x, lanceTip.y - orbTarget.y);
 				var lanceVec = new Vector2(lanceTip.x - a.x, lanceTip.y - a.y);
-				var angleDiff = Math.abs(orbVec.angle - lanceVec.angle) * 100;
-				trace('Angle diff: ' + angleDiff);
-
-				if(angleDiff > 275 && angleDiff < 375) {
+				var angleDiff = orbVec.angleWith(lanceVec) * (180 / Math.PI);
+				
+				if(angleDiff > 156 && angleDiff < 205) {
+					trace('Hit at ' + angleDiff);
 					delayer.addMs('explode_orb', () -> {
 						var orb = findOrbFromCollision(a, b);
 						if(orb != null) orb.explode();
-					}, 200);
+					}, 10);
+				}
+				else if(angleDiff > 140 && angleDiff < 220) {
+					trace('Near glance at ' + angleDiff);
+					player.alignToVelocity();
+				}
+				else {
+					trace('Far glance at ' + angleDiff);
+					player.alignToVelocity();
+
 				}
 			}
 
@@ -139,10 +147,10 @@ class World extends dn.Process {
 	override function postUpdate() {
 		super.postUpdate();
 
-		// g.clear();
-		// g.tileWrap = true;
-		// g.beginTileFill(camera.levelToGlobalX(camera.left), camera.levelToGlobalY(camera.top), 1, 1, bgTile);        
-        // g.drawRect(camera.left, camera.top, camera.pxWidth, camera.pxHeight); 
+		g.clear();
+		g.tileWrap = true;
+		g.beginTileFill(camera.levelToGlobalX(camera.left), camera.levelToGlobalY(camera.top), 1, 1, bgTile);        
+        g.drawRect(camera.left, camera.top, camera.pxWidth, camera.pxHeight); 
 
 		debug.draw(physWorld);
 

@@ -9,7 +9,7 @@ class Orb extends Entity {
 	public var body:Body;
 	public var g : h2d.Graphics;
 
-	public var radius = 32.0;
+	public var radius = 48.0;
 
 	public function new(sx, sy, physWorld: echo.World) {
 		super(sx, sy);

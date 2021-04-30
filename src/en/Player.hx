@@ -27,6 +27,7 @@ class Player extends Entity {
 			x: sx,
 			y: sy,
 			elasticity: 0.2,
+			mass: 1,
 			drag_length: 0.01,
 			shapes: [
 				{
@@ -71,11 +72,14 @@ class Player extends Entity {
 		charging = false;
 		var newVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
 		body.velocity = newVec.normal * charge;
-		body.rotation = Math.atan2(body.velocity.y, body.velocity.x) * (180 / Math.PI) + 90;
-
+		alignToVelocity();
 		charge = 1;
 
 		body.velocity.copyTo(prevLanceVel);
+	}
+
+	public function alignToVelocity() {
+		body.rotation = Math.atan2(body.velocity.y, body.velocity.x) * (180 / Math.PI) + 90;
 	}
 
     public override function update() {
@@ -90,7 +94,7 @@ class Player extends Entity {
 			charge = chargeMax;
 		}
 
-		// g.clear();
+		g.clear();
 
 		// g.beginFill(0xff0000);
 		// g.drawCircle(centerX, centerY, 16);
@@ -118,12 +122,11 @@ class Player extends Entity {
 		// g.addVertex(centerX + botRotX, centerY + botRotY, 0.5, 0.0, 0.5, 1.0);
 		// g.addVertex(centerX + rightRotX, centerY + rightRotY, 0.5, 0.0, 0.5, 1.0);
 
-		// var mouseVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
-		// var aimVec = mouseVec.normal * charge * 10;
+		var mouseVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
+		var aimVec = mouseVec.normal * charge * 10;
 
-
-		// g.lineStyle(2, 0xFF0000);
-		// g.moveTo(centerX, centerY);
-		// g.lineTo(aimVec.x + centerX, aimVec.y + centerY);
+		g.lineStyle(1, 0xFF0000);
+		g.moveTo(centerX, centerY);
+		g.lineTo(aimVec.x + centerX, aimVec.y + centerY);
 	}
 }
