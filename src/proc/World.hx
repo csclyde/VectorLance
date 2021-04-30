@@ -70,11 +70,16 @@ class World extends dn.Process {
 		
 		if(a == player.body || b == player.body) {
 			var slowCollide = false;
+			var trueCollision = false;
 
 			//if one of the coliding shapes is not solid, we are hitting the buffer around that shape
 			for(cd in c) {
 				if(!cd.sa.solid || !cd.sb.solid) {
 					slowCollide = true;
+				}
+
+				if(cd.sa.solid && cd.sb.solid) {
+					trueCollision = true;
 				}
 			}
 
@@ -82,8 +87,25 @@ class World extends dn.Process {
 				tw.createMs(worldSpeed, 0.2, TEaseIn, 150);
 				delayer.addMs('speed_up', () -> tw.createMs(worldSpeed, 1.0, TEaseOut, 200), 600);
 
-			}
+				delayer.addMs('explode_orb', () -> {
+					var orb = findOrbFromCollision(a, b);
+					if(orb != null) orb.explode();
+				}, 600);
+				
+				if(trueCollision) {
+
+				}
+
+			} 
 		}
+	}
+
+	function findOrbFromCollision(a:Body, b:Body) {
+		for(o in orbs) {
+			if(o.body == a || o.body == b) return o;
+		}
+
+		return null;
 	}
 
 	function render() {

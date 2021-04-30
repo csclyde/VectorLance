@@ -42,11 +42,6 @@ class Orb extends Entity {
 		physWorld.add(body);
 	}
 
-	public function collidePlayer(a:Body, b:Body, c:Array<echo.data.Data.CollisionData>) {
-		g.clear();
-		this.destroy();
-	}
-
 	public override function preUpdate() {}
     public override function postUpdate() {}
 	public override function fixedUpdate() {}
@@ -60,4 +55,10 @@ class Orb extends Entity {
 		g.lineStyle(2, 0xFFFFFF);
 		g.drawCircle(centerX, centerY, this.radius);
 	}
+
+	public function explode() {
+        destroy();
+		body.dispose();
+		g.clear();
+    }
 }
