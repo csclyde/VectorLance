@@ -12,6 +12,7 @@ class Player extends Entity {
 	public var charging : Bool;
 	public var chargeRate = 0.25;
 	public var chargeMax = 10;
+	public var prevLanceVel: Vector2;
 
 	public function new(sx, sy, physWorld) {
 		super(sx, sy);
@@ -20,15 +21,24 @@ class Player extends Entity {
 		g = new h2d.Graphics();
 		Game.inst.root.add(g, Const.MIDGROUND_OBJECTS);
 
+		prevLanceVel = new Vector2(0, -1);
+
 		body = new Body({
 			x: sx,
 			y: sy,
 			elasticity: 0.2,
-			drag_length: 0.05,
-			shape: {
-				type: CIRCLE,
-				radius: 16,
-			}
+			drag_length: 0.045,
+			shapes: [
+				{
+					type: CIRCLE,
+					radius: 16,
+				},
+				{
+					type: CIRCLE,
+					radius: 16 * 3,
+					solid: false
+				}
+			]
 		});
     	//body.entity = this;
 
@@ -54,6 +64,8 @@ class Player extends Entity {
 		body.velocity = newVec.normal * charge;
 
 		charge = 1;
+
+		body.velocity.copyTo(prevLanceVel);
 	}
 
     public override function update() {
@@ -73,23 +85,23 @@ class Player extends Entity {
 		g.beginFill(0xff0000);
 		//g.drawCircle(centerX, centerY, 16);
 
-		var ang = body.velocity.angle + (Math.PI / 2);
+		var ang = prevLanceVel.angle + (Math.PI / 2);
 
-		// lance tip: 0, -25
-		var tipRotX = (0) * Math.cos(ang) - (-25) * Math.sin(ang);
-		var tipRotY = (-25) * Math.cos(ang) + (0) * Math.sin(ang);
+		// lance tip: 0, -30
+		var tipRotX = (0) * Math.cos(ang) - (-30) * Math.sin(ang);
+		var tipRotY = (-30) * Math.cos(ang) + (0) * Math.sin(ang);
 
-		// left wing: -10, 25
-		var leftRotX = (-10) * Math.cos(ang) - (25) * Math.sin(ang);
-		var leftRotY = (25) * Math.cos(ang) + (-10) * Math.sin(ang);
+		// left wing: -10, 30
+		var leftRotX = (-10) * Math.cos(ang) - (30) * Math.sin(ang);
+		var leftRotY = (30) * Math.cos(ang) + (-10) * Math.sin(ang);
 
 		// bottom: 0, 15
 		var botRotX = (0) * Math.cos(ang) - (15) * Math.sin(ang);
 		var botRotY = (15) * Math.cos(ang) + (0) * Math.sin(ang);
 
-		// right wing: 10, 25
-		var rightRotX = (10) * Math.cos(ang) - (25) * Math.sin(ang);
-		var rightRotY = (25) * Math.cos(ang) + (10) * Math.sin(ang);
+		// right wing: 10, 30
+		var rightRotX = (10) * Math.cos(ang) - (30) * Math.sin(ang);
+		var rightRotY = (30) * Math.cos(ang) + (10) * Math.sin(ang);
 
 		g.addVertex(centerX + tipRotX, centerY + tipRotY, 1.0, 0.0, 0.0, 1.0);
 		g.addVertex(centerX + leftRotX, centerY + leftRotY, 0.5, 0.0, 0.5, 1.0);

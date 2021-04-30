@@ -27,11 +27,6 @@ class Orb extends Entity {
 				{
 					type: CIRCLE,
 					radius: this.radius,
-				},
-				{
-					type: CIRCLE,
-					radius: this.radius + this.radius + this.radius,
-					solid: false
 				}
 			]
 		});
