@@ -1,5 +1,6 @@
 package proc;
 
+import echo.util.Debug;
 import echo.data.Data.CollisionData;
 import echo.Body;
 import echo.util.Debug.HeapsDebug;
@@ -15,6 +16,7 @@ class World extends dn.Process {
 	public var pxHeight : Int;
 	
 	public var physWorld:echo.World;
+	public var debug:HeapsDebug;
 	public var bgTile: h2d.Tile;
 	public var g : h2d.Graphics;
 
@@ -29,6 +31,8 @@ class World extends dn.Process {
 
 		worldSpeed = 1.0;
 
+		debug = new HeapsDebug(Game.inst.root);
+		
 		physWorld = new echo.World({
 			width: 1,
 			height: 1,
@@ -46,11 +50,17 @@ class World extends dn.Process {
 
 		bgTile = hxd.Res.space.toTile();
 
-		player = new en.Player(0, 0, physWorld);
+		player = new en.Player(0, 0);
+		physWorld.add(player.body);
 		camera.trackEntity(player);
 
 		orbs = [];
 
+		addOrb();
+		addOrb();
+		addOrb();
+		addOrb();
+		addOrb();
 		addOrb();
 		addOrb();
 		addOrb();
@@ -68,7 +78,7 @@ class World extends dn.Process {
 
 	function onCollision(a:Body, b:Body, c:Array<CollisionData>) {
 		
-		if(a == player.body || b == player.body) {
+		if(a == player.body) {
 			var slowCollide = false;
 			var trueCollision = false;
 
@@ -86,17 +96,14 @@ class World extends dn.Process {
 			if(slowCollide) {
 				tw.createMs(worldSpeed, 0.2, TEaseIn, 150);
 				delayer.addMs('speed_up', () -> tw.createMs(worldSpeed, 1.0, TEaseOut, 200), 600);
+			} 
 
+			if(trueCollision) {
 				delayer.addMs('explode_orb', () -> {
 					var orb = findOrbFromCollision(a, b);
 					if(orb != null) orb.explode();
 				}, 600);
-				
-				if(trueCollision) {
-
-				}
-
-			} 
+			}
 		}
 	}
 
@@ -121,16 +128,21 @@ class World extends dn.Process {
 		physWorld.step(tmod * worldSpeed);
 	}
 
+	override function update() {
+
+	}
+
 	override function postUpdate() {
 		super.postUpdate();
 
-		g.clear();
+		// g.clear();
+		// g.tileWrap = true;
+		// g.beginTileFill(camera.levelToGlobalX(camera.left), camera.levelToGlobalY(camera.top), 1, 1, bgTile);        
+        // g.drawRect(camera.left, camera.top, camera.pxWidth, camera.pxHeight); 
 
-		g.tileWrap = true;
-		g.beginTileFill(camera.levelToGlobalX(camera.left), camera.levelToGlobalY(camera.top), 1, 1, bgTile);        
-        g.drawRect(camera.left, camera.top, camera.pxWidth, camera.pxHeight); 
+		debug.draw(physWorld);
 
-		if( invalidated ) {
+		if(invalidated) {
 			invalidated = false;
 			render();
 		}

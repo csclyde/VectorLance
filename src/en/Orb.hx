@@ -35,7 +35,7 @@ class Orb extends Entity {
 		//body.velocity.x = -1;
 
 		var initialVel = new Vector2(M.frandRange(-100, 100), M.frandRange(-100, 100));
-		initialVel = initialVel.normal * 2;
+		initialVel = initialVel.normal * 1.5;
 
 		body.velocity = initialVel;
 
@@ -50,15 +50,15 @@ class Orb extends Entity {
 		centerX = body.x;
 		centerY = body.y;
 
-		g.clear();
+		// g.clear();
 
-		g.lineStyle(2, 0xFFFFFF);
-		g.drawCircle(centerX, centerY, this.radius);
+		// g.lineStyle(2, 0xFFFFFF);
+		// g.drawCircle(centerX, centerY, this.radius);
 	}
 
 	public function explode() {
         destroy();
 		body.dispose();
-		g.clear();
+		// g.clear();
     }
 }
