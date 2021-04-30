@@ -67,9 +67,22 @@ class World extends dn.Process {
 	}
 
 	function onCollision(a:Body, b:Body, c:Array<CollisionData>) {
+		
 		if(a == player.body || b == player.body) {
-			worldSpeed = 0.1;
-			tw.createMs(worldSpeed, 1.0, TEaseIn, 600);
+			var slowCollide = false;
+
+			//if one of the coliding shapes is not solid, we are hitting the buffer around that shape
+			for(cd in c) {
+				if(!cd.sa.solid || !cd.sb.solid) {
+					slowCollide = true;
+				}
+			}
+
+			if(slowCollide) {
+				tw.createMs(worldSpeed, 0.2, TEaseIn, 150);
+				delayer.addMs('speed_up', () -> tw.createMs(worldSpeed, 1.0, TEaseOut, 200), 600);
+
+			}
 		}
 	}
 

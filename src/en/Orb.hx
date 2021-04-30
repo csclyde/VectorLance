@@ -1,5 +1,6 @@
 package en;
 
+import echo.shape.Circle;
 import hxmath.math.Vector2;
 import echo.Body;
 import echo.data.Options.BodyOptions;
@@ -22,10 +23,17 @@ class Orb extends Entity {
 			y: sy,
 			elasticity: 1,
 			drag_length: 0.0,
-			shape: {
-				type: CIRCLE,
-				radius: this.radius,
-			}
+			shapes: [
+				{
+					type: CIRCLE,
+					radius: this.radius,
+				},
+				{
+					type: CIRCLE,
+					radius: this.radius + this.radius + this.radius,
+					solid: false
+				}
+			]
 		});
     	//body.entity = this;
 
