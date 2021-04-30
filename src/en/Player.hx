@@ -71,7 +71,12 @@ class Player extends Entity {
 		g.clear();
 
 		g.beginFill(0xff0000);
-		g.drawCircle(centerX, centerY, 16);
+		//g.drawCircle(centerX, centerY, 16);
+
+		g.addVertex(centerX, centerY - 25, 1.0, 0.0, 0.0, 1.0);
+		g.addVertex(centerX - 10, centerY + 25, 0.5, 0.0, 0.5, 1.0);
+		g.addVertex(centerX, centerY + 15, 0.5, 0.0, 0.5, 1.0);
+		g.addVertex(centerX + 10, centerY + 25, 0.5, 0.0, 0.5, 1.0);
 
 		var mouseVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
 		var aimVec = mouseVec.normal * charge * 10;

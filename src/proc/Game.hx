@@ -1,5 +1,6 @@
 package proc;
 
+import h2d.filter.Glow;
 import h2d.filter.Bloom;
 import dn.Process;
 
@@ -23,8 +24,8 @@ class Game extends Process {
 		engine.backgroundColor = 0x000000;
         engine.fullScreen = true;
 
-		root.filter = new h2d.filter.Bloom(); // force rendering for pixel perfect
-
+		root.filter = new h2d.filter.Bloom();
+		
 		input = new Input();
 		camera = new Camera();
 		fx = new Fx();
