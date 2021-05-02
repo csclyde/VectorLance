@@ -1,18 +1,12 @@
 package proc;
 
 import hxmath.math.Vector2;
-import echo.util.Debug;
 import echo.data.Data.CollisionData;
-import echo.Body;
 import echo.util.Debug.HeapsDebug;
+import echo.Body;
 import echo.World;
 
 class World extends Process {
-	var game(get,never) : Game; inline function get_game() return Game.inst;
-	var fx(get,never) : Fx; inline function get_fx() return Game.inst.fx;
-	var camera(get,never) : Camera; inline function get_camera() return Game.inst.camera;
-	var input(get,never) : Input; inline function get_input() return Game.inst.input;
-
 	public var pxWidth : Int;
 	public var pxHeight : Int;
 	
@@ -28,8 +22,7 @@ class World extends Process {
 	var invalidated = true;
 
 	public function new() {
-		trace('World init');
-		super(Game.inst);
+		super(game);
 
 		worldSpeed = 1.0;
 		

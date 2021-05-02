@@ -1,9 +1,6 @@
 package proc;
 
 class Input extends Process {
-	var camera(get,never) : Camera; inline function get_camera() return Game.inst.camera;
-	var game(get,never) : Game; inline function get_game() return Game.inst;
-
 	public var ca : dn.heaps.Controller.ControllerAccess;
 	public var controller : dn.heaps.Controller;
 
@@ -13,7 +10,7 @@ class Input extends Process {
 	public var mouseWorldY : Float;
 
 	public function new() {
-		super(Game.inst);
+		super(game);
 
 		controller = new dn.heaps.Controller(App.inst.s2d);
 		controller.bind(AXIS_LEFT_X_NEG, K.LEFT, K.Q, K.A);
@@ -35,10 +32,10 @@ class Input extends Process {
 		//trace(event.toString());
 
 		if(event.kind == ERelease && event.button == 0) {
-			game.events.send('launch_vector', {});
+			events.send('launch_vector', {});
 		}
 		else if(event.kind == EPush && event.button == 0) {
-			game.events.send('charge_vector', {});
+			events.send('charge_vector', {});
 		}
 	}
 

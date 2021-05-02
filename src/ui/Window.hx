@@ -4,9 +4,9 @@ class Window extends Process {
 	public var win: h2d.Flow;
 
 	public function new() {
-		super(Game.inst);
+		super(game);
 
-		createRootInLayers(Game.inst.root, Const.UI_LAYER);
+		createRootInLayers(game.root, Const.UI_LAYER);
 		root.filter = new h2d.filter.ColorMatrix(); // force pixel perfect rendering
 
 		win = new h2d.Flow(root);

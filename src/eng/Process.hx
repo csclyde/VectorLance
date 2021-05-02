@@ -6,6 +6,14 @@ import dn.Delayer;
 import dn.CiAssert;
 
 class Process {
+	public var game(get,never) : Game; inline function get_game() return App.inst.game;
+	public var fx(get,never) : Fx; inline function get_fx() return App.inst.fx;
+	public var world(get,never) : World; inline function get_world() return App.inst.world;
+	public var hud(get,never) : ui.Hud; inline function get_hud() return App.inst.hud;
+	public var camera(get,never) : Camera; inline function get_camera() return App.inst.camera;
+	public var input(get,never) : Input; inline function get_input() return App.inst.input;
+	public var events(get,never) : EventRouter; inline function get_events() return App.inst.events;
+
 	public static var FIXED_UPDATE_FPS = 30;
 
 	public static var CUSTOM_STAGE_WIDTH  = -1;

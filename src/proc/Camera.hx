@@ -27,12 +27,12 @@ class Camera extends Process {
 
 
 	public function new() {
-		super(Game.inst);
+		super(game);
 		dx = dy = 0;
 		//apply();
 
-		pxWidth = M.ceil(Game.inst.w() / Const.SCALE);
-		pxHeight = M.ceil(Game.inst.h() / Const.SCALE);
+		pxWidth = M.ceil(game.w() / Const.SCALE);
+		pxHeight = M.ceil(game.h() / Const.SCALE);
 	}
 
 	@:keep
@@ -57,8 +57,8 @@ class Camera extends Process {
 		}
 	}
 
-	public inline function levelToGlobalX(v:Float) return v*Const.SCALE + Game.inst.root.x;
-	public inline function levelToGlobalY(v:Float) return v*Const.SCALE + Game.inst.root.y;
+	public inline function levelToGlobalX(v:Float) return v*Const.SCALE + game.root.x;
+	public inline function levelToGlobalY(v:Float) return v*Const.SCALE + game.root.y;
 
 	var shakePower = 1.0;
 	public function shakeS(t:Float, ?pow=1.0) {
@@ -69,7 +69,7 @@ class Camera extends Process {
 
 	/** Apply camera values to Game root scene **/
 	function apply() {
-		var rootScene = Game.inst.root;
+		var rootScene = game.root;
 
 		rootScene.x = -focus.x + pxWidth*0.5;
 		rootScene.y = -focus.y + pxHeight*0.5;

@@ -5,10 +5,9 @@ import dn.heaps.HParticle;
 import dn.Tweenie;
 
 class Fx extends Process {
-	var game(get,never) : Game; inline function get_game() return Game.inst;
 
 	public function new() {
-		super(Game.inst);
+		super(game);
 	}
 
 	override public function onDispose() {

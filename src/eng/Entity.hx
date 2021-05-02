@@ -5,16 +5,17 @@ class Entity {
     public static var GC : Array<Entity> = [];
 
 	// Various getters to access all important stuff easily
-	public var game(get,never) : Game; inline function get_game() return Game.inst;
-	public var fx(get,never) : Fx; inline function get_fx() return Game.inst.fx;
-	public var world(get,never) : World; inline function get_world() return Game.inst.world;
-	public var hud(get,never) : ui.Hud; inline function get_hud() return Game.inst.hud;
-	public var camera(get,never) : Camera; inline function get_camera() return Game.inst.camera;
-	public var input(get,never) : Input; inline function get_input() return Game.inst.input;
+	public var game(get,never) : Game; inline function get_game() return App.inst.game;
+	public var fx(get,never) : Fx; inline function get_fx() return App.inst.fx;
+	public var world(get,never) : World; inline function get_world() return App.inst.world;
+	public var hud(get,never) : ui.Hud; inline function get_hud() return App.inst.hud;
+	public var camera(get,never) : Camera; inline function get_camera() return App.inst.camera;
+	public var input(get,never) : Input; inline function get_input() return App.inst.input;
+	public var events(get,never) : EventRouter; inline function get_events() return App.inst.events;
 	
 	public var destroyed(default,null) = false;
 	public var ftime(get,never) : Float; inline function get_ftime() return game.ftime;
-	public var tmod(get,never) : Float; inline function get_tmod() return Game.inst.tmod;
+	public var tmod(get,never) : Float; inline function get_tmod() return game.tmod;
 
 	/** Unique identifier **/
 	public var uid(default,null) : Int;

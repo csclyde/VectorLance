@@ -1,6 +1,14 @@
 class App extends hxd.App {
 	public static var inst : App;
 
+	public var game: Game;
+	public var events: EventRouter;
+	public var input: Input;
+	public var fx: Fx;
+	public var camera: Camera;
+	public var hud: ui.Hud;
+	public var world: World;
+
 	static function main() {
 		new App();
 	}
@@ -33,7 +41,13 @@ class App extends hxd.App {
 		hxd.Timer.wantedFPS = Const.FPS;
 		hxd.Timer.skip();
 		
-		new Game(s2d);
+		game = new Game(s2d);
+		events = new EventRouter();
+		input = new Input();
+		fx = new Fx();
+		camera = new Camera();
+		hud = new ui.Hud();
+		world = new World();
 		onResize();
 	}
 

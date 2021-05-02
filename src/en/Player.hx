@@ -2,7 +2,6 @@ package en;
 
 import hxmath.math.Vector2;
 import echo.Body;
-import echo.data.Options.BodyOptions;
 
 class Player extends Entity {
 	public var body:Body;
@@ -19,7 +18,7 @@ class Player extends Entity {
 
 		// Some default rendering for our character
 		g = new h2d.Graphics();
-		Game.inst.root.add(g, Const.MIDGROUND_OBJECTS);
+		game.root.add(g, Const.MIDGROUND_OBJECTS);
 
 		prevLanceVel = new Vector2(0, -1);
 
@@ -57,8 +56,8 @@ class Player extends Entity {
 
 		charge = 1;
 		trace('Subscribing...');
-		game.events.subscribe('charge_vector', chargeVector);
-		game.events.subscribe('launch_vector', launchVector);
+		events.subscribe('charge_vector', chargeVector);
+		events.subscribe('launch_vector', launchVector);
 	}
 
 	public override function preUpdate() {}

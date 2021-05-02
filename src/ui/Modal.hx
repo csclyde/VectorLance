@@ -14,9 +14,9 @@ class Modal extends ui.Window {
 		ALL.push(this);
 		modalIdx = COUNT++;
 		if( modalIdx==0 )
-			Game.inst.pause();
+			game.pause();
 
-		ca = Game.inst.input.controller.createAccess("modal", true);
+		ca = game.input.controller.createAccess("modal", true);
 		mask = new h2d.Bitmap(h2d.Tile.fromColor(0x0, 1, 1, 0.6), root);
 		root.under(mask);
 		Process.resizeAll();
@@ -35,7 +35,7 @@ class Modal extends ui.Window {
 		ALL.remove(this);
 		COUNT--;
 		if( !hasAny() )
-			Game.inst.resume();
+			game.resume();
 	}
 
 	function closeAllModals() {

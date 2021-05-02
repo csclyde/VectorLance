@@ -1,9 +1,7 @@
 package en;
 
-import echo.shape.Circle;
 import hxmath.math.Vector2;
 import echo.Body;
-import echo.data.Options.BodyOptions;
 
 class Orb extends Entity {
 	public var body:Body;
@@ -16,7 +14,7 @@ class Orb extends Entity {
 
 		// Some default rendering for our character
 		g = new h2d.Graphics();
-		Game.inst.root.add(g, Const.MIDGROUND_OBJECTS);
+		game.root.add(g, Const.MIDGROUND_OBJECTS);
 
 		body = new Body({
 			x: sx,
