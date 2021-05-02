@@ -6,3 +6,6 @@
 -lib echo
 -main App
 -dce full
+
+-D windowSize=1920x1080
+-hl bin/client.hl
