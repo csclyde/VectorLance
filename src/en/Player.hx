@@ -125,8 +125,22 @@ class Player extends Entity {
 		var mouseVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
 		var aimVec = mouseVec.normal * charge * 10;
 
+		g.lineStyle(1, 0x0000FF);
+		g.moveTo(0, 0);
+		g.lineTo(centerX, centerY);
+
 		g.lineStyle(1, 0xFF0000);
 		g.moveTo(centerX, centerY);
 		g.lineTo(aimVec.x + centerX, aimVec.y + centerY);
+
+		var sprig1 = Vector2.fromPolar(aimVec.angle + (Math.PI / 4) * 3, 10);
+		var sprig2 = Vector2.fromPolar(aimVec.angle + (Math.PI / 4) * 5, 10);
+
+		g.moveTo(aimVec.x + centerX, aimVec.y + centerY);
+		g.lineTo(aimVec.x + centerX + sprig1.x, aimVec.y + centerY + sprig1.y);
+
+		g.moveTo(aimVec.x + centerX, aimVec.y + centerY);
+		g.lineTo(aimVec.x + centerX + sprig2.x, aimVec.y + centerY + sprig2.y);
+		//g.lineTo(0, 0);
 	}
 }
