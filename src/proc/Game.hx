@@ -5,6 +5,8 @@ import h2d.filter.Bloom;
 
 class Game extends Process {
 
+	public var energy: Energy;
+
 	public function new(s:h2d.Scene) {
 		super();
 
@@ -16,6 +18,8 @@ class Game extends Process {
 
 		root.filter = new h2d.filter.Bloom();
 
+		energy = new Energy();
+		
 		Process.resizeAll();
 		trace("Game is ready.");
 	}
@@ -74,16 +78,13 @@ class Game extends Process {
 
 		for(e in Entity.ALL) if(!e.destroyed) e.update();
 
-		if(!ui.Console.ME.isActive() && !ui.Modal.hasAny()) {
-			#if hl
+		if(!ui.Modal.hasAny()) {
 			// Exit
 			if(input.ca.isKeyboardPressed(K.ESCAPE))
 				if(!cd.hasSetS("exitWarn",3))
 					trace("Press ESCAPE again to exit.");
 				else
 					hxd.System.exit();
-			#end
-
 		}
 	}
 }

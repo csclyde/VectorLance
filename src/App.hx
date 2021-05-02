@@ -6,8 +6,9 @@ class App extends hxd.App {
 	public var input: Input;
 	public var fx: Fx;
 	public var camera: Camera;
-	public var hud: ui.Hud;
+	public var hud: Hud;
 	public var world: World;
+	public var console: Console;
 
 	static function main() {
 		new App();
@@ -34,9 +35,8 @@ class App extends hxd.App {
 		// Assets & data init
 		hxd.snd.Manager.get(); // force sound manager init on startup instead of first sound play
 		Assets.init(); // init assets
-		new ui.Console(Assets.fontTiny, s2d); // init debug console
 		Data.load(hxd.Res.data.entry.getText()); // read castleDB json
-
+		
 		// Start with 1 frame delay, to avoid 1st frame freezing from the game perspective
 		hxd.Timer.wantedFPS = Const.FPS;
 		hxd.Timer.skip();
@@ -46,7 +46,8 @@ class App extends hxd.App {
 		input = new Input();
 		fx = new Fx();
 		camera = new Camera();
-		hud = new ui.Hud();
+		hud = new Hud();
+		console = new Console(); // init debug console
 		world = new World();
 		onResize();
 	}

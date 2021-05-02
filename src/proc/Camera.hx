@@ -69,7 +69,7 @@ class Camera extends Process {
 
 	/** Apply camera values to Game root scene **/
 	function apply() {
-		var rootScene = game.root;
+		var rootScene = world.root;
 
 		rootScene.x = -focus.x + pxWidth*0.5;
 		rootScene.y = -focus.y + pxHeight*0.5;
@@ -92,9 +92,7 @@ class Camera extends Process {
 
 	override function postUpdate() {
 		super.postUpdate();
-
-		if(!ui.Console.ME.hasFlag("scroll"))
-			apply();
+		apply();
 	}
 
 

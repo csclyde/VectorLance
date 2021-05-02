@@ -1,20 +1,24 @@
 package ui;
 
-class Console extends h2d.Console {
-	public static var ME : Console;
+class Console extends Process {
+	var h2dConsole: h2d.Console;
+
 	#if debug
 	var flags : Map<String,Bool>;
 	#end
 
-	public function new(f:h2d.Font, p:h2d.Object) {
-		super(f, p);
+	public function new() {
+		super(game);
 
-		scale(2); // TODO smarter scaling for 4k screens
+		createRootInLayers(game.root, Const.UI_LAYER);
+
+		h2dConsole = new h2d.Console(Assets.fontTiny, root);
+
+		h2dConsole.scale(2); // TODO smarter scaling for 4k screens
 
 		// Settings
-		ME = this;
 		h2d.Console.HIDE_LOG_TIMEOUT = 30;
-		Lib.redirectTracesToH2dConsole(this);
+		Lib.redirectTracesToH2dConsole(h2dConsole);
 
 		// Debug flags
 		#if debug
@@ -43,13 +47,13 @@ class Console extends h2d.Console {
 		#end
 	}
 
-	override function handleCommand(command:String) {
-		var flagReg = ~/[\/ \t]*\+[ \t]*([\w]+)/g; // cleanup missing spaces
-		super.handleCommand( flagReg.replace(command, "/+ $1") );
-	}
+	// function handleCommand(command:String) {
+	// 	var flagReg = ~/[\/ \t]*\+[ \t]*([\w]+)/g; // cleanup missing spaces
+	// 	h2dConsole.handleCommand( flagReg.replace(command, "/+ $1") );
+	// }
 
 	public function error(msg:Dynamic) {
-		log("[ERROR] "+Std.string(msg), 0xff0000);
+		h2dConsole.log("[ERROR] "+Std.string(msg), 0xff0000);
 		h2d.Console.HIDE_LOG_TIMEOUT = Const.INFINITE;
 	}
 

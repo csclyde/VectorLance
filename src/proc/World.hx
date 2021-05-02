@@ -35,30 +35,32 @@ class World extends Process {
 			enter: onCollision
 		});
 
-		g = new h2d.Graphics();
-		//game.root.add(g, Const.BACKGROUND_OBJECTS);
 		createRoot(game.root);
-
+		
+		g = new h2d.Graphics();
 		root.add(g, Const.BACKGROUND_OBJECTS);
 		debug = new HeapsDebug(root);
 
 		bgTile = hxd.Res.space.toTile();
 
-		player = new en.Player(0, 0);
-		physWorld.add(player.body);
-		camera.trackEntity(player);
+		delayer.addF('create_stuff', () -> {
+			player = new en.Player(0, 0);
+			physWorld.add(player.body);
+			camera.trackEntity(player);
+	
+			orbs = [];
+	
+			addOrb();
+			addOrb();
+			addOrb();
+			addOrb();
+			addOrb();
+			addOrb();
+			addOrb();
+			addOrb();
+			addOrb();
+		}, 1 );
 
-		orbs = [];
-
-		addOrb();
-		addOrb();
-		addOrb();
-		addOrb();
-		addOrb();
-		addOrb();
-		addOrb();
-		addOrb();
-		addOrb();
 	}
 
 	function addOrb() {
@@ -155,10 +157,10 @@ class World extends Process {
 	override function postUpdate() {
 		super.postUpdate();
 
-		// g.clear();
-		// g.tileWrap = true;
-		// g.beginTileFill(camera.levelToGlobalX(camera.left), camera.levelToGlobalY(camera.top), 1, 1, bgTile);        
-        // g.drawRect(camera.left, camera.top, camera.pxWidth, camera.pxHeight); 
+		g.clear();
+		g.tileWrap = true;
+		g.beginTileFill(0, 0, 1, 1, bgTile);        
+        g.drawRect(camera.left, camera.top, camera.pxWidth, camera.pxHeight); 
 
 		debug.draw(physWorld);
 

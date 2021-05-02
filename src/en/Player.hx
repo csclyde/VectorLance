@@ -18,7 +18,8 @@ class Player extends Entity {
 
 		// Some default rendering for our character
 		g = new h2d.Graphics();
-		game.root.add(g, Const.MIDGROUND_OBJECTS);
+		trace(world);
+		world.root.add(g, Const.MIDGROUND_OBJECTS);
 
 		prevLanceVel = new Vector2(0, -1);
 
@@ -55,7 +56,6 @@ class Player extends Entity {
     	//body.entity = this;
 
 		charge = 1;
-		trace('Subscribing...');
 		events.subscribe('charge_vector', chargeVector);
 		events.subscribe('launch_vector', launchVector);
 	}
