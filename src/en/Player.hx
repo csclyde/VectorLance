@@ -73,9 +73,12 @@ class Player extends Entity {
 		var newVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
 		body.velocity = newVec.normal * charge;
 		alignToVelocity();
-		charge = 1;
-
+		
 		body.velocity.copyTo(prevLanceVel);
+
+		game.energy.removeEnergy(charge);
+		
+		charge = 1;
 	}
 
 	public function alignToVelocity() {
@@ -141,6 +144,5 @@ class Player extends Entity {
 
 		g.moveTo(aimVec.x + centerX, aimVec.y + centerY);
 		g.lineTo(aimVec.x + centerX + sprig2.x, aimVec.y + centerY + sprig2.y);
-		//g.lineTo(0, 0);
 	}
 }

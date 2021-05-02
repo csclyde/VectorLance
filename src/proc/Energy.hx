@@ -2,9 +2,8 @@ package proc;
 
 class Energy extends Process {
 
-	var currentEnergy = 50;
-	var latentEnergy = 50;
-	var maxEnergy = 100;
+	var currentEnergy = 50.0;
+	var maxEnergy = 100.0;
 
 	public function new() {
 		super(game);
@@ -16,6 +15,17 @@ class Energy extends Process {
 
 	public function getMaxEnergy() {
 		return maxEnergy;
+	}
+
+	public function addEnergy(amount:Float) {
+		currentEnergy += amount;
+		if(currentEnergy > maxEnergy) {
+			currentEnergy = maxEnergy;
+		}
+	}
+
+	public function removeEnergy(amount:Float) {
+		currentEnergy -= amount;
 	}
 
 	override public function onDispose() {

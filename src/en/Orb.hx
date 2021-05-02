@@ -57,6 +57,7 @@ class Orb extends Entity {
 	public function explode() {
         destroy();
 		body.dispose();
+		game.energy.addEnergy(5);
 		// g.clear();
     }
 }

@@ -5,6 +5,9 @@ class Hud extends Process {
 	var invalidated = true;
 	public var g : h2d.Graphics;
 
+	var energyMarker:Float;
+	var energyChargeRate = 1;
+
 	public function new() {
 		super(game);
 
@@ -12,6 +15,8 @@ class Hud extends Process {
 
 		g = new h2d.Graphics();
 		root.add(g, Const.UI_LAYER);
+
+		energyMarker = game.energy.getEnergy();
 
 		flow = new h2d.Flow(root);
 	}
@@ -23,6 +28,10 @@ class Hud extends Process {
 	public inline function invalidate() invalidated = true;
 
 	function render() {}
+
+	override function update() {
+
+	}
 
 	override function postUpdate() {
 		super.postUpdate();
