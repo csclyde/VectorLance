@@ -14,6 +14,7 @@ class Process {
 	public var input(get,never) : Input; inline function get_input() return App.inst.input;
 	public var events(get,never) : EventRouter; inline function get_events() return App.inst.events;
 	public var console(get,never) : Console; inline function get_console() return App.inst.console;
+	public var audio(get,never) : Audio; inline function get_audio() return App.inst.audio;
 
 	public static var FIXED_UPDATE_FPS = 30;
 

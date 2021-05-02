@@ -12,6 +12,7 @@ class Entity {
 	public var camera(get,never) : Camera; inline function get_camera() return App.inst.camera;
 	public var input(get,never) : Input; inline function get_input() return App.inst.input;
 	public var events(get,never) : EventRouter; inline function get_events() return App.inst.events;
+	public var audio(get,never) : Audio; inline function get_audio() return App.inst.audio;
 	
 	public var destroyed(default,null) = false;
 	public var ftime(get,never) : Float; inline function get_ftime() return game.ftime;

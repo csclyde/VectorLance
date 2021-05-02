@@ -9,6 +9,7 @@ class App extends hxd.App {
 	public var hud: Hud;
 	public var world: World;
 	public var console: Console;
+	public var audio: Audio;
 
 	static function main() {
 		new App();
@@ -33,7 +34,6 @@ class App extends hxd.App {
 		#end
 
 		// Assets & data init
-		hxd.snd.Manager.get(); // force sound manager init on startup instead of first sound play
 		Assets.init(); // init assets
 		Data.load(hxd.Res.data.entry.getText()); // read castleDB json
 		
@@ -48,6 +48,7 @@ class App extends hxd.App {
 		camera = new Camera();
 		hud = new Hud();
 		console = new Console(); // init debug console
+		audio = new Audio();
 		world = new World();
 		onResize();
 	}

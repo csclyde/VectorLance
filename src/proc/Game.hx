@@ -81,7 +81,7 @@ class Game extends Process {
 		if(!ui.Modal.hasAny()) {
 			// Exit
 			if(input.ca.isKeyboardPressed(K.ESCAPE))
-				if(!cd.hasSetS("exitWarn",3))
+				if(!cd.hasSetS("exitWarn", 3))
 					trace("Press ESCAPE again to exit.");
 				else
 					hxd.System.exit();
