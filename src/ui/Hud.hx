@@ -1,6 +1,6 @@
 package ui;
 
-class Hud extends dn.Process {
+class Hud extends Process {
 	public var game(get,never) : Game; inline function get_game() return Game.inst;
 	public var fx(get,never) : Fx; inline function get_fx() return Game.inst.fx;
 	public var world(get,never) : World; inline function get_world() return Game.inst.world;

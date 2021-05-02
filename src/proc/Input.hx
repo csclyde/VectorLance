@@ -1,7 +1,8 @@
 package proc;
 
-class Input extends dn.Process {
+class Input extends Process {
 	var camera(get,never) : Camera; inline function get_camera() return Game.inst.camera;
+	var game(get,never) : Game; inline function get_game() return Game.inst;
 
 	public var ca : dn.heaps.Controller.ControllerAccess;
 	public var controller : dn.heaps.Controller;
@@ -34,10 +35,10 @@ class Input extends dn.Process {
 		//trace(event.toString());
 
 		if(event.kind == ERelease && event.button == 0) {
-			Game.inst.e.send('launch_vector', {});
+			game.events.send('launch_vector', {});
 		}
 		else if(event.kind == EPush && event.button == 0) {
-			Game.inst.e.send('charge_vector', {});
+			game.events.send('charge_vector', {});
 		}
 	}
 

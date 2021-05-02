@@ -39,7 +39,7 @@ class App extends hxd.App {
 
 	override function onResize() {
 		super.onResize();
-		dn.Process.resizeAll();
+		Process.resizeAll();
 	}
 
 	override function update(deltaTime:Float) {
@@ -48,6 +48,6 @@ class App extends hxd.App {
 		dn.heaps.Controller.beforeUpdate();
 
 		var currentTmod = hxd.Timer.tmod;
-		dn.Process.updateAll(currentTmod);
+		Process.updateAll(currentTmod);
 	}
 }

@@ -1,6 +1,6 @@
 package proc;
 
-class Camera extends dn.Process {
+class Camera extends Process {
 	public var focus = { x: 0.0, y: 0.0 };
 
 	var target : Null<Entity>;

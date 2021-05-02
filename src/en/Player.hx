@@ -53,11 +53,12 @@ class Player extends Entity {
 			]
 		});
 
-    	body.entity = this;
+    	//body.entity = this;
 
 		charge = 1;
-		game.e.subscribe('charge_vector', chargeVector);
-		game.e.subscribe('launch_vector', launchVector);
+		trace('Subscribing...');
+		game.events.subscribe('charge_vector', chargeVector);
+		game.events.subscribe('launch_vector', launchVector);
 	}
 
 	public override function preUpdate() {}

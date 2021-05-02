@@ -4,7 +4,7 @@ import h2d.Sprite;
 import dn.heaps.HParticle;
 import dn.Tweenie;
 
-class Fx extends dn.Process {
+class Fx extends Process {
 	var game(get,never) : Game; inline function get_game() return Game.inst;
 
 	public function new() {

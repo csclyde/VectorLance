@@ -1,8 +1,8 @@
+package eng;
+
 class Const {
 	// Various constants
 	public static inline var FPS = 60;
-	public static inline var FIXED_FPS = 30;
-	public static inline var GRID = 16;
 	public static inline var INFINITE = 999999;
 
 	/** Unique value generator **/

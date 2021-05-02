@@ -1,3 +1,5 @@
+package eng;
+
 typedef Callback = (Dynamic) -> Void;
 
 class EventRouter {

@@ -7,7 +7,7 @@ import echo.Body;
 import echo.util.Debug.HeapsDebug;
 import echo.World;
 
-class World extends dn.Process {
+class World extends Process {
 	var game(get,never) : Game; inline function get_game() return Game.inst;
 	var fx(get,never) : Fx; inline function get_fx() return Game.inst.fx;
 	var camera(get,never) : Camera; inline function get_camera() return Game.inst.camera;
@@ -28,6 +28,7 @@ class World extends dn.Process {
 	var invalidated = true;
 
 	public function new() {
+		trace('World init');
 		super(Game.inst);
 
 		worldSpeed = 1.0;
@@ -78,7 +79,7 @@ class World extends dn.Process {
 
 	function onCollision(a:Body, b:Body, c:Array<CollisionData>) {
 		
-		if(a.entity == player) {
+		if(a == player.body) {
 			var lanceTip = null;
 			var orbTarget = null;
 
@@ -105,20 +106,15 @@ class World extends dn.Process {
 				else if(angleDiff > 155 && angleDiff < 205) {
 					trace('Hit at ' + angleDiff);
 
-					orbTarget.mass = 0;
-					a.mass = 0;
-
-					tw.createMs(worldSpeed, 0.1, TEaseIn, 100);
+					tw.createMs(worldSpeed, 0.01, TEaseIn, 200);
 					delayer.addMs('speed_up', () -> {
-						tw.createMs(worldSpeed, 1.0, TEaseOut, 200);
-						orbTarget.mass = 1;
-						a.mass = 1;
-					}, 200);
+						tw.createMs(worldSpeed, 1.0, TEaseOut, 300);
+					}, 500);
 
 					delayer.addMs('explode_orb', () -> {
 						var orb = findOrbFromCollision(a, b);
 						if(orb != null) orb.explode();
-					}, 300);
+					}, 600);
 				}
 				else if(angleDiff > 140 && angleDiff < 220) {
 					trace('Near glance at ' + angleDiff);

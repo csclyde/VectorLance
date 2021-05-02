@@ -2,37 +2,35 @@ package proc;
 
 import h2d.filter.Glow;
 import h2d.filter.Bloom;
-import dn.Process;
 
 class Game extends Process {
 	public static var inst : Game;
 
+	public var events: EventRouter;
 	public var input: Input;
-	public var fx : Fx;
-	public var camera : Camera;
-	public var world : proc.World;
-	public var hud : ui.Hud;
-	public var e : EventRouter;
-
+	public var fx: Fx;
+	public var camera: Camera;
+	public var hud: ui.Hud;
+	public var world: World;
+	
 	public function new(s:h2d.Scene) {
 		super();
 		inst = this;
 
         createRoot(s);
 
+		events = new EventRouter();
+		input = new Input();
+		fx = new Fx();
+		camera = new Camera();
+		hud = new ui.Hud();
+		world = new World();
+
 		// Engine settings
 		engine.backgroundColor = 0x000000;
         engine.fullScreen = true;
 
 		root.filter = new h2d.filter.Bloom();
-		
-		input = new Input();
-		camera = new Camera();
-		fx = new Fx();
-		hud = new ui.Hud();
-		e = new EventRouter();
-
-		world = new World();
 
 		Process.resizeAll();
 		trace("Game is ready.");

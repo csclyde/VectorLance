@@ -1,6 +1,6 @@
 package ui;
 
-class Window extends dn.Process {
+class Window extends Process {
 	public var win: h2d.Flow;
 
 	public function new() {
@@ -16,7 +16,7 @@ class Window extends dn.Process {
 		win.layout = Vertical;
 		win.verticalSpacing = 2;
 
-		dn.Process.resizeAll();
+		Process.resizeAll();
 	}
 
 	public function clearWindow() {

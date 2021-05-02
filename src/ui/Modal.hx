@@ -19,7 +19,7 @@ class Modal extends ui.Window {
 		ca = Game.inst.input.controller.createAccess("modal", true);
 		mask = new h2d.Bitmap(h2d.Tile.fromColor(0x0, 1, 1, 0.6), root);
 		root.under(mask);
-		dn.Process.resizeAll();
+		Process.resizeAll();
 	}
 
 	public static function hasAny() {
