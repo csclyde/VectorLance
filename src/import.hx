@@ -4,6 +4,9 @@ import eng.Const;
 import eng.Data;
 import eng.Process;
 import eng.Assets;
+import eng.Camera;
+import eng.Fx;
+import eng.Input;
 
 import dn.M;
 import dn.Lib;
@@ -19,8 +22,5 @@ import tools.*;
 import dn.Color as C;
 import hxd.Key as K;
 
-import proc.Camera;
-import proc.Fx;
 import proc.Game;
-import proc.Input;
 import proc.World;

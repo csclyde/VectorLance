@@ -1,4 +1,4 @@
-package proc;
+package eng;
 
 class Camera extends Process {
 	public var focus = { x: 0.0, y: 0.0 };
