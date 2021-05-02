@@ -126,7 +126,7 @@ class Player extends Entity {
 		// g.addVertex(centerX + rightRotX, centerY + rightRotY, 0.5, 0.0, 0.5, 1.0);
 
 		var mouseVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
-		var aimVec = mouseVec.normal * charge * 10;
+		var aimVec = mouseVec.normal * charge * 15;
 
 		g.lineStyle(1, 0x0000FF);
 		g.moveTo(0, 0);

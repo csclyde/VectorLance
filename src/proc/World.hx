@@ -16,8 +16,9 @@ class World extends Process {
 	public var g : h2d.Graphics;
 
 	public var player : en.Player;
-	public var orbs: Array<en.Orb>;
 	public var worldSpeed: Float;
+
+	public var orbManager: OrbManager;
 
 	var invalidated = true;
 
@@ -43,29 +44,15 @@ class World extends Process {
 
 		bgTile = hxd.Res.space.toTile();
 
+		
 		delayer.addF('create_stuff', () -> {
 			player = new en.Player(0, 0);
 			physWorld.add(player.body);
 			camera.trackEntity(player);
-	
-			orbs = [];
-	
-			addOrb();
-			addOrb();
-			addOrb();
-			addOrb();
-			addOrb();
-			addOrb();
-			addOrb();
-			addOrb();
-			addOrb();
+			
+			orbManager = new OrbManager();
 		}, 1 );
 
-	}
-
-	function addOrb() {
-		var testOrb = new en.Orb(M.randRange(camera.left, camera.right), M.randRange(camera.top, camera.bottom), physWorld);
-		orbs.push(testOrb);
 	}
 
 	function cullDistantOrbs() {
@@ -95,7 +82,7 @@ class World extends Process {
 				
 				if(angleDiff > 170 && angleDiff < 190) {
 					trace('Dead on at ' + angleDiff);
-					var orb = findOrbFromCollision(a, b);
+					var orb = orbManager.findOrbFromCollision(a, b);
 					if(orb != null) orb.explode();
 				}
 				else if(angleDiff > 155 && angleDiff < 205) {
@@ -107,7 +94,7 @@ class World extends Process {
 					}, 500);
 
 					delayer.addMs('explode_orb', () -> {
-						var orb = findOrbFromCollision(a, b);
+						var orb = orbManager.findOrbFromCollision(a, b);
 						if(orb != null) orb.explode();
 					}, 600);
 				}
@@ -129,13 +116,7 @@ class World extends Process {
 		}
 	}
 
-	function findOrbFromCollision(a:Body, b:Body) {
-		for(o in orbs) {
-			if(o.body == a || o.body == b) return o;
-		}
-
-		return null;
-	}
+	
 
 	function render() {
 		// Placeholder level render
