@@ -51,11 +51,15 @@ class Camera extends Process {
 	}
 
 	public inline function entityOnScreen(en:Entity, pad:Int) {
-		if(en.centerX < left - pad || en.centerX > right + pad) {
+		return coordsOnScreen(en.centerX, en.centerY, pad);
+	}
+
+	public inline function coordsOnScreen(x:Float, y:Float, pad:Int) {
+		if(x < left - pad || x > right + pad) {
 			return false;
 		}
 
-		if(en.centerY < top - pad || en.centerY > bottom + pad) {
+		if(y < top - pad || y > bottom + pad) {
 			return false;
 		}
 
