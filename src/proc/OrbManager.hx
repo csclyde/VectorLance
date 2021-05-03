@@ -63,7 +63,7 @@ class OrbManager extends Process {
 		//mark that we tested this grid
 		testedGrids[gridKey] = true;
 
-		if(M.frand() < 0.05) {
+		if(M.frand() < 0.04) {
 			addOrb((x * gridSize) - gridSize / 2, (y * gridSize) - gridSize / 2, 'Lazy');
 		}
 
@@ -74,7 +74,7 @@ class OrbManager extends Process {
 	}
 
 	override function fixedUpdate() {
-		cullDistantOrbs();
+		//cullDistantOrbs();
 
 		orbs = Lambda.filter(orbs, (o) -> return o.isAlive());
 
