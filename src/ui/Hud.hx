@@ -6,7 +6,7 @@ class Hud extends Process {
 	public var g : h2d.Graphics;
 
 	var energyMarker:Float;
-	var energyChargeRate = 1;
+	var energyChargeRate = 0.005;
 
 	public function new() {
 		super(game);
@@ -16,7 +16,7 @@ class Hud extends Process {
 		g = new h2d.Graphics();
 		root.add(g, Const.UI_LAYER);
 
-		energyMarker = game.energy.getEnergy();
+		energyMarker = game.energy.getNormalizedEnergy();
 
 		flow = new h2d.Flow(root);
 	}
@@ -31,13 +31,30 @@ class Hud extends Process {
 
 	override function update() {
 
+		var energyStep = energyChargeRate * tmod;
+		var energyDiff = Math.abs(game.energy.getNormalizedEnergy() - energyMarker);
+
+		if(energyDiff < energyStep) {
+			energyMarker = game.energy.getNormalizedEnergy();
+		} else {
+			if(energyMarker < game.energy.getNormalizedEnergy()) {
+				energyMarker += energyChargeRate * tmod;
+			}
+			else if(energyMarker > game.energy.getNormalizedEnergy()) {
+				energyMarker -= energyChargeRate * tmod;
+			}
+		}
+
 	}
 
 	override function postUpdate() {
 		super.postUpdate();
 
-		var barWidth = game.energy.getMaxEnergy() * 2;
-		var energyWidth = game.energy.getEnergy() * 2;
+		var barWidth = game.energy.getNormalizedMaxEnergy() * 200;
+		var energyWidth = game.energy.getNormalizedEnergy() * 200;
+		//var energyWidth = energyMarker * 200;
+
+		if(energyWidth < 0) energyWidth = 0;
 
 		g.clear();
 		g.lineStyle(1, 0x0000FF);

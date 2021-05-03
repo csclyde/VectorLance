@@ -35,6 +35,10 @@ class OrbManager extends Process {
 		return null;
 	}
 
+	function cullDistantOrbs() {
+
+	}
+
 	override public function onDispose() {
 		super.onDispose();
 	}

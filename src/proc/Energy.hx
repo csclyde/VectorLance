@@ -1,5 +1,7 @@
 package proc;
 
+import en.Player;
+
 class Energy extends Process {
 
 	var currentEnergy = 50.0;
@@ -13,8 +15,20 @@ class Energy extends Process {
 		return currentEnergy;
 	}
 
+	public function getNormalizedEnergy() {
+		try {
+			return (currentEnergy - world.player.charge) / maxEnergy;
+		} catch(e) {
+			return (currentEnergy) / maxEnergy;
+		}
+	}
+
 	public function getMaxEnergy() {
 		return maxEnergy;
+	}
+
+	public function getNormalizedMaxEnergy() {
+		return maxEnergy / 100;
 	}
 
 	public function addEnergy(amount:Float) {

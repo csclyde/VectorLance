@@ -28,7 +28,7 @@ class Player extends Entity {
 			y: sy,
 			elasticity: 0.2,
 			mass: 1,
-			drag_length: 0.01,
+			drag_length: 0.025,
 			shapes: [
 				{
 					type: CIRCLE,
@@ -66,6 +66,7 @@ class Player extends Entity {
 
 	function chargeVector(params: Dynamic) {
 		charging = true;
+		charge = 1;
 	}
 
 	function launchVector(params: Dynamic) {
@@ -77,8 +78,12 @@ class Player extends Entity {
 		body.velocity.copyTo(prevLanceVel);
 
 		game.energy.removeEnergy(charge);
-		
-		charge = 1;
+
+		charge = 0;
+	}
+
+	public function getNormalizedCharge() {
+		return charge / chargeMax;
 	}
 
 	public function alignToVelocity() {
@@ -126,7 +131,7 @@ class Player extends Entity {
 		// g.addVertex(centerX + rightRotX, centerY + rightRotY, 0.5, 0.0, 0.5, 1.0);
 
 		var mouseVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
-		var aimVec = mouseVec.normal * charge * 15;
+		var aimVec = mouseVec.normal * Math.max(charge, 1) * 15;
 
 		g.lineStyle(1, 0x0000FF);
 		g.moveTo(0, 0);

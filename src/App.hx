@@ -47,7 +47,7 @@ class App extends hxd.App {
 		fx = new Fx();
 		camera = new Camera();
 		hud = new Hud();
-		console = new Console(); // init debug console
+		console = new Console();
 		audio = new Audio();
 		world = new World();
 		onResize();

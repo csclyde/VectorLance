@@ -49,8 +49,8 @@ class World extends Process {
 			player = new en.Player(0, 0);
 			physWorld.add(player.body);
 			camera.trackEntity(player);
-			
 			orbManager = new OrbManager();
+				
 		}, 1 );
 
 	}
