@@ -3,25 +3,17 @@ package proc;
 import echo.Body;
 import hxmath.math.Vector2;
 
-typedef LatentOrb = {
-	x:Float,
-	y:Float,
-	type:String,
-	spawned:Bool,
-}
-
 class OrbManager extends Process {
 
 	public var orbs: Array<en.Orb>;
-	public var latentOrbs: Array<LatentOrb>;
+	public var testedGrids: Map<String, Bool>;
+	var gridSize = 128;
 
 	public function new() {
 		super(game);
 
 		orbs = [];
-		latentOrbs = [];
-
-		generateLatentOrbs();
+		testedGrids = [];
 	}
 
 	public function addOrb(x, y, type) {
@@ -37,40 +29,44 @@ class OrbManager extends Process {
 		return null;
 	}
 
-	function generateLatentOrbs() {
-		var newOrb: LatentOrb;
-		var orbVec: Vector2;
-
-		for(i in 0...1000) {
-
-			orbVec = Vector2.fromPolar(M.frandRange(0, 2.0 * Math.PI), M.randRange(0, 100000));
-
-			newOrb = {
-				x: orbVec.x,
-				y: orbVec.y,
-				type: 'Lazy',
-				spawned: false,
-			}
-
-			latentOrbs.push(newOrb);
-		}
-	}
-
 	function cullDistantOrbs() {
 		for(orb in orbs) {
-			if(orb != null && !orb.destroyed && !camera.entityOnScreen(orb, 100)) {
+			if(orb != null && !orb.destroyed && !camera.entityOnScreen(orb, gridSize * 3)) {
 				orb.destroy();
 			}
 		}
 	}
 
 	function generateNewOrbs() {
-		for(o in latentOrbs) {
-			if(!o.spawned && camera.coordsOnScreen(o.x, o.y, 100)) {
-				o.spawned = true;
-				addOrb(o.x, o.y, o.type);
+
+		var gridLeft = Math.floor((camera.left - gridSize * 2) / gridSize);
+		var gridRight = Math.floor((camera.right + gridSize * 2) / gridSize);
+		var gridTop = Math.floor((camera.top - gridSize * 2) / gridSize);
+		var gridBottom = Math.floor((camera.bottom + gridSize * 2) / gridSize);
+
+		for(y in gridTop...gridBottom) {
+			for(x in gridLeft...gridRight) {
+				testGrid(x, y);
 			}
 		}
+	}
+
+	function testGrid(x:Int, y:Int) {
+		var gridKey = "x" + x + "y" + y;
+		var distVec = new Vector2(x, y);
+
+		//bail if its already been tested
+		if(testedGrids[gridKey]) {
+			return;
+		}
+
+		//mark that we tested this grid
+		testedGrids[gridKey] = true;
+
+		if(M.frand() < 0.05) {
+			addOrb((x * gridSize) - gridSize / 2, (y * gridSize) - gridSize / 2, 'Lazy');
+		}
+
 	}
 
 	override public function onDispose() {
