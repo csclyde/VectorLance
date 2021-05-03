@@ -88,9 +88,9 @@ class World extends Process {
 				else if(angleDiff > 155 && angleDiff < 205) {
 					trace('Hit at ' + angleDiff);
 
-					tw.createMs(worldSpeed, 0.01, TEaseIn, 200);
+					//tw.createMs(worldSpeed, 0.01, TEaseIn, 200);
 					delayer.addMs('speed_up', () -> {
-						tw.createMs(worldSpeed, 1.0, TEaseOut, 300);
+						//tw.createMs(worldSpeed, 1.0, TEaseOut, 300);
 					}, 500);
 
 					delayer.addMs('explode_orb', () -> {

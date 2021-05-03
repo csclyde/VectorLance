@@ -43,10 +43,6 @@ class Entity {
 		return !destroyed;
 	}
 
-	public function kill(by:Null<Entity>) {
-		destroy();
-	}
-
 	public function is<T:Entity>(c:Class<T>) return Std.isOfType(this, c);
 	public function as<T:Entity>(c:Class<T>) : T return Std.downcast(this, c);
 

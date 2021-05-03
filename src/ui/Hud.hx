@@ -58,7 +58,7 @@ class Hud extends Process {
 
 		g.clear();
 		g.lineStyle(1, 0x0000FF);
-		g.drawRect(10, 10, barWidth + 4, 30);
+		g.drawRect(10, 10, barWidth + 6, 30);
 		g.drawRect(12, 12, barWidth + 2, 26);
 
 		g.lineStyle(0, 0x0000FF);

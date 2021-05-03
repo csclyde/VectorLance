@@ -32,7 +32,7 @@ class Game extends Process {
 	}
 
 	function gc() {
-		if(Entity.GC==null || Entity.GC.length==0) {
+		if(Entity.GC == null || Entity.GC.length == 0) {
 			return;
 		}
 

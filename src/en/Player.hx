@@ -130,19 +130,31 @@ class Player extends Entity {
 		// g.addVertex(centerX + botRotX, centerY + botRotY, 0.5, 0.0, 0.5, 1.0);
 		// g.addVertex(centerX + rightRotX, centerY + rightRotY, 0.5, 0.0, 0.5, 1.0);
 
-		var mouseVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
-		var aimVec = mouseVec.normal * Math.max(charge, 1) * 15;
+		var homeVec = new Vector2(0 - centerX, 0 - centerY);
+		homeVec = homeVec.normal * 80;
 
 		g.lineStyle(1, 0x0000FF);
-		g.moveTo(0, 0);
-		g.lineTo(centerX, centerY);
+		g.moveTo(centerX, centerY);
+		g.lineTo(homeVec.x + centerX, homeVec.y + centerY);
+
+		var sprig1 = Vector2.fromPolar(homeVec.angle + (Math.PI / 4) * 3, 10);
+		var sprig2 = Vector2.fromPolar(homeVec.angle + (Math.PI / 4) * 5, 10);
+
+		g.moveTo(homeVec.x + centerX, homeVec.y + centerY);
+		g.lineTo(homeVec.x + centerX + sprig1.x, homeVec.y + centerY + sprig1.y);
+
+		g.moveTo(homeVec.x + centerX, homeVec.y + centerY);
+		g.lineTo(homeVec.x + centerX + sprig2.x, homeVec.y + centerY + sprig2.y);
+
+		var mouseVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
+		var aimVec = mouseVec.normal * Math.max(charge, 1) * 15;
 
 		g.lineStyle(1, 0xFF0000);
 		g.moveTo(centerX, centerY);
 		g.lineTo(aimVec.x + centerX, aimVec.y + centerY);
 
-		var sprig1 = Vector2.fromPolar(aimVec.angle + (Math.PI / 4) * 3, 10);
-		var sprig2 = Vector2.fromPolar(aimVec.angle + (Math.PI / 4) * 5, 10);
+		sprig1 = Vector2.fromPolar(aimVec.angle + (Math.PI / 4) * 3, 10);
+		sprig2 = Vector2.fromPolar(aimVec.angle + (Math.PI / 4) * 5, 10);
 
 		g.moveTo(aimVec.x + centerX, aimVec.y + centerY);
 		g.lineTo(aimVec.x + centerX + sprig1.x, aimVec.y + centerY + sprig1.y);

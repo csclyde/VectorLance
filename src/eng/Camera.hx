@@ -50,6 +50,18 @@ class Camera extends Process {
 		target = null;
 	}
 
+	public inline function entityOnScreen(en:Entity, pad:Int) {
+		if(en.centerX < left - pad || en.centerX > right + pad) {
+			return false;
+		}
+
+		if(en.centerY < top - pad || en.centerY > bottom + pad) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public function recenter() {
 		if(target != null) {
 			focus.x = target.centerX;

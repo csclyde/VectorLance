@@ -36,11 +36,21 @@ class OrbManager extends Process {
 	}
 
 	function cullDistantOrbs() {
+		for(orb in orbs) {
+			if(orb != null && !orb.destroyed && !camera.entityOnScreen(orb, 100)) {
+				orb.destroy();
+			}
+		}
 
+		orbs = Lambda.filter(orbs, (o) -> return o.isAlive());
 	}
 
 	override public function onDispose() {
 		super.onDispose();
+	}
+
+	override function fixedUpdate() {
+		cullDistantOrbs();
 	}
 
 	override function update() {
