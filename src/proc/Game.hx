@@ -35,6 +35,7 @@ class Game extends Process {
 		world.reset();
 		energy.reset();
 		hud.reset();
+		fx.reset();
 	}
 
 	function gc() {
