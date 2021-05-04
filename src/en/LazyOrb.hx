@@ -8,7 +8,7 @@ class LazyOrb extends en.Orb {
 	public function new(sx, sy, physWorld: echo.World) {
 		super(sx, sy, physWorld);
 		
-		radius = 48;
+		radius = 64;
 
 		body = new Body({
 			x: sx,
@@ -27,7 +27,7 @@ class LazyOrb extends en.Orb {
 		//body.velocity.x = -1;
 
 		var initialVel = new Vector2(M.frandRange(-100, 100), M.frandRange(-100, 100));
-		initialVel = initialVel.normal * 1.5;
+		initialVel = initialVel.normal * 1.2;
 
 		body.velocity = initialVel;
 

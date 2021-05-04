@@ -85,7 +85,7 @@ class World extends Process {
 					var orb = orbManager.findOrbFromCollision(a, b);
 					if(orb != null) orb.explode();
 				}
-				else if(angleDiff > 155 && angleDiff < 205) {
+				else if(angleDiff > 150 && angleDiff < 210) {
 					trace('Hit at ' + angleDiff);
 
 					
@@ -100,7 +100,7 @@ class World extends Process {
 					// 	tw.createMs(worldSpeed, 1.0, TEaseOut, 300);
 					// }, 500);
 				}
-				else if(angleDiff > 140 && angleDiff < 220) {
+				else if(angleDiff > 130 && angleDiff < 230) {
 					trace('Near glance at ' + angleDiff);
 					player.alignToVelocity();
 				}
@@ -140,10 +140,10 @@ class World extends Process {
 	override function postUpdate() {
 		super.postUpdate();
 
-		// g.clear();
-		// g.tileWrap = true;
-		// g.beginTileFill(0, 0, 1, 1, bgTile);        
-        // g.drawRect(camera.left, camera.top, camera.pxWidth, camera.pxHeight); 
+		g.clear();
+		g.tileWrap = true;
+		g.beginTileFill(0, 0, 1, 1, bgTile);        
+        g.drawRect(camera.left, camera.top, camera.pxWidth, camera.pxHeight); 
 
 		//debug.draw(physWorld);
 
