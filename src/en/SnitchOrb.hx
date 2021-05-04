@@ -29,7 +29,7 @@ class SnitchOrb extends en.Orb {
 		//body.velocity.x = -1;
 
 		var initialVel = new Vector2(M.frandRange(-100, 100), M.frandRange(-100, 100));
-		initialVel = initialVel.normal * 2;
+		initialVel = initialVel.normal * 3;
 
 		body.velocity = initialVel;
 

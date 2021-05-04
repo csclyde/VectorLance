@@ -27,7 +27,7 @@ class LazyOrb extends en.Orb {
     	//body.entity = this;
 
 		var initialVel = new Vector2(M.frandRange(-100, 100), M.frandRange(-100, 100));
-		initialVel = initialVel.normal * 1.2;
+		initialVel = initialVel.normal * 3;
 
 		body.velocity = initialVel;
 
