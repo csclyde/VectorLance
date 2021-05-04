@@ -34,6 +34,11 @@ class Energy extends Process {
 	}
 
 	public function addEnergy(amount:Float) {
+
+		if(amount > 0 && currentEnergy <= 0) {
+			currentEnergy = 0;
+		}
+		
 		currentEnergy += amount;
 		if(currentEnergy > maxEnergy) {
 			currentEnergy = maxEnergy;

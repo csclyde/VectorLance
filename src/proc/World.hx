@@ -85,7 +85,7 @@ class World extends Process {
 					trace('Dead on at ' + angleDiff);
 					if(orbEntity != null) orbEntity.explode();
 				}
-				else if(angleDiff > 150 && angleDiff < 210) {
+				else if(angleDiff > 140 && angleDiff < 220) {
 					trace('Hit at ' + angleDiff);
 					if(orbEntity != null) orbEntity.explode();
 
@@ -97,7 +97,7 @@ class World extends Process {
 					// 	tw.createMs(worldSpeed, 1.0, TEaseOut, 300);
 					// }, 500);
 				}
-				else if(angleDiff > 130 && angleDiff < 230) {
+				else if(angleDiff > 120 && angleDiff < 240) {
 					trace('Near glance at ' + angleDiff);
 					player.alignToVelocity();
 				}

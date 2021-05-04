@@ -48,6 +48,11 @@ class BlockOrb extends en.Orb {
 		g.lineStyle(2, 0xFF0000);
 
 		var r:Rect = cast body.shape;
+
+		if(r == null || r.transformed_rect == null) {
+			return;
+		}
+		
 		var count = r.transformed_rect.count;
 		var vertices = r.transformed_rect.vertices;
 
