@@ -12,6 +12,16 @@ class OrbManager extends Process {
 	public function new() {
 		super(game);
 
+		reset();
+	}
+
+	override function reset() {
+		if(orbs != null) {
+			for(o in orbs) {
+				o.destroy();
+			}
+		}
+
 		orbs = [];
 		testedGrids = [];
 	}

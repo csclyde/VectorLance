@@ -11,22 +11,17 @@ class World extends Process {
 	public var pxHeight : Int;
 	
 	public var physWorld:echo.World;
+	public var worldSpeed: Float;
 	public var debug:HeapsDebug;
 	public var bgTile: h2d.Tile;
 	public var g : h2d.Graphics;
 
 	public var player : en.Player;
-	public var worldSpeed: Float;
-
 	public var orbManager: OrbManager;
-
-	var invalidated = true;
 
 	public function new() {
 		super(game);
 
-		worldSpeed = 1.0;
-		
 		physWorld = new echo.World({
 			width: 1,
 			height: 1,
@@ -50,7 +45,8 @@ class World extends Process {
 			physWorld.add(player.body);
 			camera.trackEntity(player);
 			orbManager = new OrbManager();
-				
+
+			reset();
 		}, 1 );
 
 	}
@@ -118,7 +114,12 @@ class World extends Process {
 		}
 	}
 
-	
+	override function reset() {
+		worldSpeed = 1.0;
+
+		player.reset();
+		orbManager.reset();
+	}	
 
 	function render() {
 		// Placeholder level render
@@ -134,7 +135,15 @@ class World extends Process {
 	}
 
 	override function update() {
+		super.update();
+	}
 
+	override function fixedUpdate() {
+		super.fixedUpdate();
+
+		if(game.energy.getEnergy() <= 0 && player.body.velocity.length < 0.001) {
+			game.reset();
+		}
 	}
 
 	override function postUpdate() {
@@ -146,10 +155,5 @@ class World extends Process {
         g.drawRect(camera.left, camera.top, camera.pxWidth, camera.pxHeight); 
 
 		//debug.draw(physWorld);
-
-		if(invalidated) {
-			invalidated = false;
-			render();
-		}
 	}
 }

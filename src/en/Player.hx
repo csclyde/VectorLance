@@ -16,12 +16,8 @@ class Player extends Entity {
 	public function new(sx, sy) {
 		super(sx, sy);
 
-		// Some default rendering for our character
 		g = new h2d.Graphics();
-		trace(world);
 		world.root.add(g, Const.MIDGROUND_OBJECTS);
-
-		prevLanceVel = new Vector2(0, -1);
 
 		body = new Body({
 			x: sx,
@@ -56,9 +52,13 @@ class Player extends Entity {
 
     	//body.entity = this;
 
-		charge = 1;
 		events.subscribe('charge_vector', chargeVector);
 		events.subscribe('launch_vector', launchVector);
+	}
+
+	public override function reset() {
+		charge = 1;
+		prevLanceVel = new Vector2(0, -1);
 	}
 
 	public override function preUpdate() {}
@@ -66,21 +66,25 @@ class Player extends Entity {
 	public override function fixedUpdate() {}
 
 	function chargeVector(params: Dynamic) {
-		charging = true;
-		charge = 1;
+		if(game.energy.getEnergy() > 0) {
+			charging = true;
+			charge = 1;
+		}
 	}
 
 	function launchVector(params: Dynamic) {
-		charging = false;
-		var newVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
-		body.velocity = newVec.normal * charge;
-		alignToVelocity();
-		
-		body.velocity.copyTo(prevLanceVel);
-
-		game.energy.removeEnergy(charge);
-
-		charge = 0;
+		if(charging == true) {
+			charging = false;
+			var newVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
+			body.velocity = newVec.normal * charge;
+			alignToVelocity();
+			
+			body.velocity.copyTo(prevLanceVel);
+	
+			game.energy.removeEnergy(charge);
+	
+			charge = 0;
+		}
 	}
 
 	public function getNormalizedCharge() {

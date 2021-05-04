@@ -37,6 +37,8 @@ class Entity {
 
 		centerX = x;
 		centerY = y;
+
+		reset();
     }
 
 	public inline function isAlive() {
@@ -50,7 +52,7 @@ class Entity {
 	public inline function irnd(min,max,?sign) return Lib.irnd(min,max,sign);
 	public inline function pretty(v,?p=1) return M.pretty(v,p);
 
-    public inline function destroy() {
+    public function destroy() {
         if(!destroyed) {
             destroyed = true;
             GC.push(this);
@@ -66,6 +68,7 @@ class Entity {
 		}
     }
 
+	public function reset() {}
     public function preUpdate() {}
     public function postUpdate() {}
 	public function fixedUpdate() {}

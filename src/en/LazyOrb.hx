@@ -8,7 +8,8 @@ class LazyOrb extends en.Orb {
 	public function new(sx, sy, physWorld: echo.World) {
 		super(sx, sy, physWorld);
 		
-		radius = 64;
+		radius = 56;
+		energy = 5;
 
 		body = new Body({
 			x: sx,
@@ -44,5 +45,6 @@ class LazyOrb extends en.Orb {
 		g.clear();
 		g.lineStyle(2, 0x00FF00);
 		g.drawEllipse(centerX, centerY, this.radius + Math.sin(game.stime * 10) * 2, this.radius + Math.sin(game.stime * 10) * -2);
+		//g.drawPieInner(centerX, centerY, this.radius, 0, Math.PI * 1.5, Math.PI);
 	}
 }

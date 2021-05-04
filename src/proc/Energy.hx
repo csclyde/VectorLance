@@ -4,11 +4,13 @@ import en.Player;
 
 class Energy extends Process {
 
-	var currentEnergy = 50.0;
-	var maxEnergy = 100.0;
+	var currentEnergy:Float;
+	var maxEnergy:Float;
 
 	public function new() {
 		super(game);
+
+		reset();
 	}
 
 	public function getEnergy() {
@@ -42,11 +44,8 @@ class Energy extends Process {
 		currentEnergy -= amount;
 	}
 
-	override public function onDispose() {
-		super.onDispose();
-	}
-
-	override function update() {
-		super.update();
+	override function reset() {
+		currentEnergy = 50.0;
+		maxEnergy = 100.0;
 	}
 }

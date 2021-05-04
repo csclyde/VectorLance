@@ -184,6 +184,8 @@ class Process {
 		return all;
 	}
 
+	function reset() {}
+	
 	/** Called at the "beginning of the frame", before any Process update(), in declaration order **/
 	function preUpdate() {}
 

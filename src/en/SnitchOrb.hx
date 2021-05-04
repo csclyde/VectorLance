@@ -9,6 +9,7 @@ class SnitchOrb extends en.Orb {
 		super(sx, sy, physWorld);
 		
 		radius = 32;
+		energy = 20;
 
 		body = new Body({
 			x: sx,

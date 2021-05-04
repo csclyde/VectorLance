@@ -8,6 +8,7 @@ class Orb extends Entity {
 	public var g : h2d.Graphics;
 
 	public var radius = 48.0;
+	public var energy = 10;
 
 	public function new(sx, sy, physWorld: echo.World) {
 		super(sx, sy);
@@ -26,8 +27,14 @@ class Orb extends Entity {
 	}
 
 	public function explode() {
+		game.energy.addEnergy(energy);
         destroy();
-		body.dispose();
-		g.clear();
     }
+
+	override public function destroy() {
+		super.destroy();
+
+		g.clear();
+		body.dispose();
+	}
 }

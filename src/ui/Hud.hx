@@ -2,7 +2,6 @@ package ui;
 
 class Hud extends Process {
 	var flow : h2d.Flow;
-	var invalidated = true;
 	public var g : h2d.Graphics;
 
 	var energyMarker:Float;
@@ -16,7 +15,7 @@ class Hud extends Process {
 		g = new h2d.Graphics();
 		root.add(g, Const.UI_LAYER);
 
-		energyMarker = game.energy.getNormalizedEnergy();
+		reset();
 
 		flow = new h2d.Flow(root);
 	}
@@ -25,9 +24,9 @@ class Hud extends Process {
 		super.onResize();
 	}
 
-	public inline function invalidate() invalidated = true;
-
-	function render() {}
+	override function reset() {
+		energyMarker = game.energy.getNormalizedEnergy();
+	}
 
 	override function update() {
 
@@ -52,7 +51,6 @@ class Hud extends Process {
 
 		var barWidth = game.energy.getNormalizedMaxEnergy() * 200;
 		var energyWidth = game.energy.getNormalizedEnergy() * 200;
-		//var energyWidth = energyMarker * 200;
 
 		if(energyWidth < 0) energyWidth = 0;
 
@@ -66,11 +64,5 @@ class Hud extends Process {
 		g.beginFill(0xFFFFFF);
 		g.drawRect(14, 14, energyWidth, 24);
 		g.endFill();
-
-
-		if(invalidated) {
-			invalidated = false;
-			render();
-		}
 	}
 }

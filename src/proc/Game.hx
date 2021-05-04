@@ -31,6 +31,12 @@ class Game extends Process {
 		root.setScale(Const.SCALE);
 	}
 
+	override function reset() {
+		world.reset();
+		energy.reset();
+		hud.reset();
+	}
+
 	function gc() {
 		if(Entity.GC == null || Entity.GC.length == 0) {
 			return;
