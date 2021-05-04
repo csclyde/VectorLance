@@ -13,7 +13,7 @@ class Orb extends Entity {
 		super(sx, sy);
 
 		g = new h2d.Graphics();
-		game.root.add(g, Const.MIDGROUND_OBJECTS);
+		world.root.add(g, Const.MIDGROUND_OBJECTS);
 	}
 
 	public override function preUpdate() {}
@@ -28,6 +28,6 @@ class Orb extends Entity {
 	public function explode() {
         destroy();
 		body.dispose();
-		// g.clear();
+		g.clear();
     }
 }

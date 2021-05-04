@@ -39,9 +39,10 @@ class LazyOrb extends en.Orb {
 	public override function fixedUpdate() {}
 
     public override function update() {
-		// g.clear();
+		super.update();
 
-		// g.lineStyle(2, 0xFFFFFF);
-		// g.drawCircle(centerX, centerY, this.radius);
+		g.clear();
+		g.lineStyle(2, 0x00FF00);
+		g.drawEllipse(centerX, centerY, this.radius + Math.sin(game.stime * 10) * 4, this.radius + Math.sin(game.stime * 10) * -4);
 	}
 }
