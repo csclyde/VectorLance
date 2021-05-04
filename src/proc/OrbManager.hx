@@ -32,6 +32,7 @@ class OrbManager extends Process {
 		switch(type) {
 			case 'Lazy': newOrb = new en.LazyOrb(x, y, world.physWorld);
 			case 'Snitch': newOrb = new en.SnitchOrb(x, y, world.physWorld);
+			case 'Block': newOrb = new en.BlockOrb(x, y, world.physWorld);
 			default: newOrb = new en.LazyOrb(x, y, world.physWorld);
 		}
 		
@@ -82,13 +83,27 @@ class OrbManager extends Process {
 
 		var randSpawn = M.frand();
 
-		if(randSpawn < 0.005) {
-			addOrb((x * gridSize) - gridSize / 2, (y * gridSize) - gridSize / 2, 'Snitch');
-		}
-		else if(M.frand() < 0.04) {
-			addOrb((x * gridSize) - gridSize / 2, (y * gridSize) - gridSize / 2, 'Lazy');
+		//4 pct chance of any orb spawning here
+		if(randSpawn < 0.04) {
+			addOrb((x * gridSize) - gridSize / 2, (y * gridSize) - gridSize / 2, getOrbType(distVec.length));
 		}
 
+
+	}
+
+	function getOrbType(dist:Float) {
+
+		var orbRand = M.frand();
+
+		if(orbRand < 0.10) {
+			return 'Snitch';
+		}
+		else if(orbRand < 0.30) {
+			return 'Block';
+		}
+		else {
+			return 'Lazy';
+		}
 	}
 
 	override public function onDispose() {

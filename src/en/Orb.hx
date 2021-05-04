@@ -9,6 +9,7 @@ class Orb extends Entity {
 
 	public var radius = 48.0;
 	public var energy = 10;
+	public var breakable = true;
 
 	public function new(sx, sy, physWorld: echo.World) {
 		super(sx, sy);

@@ -15,6 +15,7 @@ class LazyOrb extends en.Orb {
 			x: sx,
 			y: sy,
 			elasticity: 1,
+			mass: 0.8,
 			drag_length: 0.0,
 			shapes: [
 				{

@@ -23,8 +23,8 @@ class Player extends Entity {
 			x: sx,
 			y: sy,
 			elasticity: 0.2,
-			mass: 1,
-			kinematic: true,
+			mass: 1.5,
+			kinematic: false,
 			drag_length: 0.025,
 			shapes: [
 				{
@@ -59,6 +59,10 @@ class Player extends Entity {
 	public override function reset() {
 		charge = 1;
 		prevLanceVel = new Vector2(0, -1);
+
+		if(body != null) {
+			body.rotation = 0;
+		}
 	}
 
 	public override function preUpdate() {}
@@ -76,7 +80,7 @@ class Player extends Entity {
 		if(charging == true) {
 			charging = false;
 			var newVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
-			body.velocity = newVec.normal * charge;
+			body.velocity = newVec.normal * charge * 1.5;
 			alignToVelocity();
 			
 			body.velocity.copyTo(prevLanceVel);

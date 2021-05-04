@@ -59,34 +59,35 @@ class World extends Process {
 		
 		if(a == player.body) {
 			var lanceTip = null;
-			var orbTarget = null;
+			var orbShape = null;
+			var orbEntity = orbManager.findOrbFromCollision(a, b);
+
+			if(!orbEntity.breakable) {
+				return;
+			}
 
 			//if one of the coliding shapes is not solid, we are hitting the buffer around that shape
 			for(cd in c) {
 				if(cd.sa.solid && cd.sa.type == CIRCLE) {
 					lanceTip = cd.sa;
-					orbTarget = b;
+					orbShape = b;
 				}
 			}
 
 			//if the lance tip was involved in the collision
 			if(lanceTip != null) {
-				var orbVec = new Vector2(lanceTip.x - orbTarget.x, lanceTip.y - orbTarget.y);
+				var orbVec = new Vector2(lanceTip.x - orbShape.x, lanceTip.y - orbShape.y);
 				var lanceVec = new Vector2(lanceTip.x - a.x, lanceTip.y - a.y);
 				var angleDiff = orbVec.angleWith(lanceVec) * (180 / Math.PI);
 
 				
 				if(angleDiff > 170 && angleDiff < 190) {
 					trace('Dead on at ' + angleDiff);
-					var orb = orbManager.findOrbFromCollision(a, b);
-					if(orb != null) orb.explode();
+					if(orbEntity != null) orbEntity.explode();
 				}
 				else if(angleDiff > 150 && angleDiff < 210) {
 					trace('Hit at ' + angleDiff);
-
-					
-					var orb = orbManager.findOrbFromCollision(a, b);
-					if(orb != null) orb.explode();
+					if(orbEntity != null) orbEntity.explode();
 
 					// delayer.addMs('explode_orb', () -> {
 					// }, 100);
@@ -105,8 +106,6 @@ class World extends Process {
 					player.alignToVelocity();
 
 				}
-
-				//orbTarget.mass = 0;
 			}
 
 			// 	tw.createMs(worldSpeed, 0.2, TEaseIn, 100);
