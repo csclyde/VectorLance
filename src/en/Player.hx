@@ -73,6 +73,7 @@ class Player extends Entity {
 		if(game.energy.getEnergy() > 0) {
 			charging = true;
 			charge = 1;
+			this.body.velocity.set(0, 0);
 		}
 	}
 
