@@ -3,13 +3,13 @@ package en;
 import hxmath.math.Vector2;
 import echo.Body;
 
-class LazyOrb extends en.Orb {
+class HappyOrb extends en.Orb {
 
 	public function new(sx, sy, physWorld: echo.World) {
 		super(sx, sy, physWorld);
 		
-		radius = 56;
-		energy = 8;
+		radius = 72;
+		energy = 30;
 
 		body = new Body({
 			x: sx,
@@ -27,7 +27,7 @@ class LazyOrb extends en.Orb {
     	//body.entity = this;
 
 		var initialVel = new Vector2(M.frandRange(-100, 100), M.frandRange(-100, 100));
-		initialVel = initialVel.normal * 1.2;
+		initialVel = initialVel.normal * 0.6;
 
 		body.velocity = initialVel;
 
@@ -42,8 +42,9 @@ class LazyOrb extends en.Orb {
 		super.update();
 
 		g.clear();
-		g.lineStyle(2, 0x00FF00);
-		g.drawEllipse(centerX, centerY, this.radius + Math.sin(game.stime * 10) * 2, this.radius + Math.sin(game.stime * 10) * -2);
+		g.lineStyle(3, 0xFF00FF);
+		g.drawEllipse(centerX, centerY, this.radius + Math.sin(game.stime * 10) * 4, this.radius + Math.sin(game.stime * 10) * -4);
+		//g.drawEllipse(centerX, centerY, this.radius + Math.sin(game.stime * 10) * -4, this.radius + Math.sin(game.stime * 10) * 4);
 		//g.drawPieInner(centerX, centerY, this.radius, 0, Math.PI * 1.5, Math.PI);
 	}
 }

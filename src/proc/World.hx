@@ -85,7 +85,7 @@ class World extends Process {
 					trace('Dead on at ' + angleDiff);
 					if(orbEntity != null) orbEntity.explode();
 				}
-				else if(angleDiff > 140 && angleDiff < 220) {
+				else if(angleDiff > 145 && angleDiff < 215) {
 					trace('Hit at ' + angleDiff);
 					if(orbEntity != null) orbEntity.explode();
 

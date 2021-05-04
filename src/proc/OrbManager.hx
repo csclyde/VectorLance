@@ -33,6 +33,7 @@ class OrbManager extends Process {
 			case 'Lazy': newOrb = new en.LazyOrb(x, y, world.physWorld);
 			case 'Snitch': newOrb = new en.SnitchOrb(x, y, world.physWorld);
 			case 'Block': newOrb = new en.BlockOrb(x, y, world.physWorld);
+			case 'Happy': newOrb = new en.HappyOrb(x, y, world.physWorld);
 			default: newOrb = new en.LazyOrb(x, y, world.physWorld);
 		}
 		
@@ -95,10 +96,13 @@ class OrbManager extends Process {
 
 		var orbRand = M.frand();
 
-		if(orbRand < 0.10) {
+		if(orbRand < 0.01) {
+			return 'Happy';
+		}
+		else if(orbRand < 0.10) {
 			return 'Snitch';
 		}
-		else if(orbRand < 0.30) {
+		else if(orbRand < 0.20) {
 			return 'Block';
 		}
 		else {

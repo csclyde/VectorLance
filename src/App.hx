@@ -44,12 +44,12 @@ class App extends hxd.App {
 		game = new Game(s2d);
 		events = new EventRouter();
 		input = new Input();
-		fx = new Fx();
 		camera = new Camera();
 		hud = new Hud();
 		console = new Console();
 		audio = new Audio();
 		world = new World();
+		fx = new Fx();
 		onResize();
 	}
 
