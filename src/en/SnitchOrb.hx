@@ -3,12 +3,12 @@ package en;
 import hxmath.math.Vector2;
 import echo.Body;
 
-class LazyOrb extends en.Orb {
+class SnitchOrb extends en.Orb {
 
 	public function new(sx, sy, physWorld: echo.World) {
 		super(sx, sy, physWorld);
 		
-		radius = 48;
+		radius = 32;
 
 		body = new Body({
 			x: sx,
@@ -27,7 +27,7 @@ class LazyOrb extends en.Orb {
 		//body.velocity.x = -1;
 
 		var initialVel = new Vector2(M.frandRange(-100, 100), M.frandRange(-100, 100));
-		initialVel = initialVel.normal * 1.5;
+		initialVel = initialVel.normal * 2;
 
 		body.velocity = initialVel;
 
@@ -42,7 +42,7 @@ class LazyOrb extends en.Orb {
 		super.update();
 
 		g.clear();
-		g.lineStyle(2, 0x00FF00);
-		g.drawEllipse(centerX, centerY, this.radius + Math.sin(game.stime * 10) * 2, this.radius + Math.sin(game.stime * 10) * -2);
+		g.lineStyle(3, 0xFFD700);
+		g.drawEllipse(centerX, centerY, this.radius + Math.sin(game.stime * 10) * 1, this.radius + Math.sin(game.stime * 10) * -1);
 	}
 }

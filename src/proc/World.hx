@@ -88,16 +88,17 @@ class World extends Process {
 				else if(angleDiff > 155 && angleDiff < 205) {
 					trace('Hit at ' + angleDiff);
 
+					
 					var orb = orbManager.findOrbFromCollision(a, b);
 					if(orb != null) orb.explode();
+
+					// delayer.addMs('explode_orb', () -> {
+					// }, 100);
 
 					// tw.createMs(worldSpeed, 0.01, TEaseIn, 200);
 					// delayer.addMs('speed_up', () -> {
 					// 	tw.createMs(worldSpeed, 1.0, TEaseOut, 300);
 					// }, 500);
-
-					// delayer.addMs('explode_orb', () -> {
-					// }, 600);
 				}
 				else if(angleDiff > 140 && angleDiff < 220) {
 					trace('Near glance at ' + angleDiff);
@@ -139,12 +140,12 @@ class World extends Process {
 	override function postUpdate() {
 		super.postUpdate();
 
-		g.clear();
-		g.tileWrap = true;
-		g.beginTileFill(0, 0, 1, 1, bgTile);        
-        g.drawRect(camera.left, camera.top, camera.pxWidth, camera.pxHeight); 
+		// g.clear();
+		// g.tileWrap = true;
+		// g.beginTileFill(0, 0, 1, 1, bgTile);        
+        // g.drawRect(camera.left, camera.top, camera.pxWidth, camera.pxHeight); 
 
-		debug.draw(physWorld);
+		//debug.draw(physWorld);
 
 		if(invalidated) {
 			invalidated = false;

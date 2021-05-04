@@ -28,6 +28,7 @@ class Player extends Entity {
 			y: sy,
 			elasticity: 0.2,
 			mass: 1,
+			kinematic: true,
 			drag_length: 0.025,
 			shapes: [
 				{
@@ -104,31 +105,33 @@ class Player extends Entity {
 
 		g.clear();
 
-		// g.beginFill(0xff0000);
-		// g.drawCircle(centerX, centerY, 16);
+		g.lineStyle(1, 0x0000FF);
+		//g.beginFill(0xff0000);
+		//g.drawCircle(centerX, centerY, 16);
 
-		// var ang = prevLanceVel.angle + (Math.PI / 2);
+		var ang = prevLanceVel.angle + (Math.PI / 2);
 
-		// // lance tip: 0, -30
-		// var tipRotX = (0) * Math.cos(ang) - (-30) * Math.sin(ang);
-		// var tipRotY = (-30) * Math.cos(ang) + (0) * Math.sin(ang);
+		// lance tip: 0, -40
+		var tipRotX = (0) * Math.cos(ang) - (-40) * Math.sin(ang);
+		var tipRotY = (-40) * Math.cos(ang) + (0) * Math.sin(ang);
 
-		// // left wing: -10, 30
-		// var leftRotX = (-10) * Math.cos(ang) - (30) * Math.sin(ang);
-		// var leftRotY = (30) * Math.cos(ang) + (-10) * Math.sin(ang);
+		// left wing: -10, 40
+		var leftRotX = (-10) * Math.cos(ang) - (40) * Math.sin(ang);
+		var leftRotY = (40) * Math.cos(ang) + (-10) * Math.sin(ang);
 
-		// // bottom: 0, 15
-		// var botRotX = (0) * Math.cos(ang) - (15) * Math.sin(ang);
-		// var botRotY = (15) * Math.cos(ang) + (0) * Math.sin(ang);
+		// bottom: 0, 15
+		var botRotX = (0) * Math.cos(ang) - (15) * Math.sin(ang);
+		var botRotY = (15) * Math.cos(ang) + (0) * Math.sin(ang);
 
-		// // right wing: 10, 30
-		// var rightRotX = (10) * Math.cos(ang) - (30) * Math.sin(ang);
-		// var rightRotY = (30) * Math.cos(ang) + (10) * Math.sin(ang);
+		// right wing: 10, 40
+		var rightRotX = (10) * Math.cos(ang) - (40) * Math.sin(ang);
+		var rightRotY = (40) * Math.cos(ang) + (10) * Math.sin(ang);
 
-		// g.addVertex(centerX + tipRotX, centerY + tipRotY, 1.0, 0.0, 0.0, 1.0);
-		// g.addVertex(centerX + leftRotX, centerY + leftRotY, 0.5, 0.0, 0.5, 1.0);
-		// g.addVertex(centerX + botRotX, centerY + botRotY, 0.5, 0.0, 0.5, 1.0);
-		// g.addVertex(centerX + rightRotX, centerY + rightRotY, 0.5, 0.0, 0.5, 1.0);
+		g.addVertex(centerX + tipRotX, centerY + tipRotY, 1.0, 0.0, 0.0, 1.0);
+		g.addVertex(centerX + leftRotX, centerY + leftRotY, 0.5, 0.0, 0.5, 1.0);
+		g.addVertex(centerX + botRotX, centerY + botRotY, 0.5, 0.0, 0.5, 1.0);
+		g.addVertex(centerX + rightRotX, centerY + rightRotY, 0.5, 0.0, 0.5, 1.0);
+		g.addVertex(centerX + tipRotX, centerY + tipRotY, 1.0, 0.0, 0.0, 1.0);
 
 		var homeVec = new Vector2(0 - centerX, 0 - centerY);
 		homeVec = homeVec.normal * 80;
