@@ -12,32 +12,8 @@ class Orb extends Entity {
 	public function new(sx, sy, physWorld: echo.World) {
 		super(sx, sy);
 
-		// Some default rendering for our character
 		g = new h2d.Graphics();
 		game.root.add(g, Const.MIDGROUND_OBJECTS);
-
-		body = new Body({
-			x: sx,
-			y: sy,
-			elasticity: 1,
-			drag_length: 0.0,
-			shapes: [
-				{
-					type: CIRCLE,
-					radius: this.radius,
-				}
-			]
-		});
-    	//body.entity = this;
-
-		//body.velocity.x = -1;
-
-		var initialVel = new Vector2(M.frandRange(-100, 100), M.frandRange(-100, 100));
-		initialVel = initialVel.normal * 1.5;
-
-		body.velocity = initialVel;
-
-		physWorld.add(body);
 	}
 
 	public override function preUpdate() {}
@@ -47,17 +23,11 @@ class Orb extends Entity {
     public override function update() {
 		centerX = body.x;
 		centerY = body.y;
-
-		// g.clear();
-
-		// g.lineStyle(2, 0xFFFFFF);
-		// g.drawCircle(centerX, centerY, this.radius);
 	}
 
 	public function explode() {
         destroy();
 		body.dispose();
-		game.energy.addEnergy(5);
 		// g.clear();
     }
 }

@@ -17,7 +17,7 @@ class OrbManager extends Process {
 	}
 
 	public function addOrb(x, y, type) {
-		var newOrb = new en.Orb(x, y, world.physWorld);
+		var newOrb = new en.LazyOrb(x, y, world.physWorld);
 		orbs.push(newOrb);
 	}
 
