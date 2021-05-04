@@ -25,7 +25,7 @@ class Player extends Entity {
 			elasticity: 0.2,
 			mass: 1.5,
 			kinematic: false,
-			drag_length: 0.025,
+			drag_length: 0.02,
 			shapes: [
 				{
 					type: CIRCLE,
@@ -81,7 +81,7 @@ class Player extends Entity {
 		if(charging == true) {
 			charging = false;
 			var newVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
-			body.velocity = newVec.normal * charge * 2;
+			body.velocity = newVec.normal * charge * 1.2;
 			alignToVelocity();
 			
 			body.velocity.copyTo(prevLanceVel);
