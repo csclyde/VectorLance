@@ -85,7 +85,7 @@ class OrbManager extends Process {
 		var randSpawn = M.frand();
 
 		//4 pct chance of any orb spawning here
-		if(randSpawn < 0.03) {
+		if(randSpawn < 0.04) {
 			addOrb((x * gridSize) - gridSize / 2, (y * gridSize) - gridSize / 2, getOrbType(distVec.length));
 		}
 
