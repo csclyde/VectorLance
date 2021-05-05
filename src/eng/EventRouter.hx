@@ -19,7 +19,6 @@ class EventRouter {
         }
 
         callbacks.push(newCallback);
-        trace("Added callback " + eventName);
     }
 
     public function send(eventName: String, params: Dynamic) {

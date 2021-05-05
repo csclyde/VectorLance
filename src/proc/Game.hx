@@ -16,12 +16,9 @@ class Game extends Process {
 		engine.backgroundColor = 0x000000;
         engine.fullScreen = true;
 
-		root.filter = new h2d.filter.Bloom();
-
 		energy = new Energy();
 		
 		Process.resizeAll();
-		trace("Game is ready.");
 	}
 
 	public function onCdbReload() {}
@@ -86,12 +83,8 @@ class Game extends Process {
 		for(e in Entity.ALL) if(!e.destroyed) e.update();
 
 		if(!ui.Modal.hasAny()) {
-			// Exit
 			if(input.ca.isKeyboardPressed(K.ESCAPE))
-				if(!cd.hasSetS("exitWarn", 3))
-					trace("Press ESCAPE again to exit.");
-				else
-					hxd.System.exit();
+				hxd.System.exit();
 		}
 	}
 }

@@ -32,14 +32,13 @@ class World extends Process {
 		});
 
 		createRoot(game.root);
-		
+
 		g = new h2d.Graphics();
 		root.add(g, Const.BACKGROUND_OBJECTS);
 		debug = new HeapsDebug(root);
 
 		bgTile = hxd.Res.space.toTile();
 
-		
 		delayer.addF('create_stuff', () -> {
 			player = new en.Player(0, 0);
 			physWorld.add(player.body);
@@ -82,11 +81,9 @@ class World extends Process {
 
 				
 				if(angleDiff > 170 && angleDiff < 190) {
-					trace('Dead on at ' + angleDiff);
 					if(orbEntity != null) orbEntity.explode();
 				}
 				else if(angleDiff > 130 && angleDiff < 230) {
-					trace('Hit at ' + angleDiff);
 					if(orbEntity != null) orbEntity.explode();
 
 					// delayer.addMs('explode_orb', () -> {
@@ -98,11 +95,9 @@ class World extends Process {
 					// }, 500);
 				}
 				else if(angleDiff > 120 && angleDiff < 240) {
-					trace('Near glance at ' + angleDiff);
 					player.alignToVelocity();
 				}
 				else {
-					trace('Far glance at ' + angleDiff);
 					player.alignToVelocity();
 
 				}

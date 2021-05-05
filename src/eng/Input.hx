@@ -29,8 +29,6 @@ class Input extends Process {
 	}
 
 	function onEvent(event : hxd.Event) {
-		//trace(event.toString());
-
 		if(event.kind == ERelease && event.button == 0) {
 			events.send('launch_vector', {});
 		}

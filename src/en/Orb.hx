@@ -1,5 +1,6 @@
 package en;
 
+import h3d.shader.Bloom;
 import hxmath.math.Vector2;
 import echo.Body;
 
@@ -15,6 +16,8 @@ class Orb extends Entity {
 		super(sx, sy);
 
 		g = new h2d.Graphics();
+		//g.filter = new h2d.filter.Bloom(1.0, 5.0, 1.0, 5.0, 1.0);
+
 		world.root.add(g, Const.MIDGROUND_OBJECTS);
 	}
 
