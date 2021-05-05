@@ -19,6 +19,8 @@ class World extends Process {
 	public var player : en.Player;
 	public var orbManager: OrbManager;
 
+	public var target: Vector2;
+
 	public function new() {
 		super(game);
 
@@ -113,6 +115,9 @@ class World extends Process {
 
 		player.reset();
 		orbManager.reset();
+
+		target = Vector2.fromPolar(M.frandRange(0, 2 * M.PI), 10000);
+
 	}	
 
 	function render() {
@@ -138,6 +143,12 @@ class World extends Process {
 		if(game.energy.getEnergy() <= 0 && player.body.velocity.length < 0.001) {
 			game.reset();
 		}
+
+		var distVec = new Vector2(world.target.x - world.player.centerX, world.target.y - world.player.centerY);
+
+		if(distVec.length < 20) {
+			game.reset();
+		}
 	}
 
 	override function postUpdate() {
@@ -147,6 +158,7 @@ class World extends Process {
 		g.tileWrap = true;
 		g.beginTileFill(0, 0, 1, 1, bgTile);        
         g.drawRect(camera.left, camera.top, camera.pxWidth, camera.pxHeight); 
+		g.endFill();
 
 		//debug.draw(physWorld);
 	}

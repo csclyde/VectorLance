@@ -18,6 +18,7 @@ class App extends hxd.App {
 	override function init() {
 		inst = this;
 		hxd.Res.initEmbed();
+		hxd.System.setCursor(Hide);
 
 		// CastleDB hot reloading
 		#if debug

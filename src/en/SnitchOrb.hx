@@ -8,7 +8,7 @@ class SnitchOrb extends en.Orb {
 	public function new(sx, sy, physWorld: echo.World) {
 		super(sx, sy, physWorld);
 		
-		radius = 48;
+		radius = 36;
 		energy = 20;
 
 		body = new Body({

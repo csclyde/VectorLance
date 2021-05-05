@@ -33,6 +33,7 @@ class Game extends Process {
 		energy.reset();
 		hud.reset();
 		fx.reset();
+		camera.reset();
 	}
 
 	function gc() {

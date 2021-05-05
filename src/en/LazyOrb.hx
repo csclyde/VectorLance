@@ -10,7 +10,8 @@ class LazyOrb extends en.Orb {
 		super(sx, sy, physWorld);
 		
 		radius = 56;
-		energy = 6;
+		energy = 8;
+		
 		body = new Body({
 			x: sx,
 			y: sy,

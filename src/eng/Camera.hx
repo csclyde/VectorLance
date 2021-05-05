@@ -40,6 +40,10 @@ class Camera extends Process {
 		return 'Camera@${focus.x},${focus.y}';
 	}
 
+	override function reset() {
+		recenter();
+	}
+
 	public function trackEntity(e:Entity, immediate:Bool = true) {
 		target = e;
 		if(immediate)

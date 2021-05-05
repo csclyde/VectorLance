@@ -62,7 +62,13 @@ class Player extends Entity {
 		charge = 1;
 		prevLanceVel = new Vector2(0, -1);
 
+		centerX = 0;
+		centerY = 0;
+
 		if(body != null) {
+			body.x = 0;
+			body.y = 0;
+			body.velocity.set(0, 0);
 			body.rotation = 0;
 		}
 	}
@@ -144,7 +150,7 @@ class Player extends Entity {
 		g.addVertex(centerX + rightRotX, centerY + rightRotY, 0.5, 0.0, 0.5, 1.0);
 		g.addVertex(centerX + tipRotX, centerY + tipRotY, 1.0, 0.0, 0.0, 1.0);
 
-		var homeVec = new Vector2(0 - centerX, 0 - centerY);
+		var homeVec = new Vector2(world.target.x - centerX, world.target.y - centerY);
 		homeVec = homeVec.normal * 80;
 
 		g.lineStyle(1, 0x0000FF);
@@ -175,5 +181,17 @@ class Player extends Entity {
 
 		g.moveTo(aimVec.x + centerX, aimVec.y + centerY);
 		g.lineTo(aimVec.x + centerX + sprig2.x, aimVec.y + centerY + sprig2.y);
+
+		// draw targets
+		g.lineStyle(2, 0xFFFFFF);
+		g.drawCircle(0, 0, 72);
+		g.drawCircle(0, 0, 64);
+		g.drawCircle(0, 0, 56);
+		g.drawCircle(0, 0, 48);
+
+		g.drawCircle(world.target.x, world.target.y, 72);
+		g.drawCircle(world.target.x, world.target.y, 64);
+		g.drawCircle(world.target.x, world.target.y, 56);
+		g.drawCircle(world.target.x, world.target.y, 48);
 	}
 }
