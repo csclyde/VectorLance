@@ -1,11 +1,15 @@
 package ui;
 
+import hxmath.math.Vector2;
+
 class Hud extends Process {
 	var flow : h2d.Flow;
 	public var g : h2d.Graphics;
 
 	var energyMarker:Float;
 	var energyChargeRate = 0.005;
+
+	var distText: h2d.Text;
 
 	public function new() {
 		super(game);
@@ -18,6 +22,15 @@ class Hud extends Process {
 		reset();
 
 		flow = new h2d.Flow(root);
+
+		distText = new h2d.Text(Assets.bubbleFont);
+		distText.text = "";
+		distText.textAlign = Center;
+		distText.x = camera.pxWidth / 2;
+		distText.y = 10;
+
+		// add to any parent, in this case we append to root
+		root.add(distText, Const.UI_LAYER);
 	}
 
 	override function onResize() {
@@ -26,6 +39,12 @@ class Hud extends Process {
 
 	override function reset() {
 		energyMarker = game.energy.getNormalizedEnergy();
+	}
+
+	override function fixedUpdate() {
+		var distVec = new Vector2(world.player.centerX, world.player.centerY);
+
+		distText.text = Math.floor(distVec.length / 100) + "m to Target";
 	}
 
 	override function update() {
