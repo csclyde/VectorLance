@@ -34,6 +34,8 @@ class OrbManager extends Process {
 			case 'Snitch': newOrb = new en.SnitchOrb(x, y, world.physWorld);
 			case 'Block': newOrb = new en.BlockOrb(x, y, world.physWorld);
 			case 'Happy': newOrb = new en.HappyOrb(x, y, world.physWorld);
+			case 'Nutty': newOrb = new en.NuttyOrb(x, y, world.physWorld);
+			case 'Winder': newOrb = new en.WinderOrb(x, y, world.physWorld);
 			default: newOrb = new en.LazyOrb(x, y, world.physWorld);
 		}
 		
@@ -93,6 +95,8 @@ class OrbManager extends Process {
 	}
 
 	function getOrbType(dist:Float) {
+
+		return 'Winder';
 
 		var orbRand = M.frand();
 

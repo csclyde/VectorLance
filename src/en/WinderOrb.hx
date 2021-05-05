@@ -3,7 +3,7 @@ package en;
 import hxmath.math.Vector2;
 import echo.Body;
 
-class LazyOrb extends en.Orb {
+class WinderOrb extends en.Orb {
 
 	public function new(sx, sy, physWorld: echo.World) {
 		super(sx, sy, physWorld);
@@ -17,6 +17,7 @@ class LazyOrb extends en.Orb {
 			elasticity: 1,
 			mass: 0.8,
 			drag_length: 0.0,
+			max_velocity_length: 3,
 			shapes: [
 				{
 					type: CIRCLE,
@@ -42,17 +43,12 @@ class LazyOrb extends en.Orb {
     public override function update() {
 		super.update();
 
+		body.velocity = Vector2.fromPolar(body.velocity.normal.angle + Math.sin(game.stime) * Math.PI / 400, 3.0);
+
 		g.clear();
-		g.lineStyle(2, 0x00FF00);
-		g.drawEllipse(centerX, centerY, this.radius + (Math.sin(game.stime * Math.PI)), this.radius + Math.sin(game.stime * 10) * -2);
-		//g.drawPieInner(centerX, centerY, this.radius, 0, Math.PI * 1.5, Math.PI);
-
-		g.lineStyle(1, 0xFFAFFF);
-
-		var min = Math.round(-radius / 2);
-		var max = Math.round(radius / 2);
-		for(i in 0...energy) {
-			//g.drawCircle(centerX + M.randRange(min, max), centerY + M.randRange(min, max), 8);
-		}
+		g.lineStyle(2, 0xFFFF00);
+		g.drawEllipse(centerX, centerY, this.radius + Math.sin(game.stime * 10) * 3, this.radius + Math.cos(game.stime * 10) * 3);
+		g.lineStyle(2, 0x00FFFF);
+		g.drawEllipse(centerX, centerY, this.radius + Math.sin(game.stime * 10) * -3, this.radius + Math.cos(game.stime * 10) * -3);
 	}
 }
