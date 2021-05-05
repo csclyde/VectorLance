@@ -43,7 +43,6 @@ class NuttyOrb extends en.Orb {
     public override function update() {
 		super.update();
 
-		g.clear();
 		g.lineStyle(3, 0xC0C0C0);
 		g.drawEllipse(centerX, centerY, this.radius + Math.sin(game.stime * 10) * 4, this.radius + Math.sin(game.stime * 10) * -4);
 	}

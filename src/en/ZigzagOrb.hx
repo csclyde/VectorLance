@@ -59,7 +59,6 @@ class ZigzagOrb extends en.Orb {
     public override function update() {
 		super.update();
 
-		g.clear();
 		g.lineStyle(2, 0xFFFFFF);
 		g.drawEllipse(centerX, centerY, this.radius + Math.sin(game.stime * 50) * 3, this.radius + Math.sin(game.stime * 50) * -3);
 	}

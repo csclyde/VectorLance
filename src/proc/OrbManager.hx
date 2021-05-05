@@ -1,16 +1,30 @@
 package proc;
 
+import haxe.ds.Vector;
 import echo.Body;
 import hxmath.math.Vector2;
 
-class OrbManager extends Process {
+typedef EnergyOrb = {
+	pos: Vector2,
+	vel: Vector2
+}
 
+class OrbManager extends Process {
+	public var g : h2d.Graphics;
+	
 	public var orbs: Array<en.Orb>;
 	public var testedGrids: Map<String, Bool>;
 	var gridSize = 128;
 
+	public var looseEnergyOrbs: Array<EnergyOrb>;
+
 	public function new() {
 		super(game);
+
+		g = new h2d.Graphics();
+		world.root.add(g, Const.MIDGROUND_OBJECTS);
+
+		looseEnergyOrbs = [];
 
 		reset();
 	}
@@ -127,5 +141,22 @@ class OrbManager extends Process {
 
 	override function update() {
 		super.update();
+
+		// g.clear();
+		// g.beginFill(0xFFFFFF);
+
+		// var playerPos = new Vector2(world.player.centerX, world.player.centerY);
+
+		// for(e in looseEnergyOrbs) {
+			
+		// 	var accelVec = Vector2.fromPolar(e.pos.angleWith(playerPos), 3);
+		// 	e.vel = Vector2.lerp(e.vel, accelVec, 0.2);
+			
+		// 	e.pos.set(e.pos.x + e.vel.x, e.pos.y + e.vel.y);
+
+		// 	g.drawCircle(e.pos.x, e.pos.y, 4);
+		// }
+
+		// g.endFill();
 	}
 }

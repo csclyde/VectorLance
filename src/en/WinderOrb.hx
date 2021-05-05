@@ -48,7 +48,6 @@ class WinderOrb extends en.Orb {
 
 		body.velocity = Vector2.fromPolar(body.velocity.normal.angle + Math.sin(game.stime) * Math.PI / 400, 3.0);
 
-		g.clear();
 		g.lineStyle(2, 0xFFFF00);
 		g.drawEllipse(centerX, centerY, this.radius + Math.sin(game.stime * 10) * 3, this.radius + Math.cos(game.stime * 10) * 3);
 		g.lineStyle(2, 0x00FFFF);

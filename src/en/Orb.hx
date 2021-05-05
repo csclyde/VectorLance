@@ -3,11 +3,7 @@ package en;
 import h3d.shader.Bloom;
 import hxmath.math.Vector2;
 import echo.Body;
-
-typedef EnergyOrb = {
-	pos: Vector2,
-	vel: Vector2
-}
+import proc.OrbManager;
 
 class Orb extends Entity {
 	public var body:Body;
@@ -31,10 +27,9 @@ class Orb extends Entity {
 	}
 
 	public function generateEnergy() {
-		trace('generating ' + energy);
 		energyOrbs = [for(i in 0...energy) {
 			pos: new Vector2(0, 0),
-			vel: Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), 1)
+			vel: Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), (1 / radius) * 30)
 		}];
 	}
 
@@ -47,14 +42,13 @@ class Orb extends Entity {
 		centerY = body.y;
 
 		g.clear();
-
 		g.beginFill(0xFFFFFF);
 
 		for(e in energyOrbs) {
 			e.pos.set(e.pos.x + e.vel.x, e.pos.y + e.vel.y);
 
 			if(e.pos.length >= radius - 5) {
-				e.vel = Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), 1);
+				e.vel = Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), (1 / radius) * 30);
 			}
 
 			if(e.pos.length > radius - 5) {
@@ -69,6 +63,14 @@ class Orb extends Entity {
 
 	public function explode() {
 		game.energy.addEnergy(energy);
+
+		for(o in energyOrbs) {
+			o.pos.set(o.pos.x + centerX, o.pos.y + centerY);
+		}
+
+		world.orbManager.looseEnergyOrbs = world.orbManager.looseEnergyOrbs.concat(energyOrbs);
+		energyOrbs = [];
+
         destroy();
     }
 
