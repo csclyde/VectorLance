@@ -6,7 +6,8 @@ import hxmath.math.Vector2;
 
 typedef EnergyOrb = {
 	pos: Vector2,
-	vel: Vector2
+	vel: Vector2,
+	destroyed:Bool,
 }
 
 class OrbManager extends Process {
@@ -145,7 +146,7 @@ class OrbManager extends Process {
 		g.clear();
 		g.beginFill(0xFFFFFF);
 
-		looseEnergyOrbs.filter((e) -> return e != null);
+		looseEnergyOrbs.filter((e) -> return !e.destroyed);
 
 		for(e in looseEnergyOrbs) {
 			
@@ -167,12 +168,12 @@ class OrbManager extends Process {
 			}
 
 			e.pos.set(e.pos.x + e.vel.x, e.pos.y + e.vel.y);
-			g.drawCircle(e.pos.x, e.pos.y, 4);
+			//g.drawCircle(e.pos.x, e.pos.y, 4);
 
 			var distVec = new Vector2(world.player.centerX - e.pos.x, world.player.centerY - e.pos.y);
 
-			if(distVec.length < 500) {
-				e = null;
+			if(distVec.length < 100) {
+				e.destroyed = true;
 			}
 
 

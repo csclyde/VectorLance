@@ -17,6 +17,8 @@ class Player extends Entity {
 		super(sx, sy);
 
 		g = new h2d.Graphics();
+		//g.filter = new h2d.filter.Glow(0x0000FF, 0.7, 5.0, 1.7, 100.0, true );
+
 		world.root.add(g, Const.MIDGROUND_OBJECTS);
 
 		body = new Body({

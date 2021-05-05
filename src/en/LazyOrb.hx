@@ -28,7 +28,6 @@ class LazyOrb extends en.Orb {
 
 		physWorld.add(body);
 
-
 		var initialVel = new Vector2(M.frandRange(-100, 100), M.frandRange(-100, 100));
 		initialVel = initialVel.normal * 3;
 
@@ -47,13 +46,5 @@ class LazyOrb extends en.Orb {
 		g.lineStyle(2, 0x00FF00);
 		g.drawEllipse(centerX, centerY, this.radius + (Math.sin(game.stime * Math.PI)), this.radius + Math.sin(game.stime * 10) * -2);
 		//g.drawPieInner(centerX, centerY, this.radius, 0, Math.PI * 1.5, Math.PI);
-
-		g.lineStyle(1, 0xFFAFFF);
-
-		var min = Math.round(-radius / 2);
-		var max = Math.round(radius / 2);
-		for(i in 0...energy) {
-			//g.drawCircle(centerX + M.randRange(min, max), centerY + M.randRange(min, max), 8);
-		}
 	}
 }

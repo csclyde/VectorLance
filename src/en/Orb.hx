@@ -19,7 +19,6 @@ class Orb extends Entity {
 		super(sx, sy);
 
 		g = new h2d.Graphics();
-		//g.filter = new h2d.filter.Bloom(1.0, 5.0, 1.0, 5.0, 1.0);
 
 		world.root.add(g, Const.MIDGROUND_OBJECTS);
 
@@ -29,7 +28,8 @@ class Orb extends Entity {
 	public function generateEnergy() {
 		energyOrbs = [for(i in 0...energy) {
 			pos: new Vector2(0, 0),
-			vel: Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), (1 / radius) * 30)
+			vel: Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), (1 / radius) * 30),
+			destroyed: false
 		}];
 	}
 
