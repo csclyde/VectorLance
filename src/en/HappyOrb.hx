@@ -6,6 +6,7 @@ import echo.Body;
 class HappyOrb extends en.Orb {
 
 	public function new(sx, sy, physWorld: echo.World) {
+		
 		super(sx, sy, physWorld);
 		
 		radius = 72;
@@ -32,6 +33,8 @@ class HappyOrb extends en.Orb {
 		body.velocity = initialVel;
 
 		physWorld.add(body);
+
+		generateEnergy();
 	}
 
 	public override function preUpdate() {}
@@ -41,7 +44,6 @@ class HappyOrb extends en.Orb {
     public override function update() {
 		super.update();
 
-		g.clear();
 		g.lineStyle(3, 0xFF00FF);
 		g.drawEllipse(centerX, centerY, this.radius + Math.sin(game.stime * 10) * 4, this.radius + Math.sin(game.stime * 10) * -4);
 		//g.drawEllipse(centerX, centerY, this.radius + Math.sin(game.stime * 10) * -4, this.radius + Math.sin(game.stime * 10) * 4);

@@ -97,8 +97,6 @@ class OrbManager extends Process {
 
 	function getOrbType(dist:Float) {
 
-		return 'Zigzag';
-
 		var orbRand = M.frand();
 
 		if(orbRand < 0.01) {

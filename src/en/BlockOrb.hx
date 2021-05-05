@@ -7,12 +7,13 @@ import echo.shape.*;
 class BlockOrb extends en.Orb {
 
 	public function new(sx, sy, physWorld: echo.World) {
+		
 		super(sx, sy, physWorld);
 		
 		radius = M.randRange(64, 128);
 		energy = 0;
 		breakable = false;
-
+		
 		body = new Body({
 			x: sx,
 			y: sy,
@@ -44,7 +45,6 @@ class BlockOrb extends en.Orb {
     public override function update() {
 		super.update();
 
-		g.clear();
 		g.lineStyle(2, 0xFF0000);
 
 		var r:Rect = cast body.shape;

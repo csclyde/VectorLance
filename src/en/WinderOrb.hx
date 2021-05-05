@@ -6,11 +6,12 @@ import echo.Body;
 class WinderOrb extends en.Orb {
 
 	public function new(sx, sy, physWorld: echo.World) {
+		
 		super(sx, sy, physWorld);
-
+		
 		radius = 56;
 		energy = 8;
-
+		
 		body = new Body({
 			x: sx,
 			y: sy,
@@ -34,6 +35,8 @@ class WinderOrb extends en.Orb {
 		initialVel = initialVel.normal * 3;
 
 		body.velocity = initialVel;
+
+		generateEnergy();
 	}
 
 	public override function preUpdate() {}

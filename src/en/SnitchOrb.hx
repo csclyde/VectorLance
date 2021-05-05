@@ -8,7 +8,7 @@ class SnitchOrb extends en.Orb {
 	public function new(sx, sy, physWorld: echo.World) {
 		super(sx, sy, physWorld);
 		
-		radius = 32;
+		radius = 48;
 		energy = 20;
 
 		body = new Body({
@@ -34,6 +34,8 @@ class SnitchOrb extends en.Orb {
 		body.velocity = initialVel;
 
 		physWorld.add(body);
+
+		generateEnergy();
 	}
 
 	public override function preUpdate() {}

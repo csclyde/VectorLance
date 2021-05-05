@@ -6,11 +6,11 @@ import echo.Body;
 class LazyOrb extends en.Orb {
 
 	public function new(sx, sy, physWorld: echo.World) {
+		
 		super(sx, sy, physWorld);
-
+		
 		radius = 56;
-		energy = 8;
-
+		energy = 6;
 		body = new Body({
 			x: sx,
 			y: sy,
@@ -33,6 +33,8 @@ class LazyOrb extends en.Orb {
 		initialVel = initialVel.normal * 3;
 
 		body.velocity = initialVel;
+
+		generateEnergy();
 	}
 
 	public override function preUpdate() {}
@@ -42,7 +44,6 @@ class LazyOrb extends en.Orb {
     public override function update() {
 		super.update();
 
-		g.clear();
 		g.lineStyle(2, 0x00FF00);
 		g.drawEllipse(centerX, centerY, this.radius + (Math.sin(game.stime * Math.PI)), this.radius + Math.sin(game.stime * 10) * -2);
 		//g.drawPieInner(centerX, centerY, this.radius, 0, Math.PI * 1.5, Math.PI);

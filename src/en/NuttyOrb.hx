@@ -6,11 +6,11 @@ import echo.Body;
 class NuttyOrb extends en.Orb {
 
 	public function new(sx, sy, physWorld: echo.World) {
+		
 		super(sx, sy, physWorld);
 		
 		radius = 22;
 		energy = 80;
-
 		body = new Body({
 			x: sx,
 			y: sy,
@@ -32,6 +32,8 @@ class NuttyOrb extends en.Orb {
 		body.velocity = initialVel;
 
 		physWorld.add(body);
+
+		generateEnergy();
 	}
 
 	public override function preUpdate() {}

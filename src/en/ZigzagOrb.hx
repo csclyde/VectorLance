@@ -6,8 +6,9 @@ import echo.Body;
 class ZigzagOrb extends en.Orb {
 
 	public function new(sx, sy, physWorld: echo.World) {
+		
 		super(sx, sy, physWorld);
-
+		
 		radius = 64;
 		energy = 8;
 
@@ -34,6 +35,8 @@ class ZigzagOrb extends en.Orb {
 		initialVel = initialVel.normal * 3;
 
 		body.velocity = initialVel;
+
+		generateEnergy();
 	}
 
 	function changeDir() {
