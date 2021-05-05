@@ -33,25 +33,25 @@ class ZigzagOrb extends en.Orb {
 		var initialVel = new Vector2(M.frandRange(-100, 100), M.frandRange(-100, 100));
 		initialVel = initialVel.normal * 3;
 
-		world.delayer.addMs('change_dir', changeDir, M.randRange(500, 3000));
-
 		body.velocity = initialVel;
 	}
 
 	function changeDir() {
-		if(destroyed || body == null) {
-			return;
-		}
-		
 		var newVel = Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), 3);
 		body.velocity.set(newVel.x, newVel.y);
-
-		world.delayer.addS('change_dir', changeDir, M.randRange(3, 6));
 	}
 
 	public override function preUpdate() {}
     public override function postUpdate() {}
-	public override function fixedUpdate() {}
+
+	public override function fixedUpdate() {
+
+		var randChoice = M.frand();
+
+		if(randChoice < 0.05) {
+			changeDir();
+		}
+	}
 
     public override function update() {
 		super.update();
