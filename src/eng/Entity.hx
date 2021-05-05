@@ -31,12 +31,16 @@ class Entity {
     public var spr : HSprite;
 	var debugLabel : Null<h2d.Text>;
 
+	public var delayer : dn.Delayer; // Delayer allows for callbacks to be called in a future frame
+
     public function new(x, y) {
         uid = Const.NEXT_UNIQ;
 		ALL.push(this);
 
 		centerX = x;
 		centerY = y;
+
+		delayer = new dn.Delayer(game.getDefaultFrameRate());
 
 		reset();
     }
