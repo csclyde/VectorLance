@@ -13,9 +13,9 @@ class World extends Process {
 	public var physWorld:echo.World;
 	public var worldSpeed: Float;
 	public var debug:HeapsDebug;
-	public var bgTile: h2d.Tile;
 	public var g : h2d.Graphics;
 
+	public var background : Background;
 	public var player : en.Player;
 	public var orbManager: OrbManager;
 
@@ -36,10 +36,12 @@ class World extends Process {
 		createRoot(game.root);
 
 		g = new h2d.Graphics();
-		root.add(g, Const.BACKGROUND_OBJECTS);
+		root.add(g, Const.BACKGROUND_EFFECTS);
 		debug = new HeapsDebug(root);
 
-		bgTile = hxd.Res.space.toTile();
+		background = new Background();
+
+		target = Vector2.fromPolar(M.frandRange(0, 2 * M.PI), 100000);
 
 		delayer.addF('create_stuff', () -> {
 			player = new en.Player(0, 0);
@@ -116,7 +118,7 @@ class World extends Process {
 		player.reset();
 		orbManager.reset();
 
-		target = Vector2.fromPolar(M.frandRange(0, 2 * M.PI), 10000);
+		target = Vector2.fromPolar(M.frandRange(0, 2 * M.PI), 100000);
 
 	}	
 
@@ -154,11 +156,17 @@ class World extends Process {
 	override function postUpdate() {
 		super.postUpdate();
 
-		g.clear();
-		g.tileWrap = true;
-		g.beginTileFill(0, 0, 1, 1, bgTile);        
-        g.drawRect(camera.left, camera.top, camera.pxWidth, camera.pxHeight); 
-		g.endFill();
+		// draw targets
+		g.lineStyle(2, 0xFFFFFF);
+		g.drawCircle(0, 0, 72);
+		g.drawCircle(0, 0, 64);
+		g.drawCircle(0, 0, 56);
+		g.drawCircle(0, 0, 48);
+
+		g.drawCircle(target.x, target.y, 72);
+		g.drawCircle(target.x, target.y, 64);
+		g.drawCircle(target.x, target.y, 56);
+		g.drawCircle(target.x, target.y, 48);
 
 		//debug.draw(physWorld);
 	}

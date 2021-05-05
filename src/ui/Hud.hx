@@ -83,5 +83,8 @@ class Hud extends Process {
 		g.beginFill(0xFFFFFF);
 		g.drawRect(14, 14, energyWidth, 24);
 		g.endFill();
+
+		g.lineStyle(1, 0xFF0000);
+		g.drawCircle(input.mouseX, input.mouseY, 5);
 	}
 }

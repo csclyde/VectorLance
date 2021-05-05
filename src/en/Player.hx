@@ -121,10 +121,7 @@ class Player extends Entity {
 		}
 
 		g.clear();
-
 		g.lineStyle(1, 0x0000FF);
-		//g.beginFill(0xff0000);
-		//g.drawCircle(centerX, centerY, 16);
 
 		var ang = prevLanceVel.angle + (Math.PI / 2);
 
@@ -182,16 +179,5 @@ class Player extends Entity {
 		g.moveTo(aimVec.x + centerX, aimVec.y + centerY);
 		g.lineTo(aimVec.x + centerX + sprig2.x, aimVec.y + centerY + sprig2.y);
 
-		// draw targets
-		g.lineStyle(2, 0xFFFFFF);
-		g.drawCircle(0, 0, 72);
-		g.drawCircle(0, 0, 64);
-		g.drawCircle(0, 0, 56);
-		g.drawCircle(0, 0, 48);
-
-		g.drawCircle(world.target.x, world.target.y, 72);
-		g.drawCircle(world.target.x, world.target.y, 64);
-		g.drawCircle(world.target.x, world.target.y, 56);
-		g.drawCircle(world.target.x, world.target.y, 48);
 	}
 }
