@@ -39,10 +39,12 @@ class ZigzagOrb extends en.Orb {
 	}
 
 	function changeDir() {
+		if(destroyed || body == null) {
+			return;
+		}
+		
 		var newVel = Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), 3);
-		//newVel = newVel.normal * 3;
 		body.velocity.set(newVel.x, newVel.y);
-		trace('chjange up');
 
 		world.delayer.addS('change_dir', changeDir, M.randRange(3, 6));
 	}
