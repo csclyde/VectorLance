@@ -46,7 +46,7 @@ class Energy extends Process {
 	}
 
 	public function removeEnergy(amount:Float) {
-		currentEnergy -= amount;
+		//currentEnergy -= amount;
 	}
 
 	override function reset() {

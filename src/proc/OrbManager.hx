@@ -59,7 +59,7 @@ class OrbManager extends Process {
 		}
 		else if(mLen < 200) {
 			if(randHelp < 0.5) { choice = 'Snitch'; } 
-			else if(randHelp < 0.60) { choice = 'Block'; } 
+			else if(randHelp < 0.60) { choice = 'Block'; }
 			else { choice = 'Lazy'; }
 			spawnThreshold = 0.04;
 		}
@@ -71,7 +71,7 @@ class OrbManager extends Process {
 		}
 		else if(mLen < 400) {
 			choice = 'Nutty';
-			spawnThreshold = 0.02;
+			spawnThreshold = 0.03;
 		}
 		else if(mLen < 500) {
 			if(randHelp < 0.05) { choice = 'Happy'; }
@@ -132,8 +132,10 @@ class OrbManager extends Process {
 
 	function cullDistantOrbs() {
 		for(orb in orbs) {
-			if(orb != null && !orb.destroyed && !camera.entityOnScreen(orb, gridSize * 3)) {
-				orb.destroy();
+			if(!camera.entityOnScreen(orb, gridSize * 4)) {
+				orb.body.active = false;
+			} else {
+				orb.body.active = true;
 			}
 		}
 	}
@@ -173,7 +175,7 @@ class OrbManager extends Process {
 	}
 
 	override function fixedUpdate() {
-		//cullDistantOrbs();
+		cullDistantOrbs();
 
 		orbs = Lambda.filter(orbs, (o) -> return o.isAlive());
 

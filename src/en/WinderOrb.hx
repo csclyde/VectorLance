@@ -9,8 +9,8 @@ class WinderOrb extends en.Orb {
 		
 		super(sx, sy, physWorld);
 		
-		radius = 56;
-		energy = 8;
+		radius = 48;
+		energy = 10;
 		
 		body = new Body({
 			x: sx,
@@ -32,7 +32,7 @@ class WinderOrb extends en.Orb {
 
 
 		var initialVel = new Vector2(M.frandRange(-100, 100), M.frandRange(-100, 100));
-		initialVel = initialVel.normal * 3;
+		initialVel = initialVel.normal * 3.5;
 
 		body.velocity = initialVel;
 
@@ -46,7 +46,7 @@ class WinderOrb extends en.Orb {
     public override function update() {
 		super.update();
 
-		body.velocity = Vector2.fromPolar(body.velocity.normal.angle + Math.sin(game.stime) * Math.PI / 400, 3.0);
+		body.velocity = Vector2.fromPolar(body.velocity.normal.angle + Math.sin(game.stime) * Math.PI / 200, 3.0);
 
 		g.lineStyle(2, 0xFFFF00);
 		g.drawEllipse(centerX, centerY, this.radius + Math.sin(game.stime * 10) * 3, this.radius + Math.cos(game.stime * 10) * 3);

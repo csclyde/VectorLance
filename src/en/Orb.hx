@@ -27,7 +27,7 @@ class Orb extends Entity {
 
 	public function generateEnergy() {
 		energyOrbs = [for(i in 0...energy) {
-			pos: new Vector2(0, 0),
+			pos: Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), M.frandRange(-radius, radius)),
 			vel: Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), (1 / radius) * 30),
 			destroyed: false
 		}];

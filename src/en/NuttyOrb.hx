@@ -27,7 +27,7 @@ class NuttyOrb extends en.Orb {
     	//body.entity = this;
 
 		var initialVel = new Vector2(M.frandRange(-100, 100), M.frandRange(-100, 100));
-		initialVel = initialVel.normal * 3.5;
+		initialVel = initialVel.normal * 4.0;
 
 		body.velocity = initialVel;
 
