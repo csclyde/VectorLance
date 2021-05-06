@@ -50,7 +50,7 @@ class Energy extends Process {
 	}
 
 	override function reset() {
-		currentEnergy = 50.0;
+		currentEnergy = 100.0;
 		maxEnergy = 100.0;
 	}
 }

@@ -75,8 +75,8 @@ class OrbManager extends Process {
 		}
 		else if(mLen < 500) {
 			if(randHelp < 0.05) { choice = 'Happy'; }
-			if(randHelp < 0.20) { choice = 'Winder'; }
-			else { choice = 'Lazy'; }
+			if(randHelp < 0.30) { choice = 'Winder'; }
+			else { choice = 'Nutty'; }
 			spawnThreshold = 0.03;
 		}
 		else if(mLen < 600) {
