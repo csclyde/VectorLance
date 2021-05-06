@@ -41,10 +41,74 @@ class OrbManager extends Process {
 		testedGrids = [];
 	}
 
-	public function addOrb(x, y, type) {
+	public function addOrb(x, y) {
 		var newOrb:en.Orb;
 
-		switch(type) {
+		//Calculate a weight for each type of orb. The weight is then added to a rand range. This is the orb chance
+		//The orb with the highest chance is spawned
+		var distVec = new Vector2(x, y);
+		var mLen = distVec.length / 50;
+
+		var choice = 'Lazy';
+		var randHelp = M.frand();
+		var spawnThreshold = 0.04;
+
+		if(mLen < 100) {
+			choice = randHelp <= 0.05 ? 'Snitch' : 'Lazy';
+			spawnThreshold = 0.03;
+		}
+		else if(mLen < 200) {
+			if(randHelp < 0.5) { choice = 'Snitch'; } 
+			else if(randHelp < 0.60) { choice = 'Block'; } 
+			else { choice = 'Lazy'; }
+			spawnThreshold = 0.04;
+		}
+		else if(mLen < 300) {
+			if(randHelp < 0.60) { choice = 'Block'; } 
+			else if(randHelp < 0.75) { choice = 'Snitch'; } 
+			else { choice = 'Lazy'; }
+			spawnThreshold = 0.15;
+		}
+		else if(mLen < 400) {
+			choice = 'Nutty';
+			spawnThreshold = 0.02;
+		}
+		else if(mLen < 500) {
+			if(randHelp < 0.05) { choice = 'Happy'; }
+			if(randHelp < 0.20) { choice = 'Winder'; }
+			else { choice = 'Lazy'; }
+			spawnThreshold = 0.03;
+		}
+		else if(mLen < 600) {
+			choice = 'Winder';
+			spawnThreshold = 0.04;
+		}
+		else if(mLen < 700) {
+			if(randHelp < 0.50) { choice = 'Winder'; }
+			else { choice = 'Zigzag'; }
+			spawnThreshold = 0.04;
+		}
+		else if(mLen < 800) {
+			choice = 'Zigzag';
+			spawnThreshold = 0.10;
+		}
+		else if(mLen < 900) {
+			choice = 'Zigzag';
+			spawnThreshold = 0.04;
+		}
+		else if(mLen < 1000) {
+			choice = 'Zigzag';
+			spawnThreshold = 0.02;
+		}
+		else {
+
+		}
+
+		if(M.frand() > spawnThreshold) {
+			return;
+		}
+		
+		switch(choice) {
 			case 'Lazy': newOrb = new en.LazyOrb(x, y, world.physWorld);
 			case 'Snitch': newOrb = new en.SnitchOrb(x, y, world.physWorld);
 			case 'Block': newOrb = new en.BlockOrb(x, y, world.physWorld);
@@ -100,39 +164,8 @@ class OrbManager extends Process {
 		//mark that we tested this grid
 		testedGrids[gridKey] = true;
 		
-		var randSpawn = M.frand();
-		
 		//4 pct chance of any orb spawning here
-		if(randSpawn < 0.04) {
-			var distVec = new Vector2(x, y);
-			addOrb((x * gridSize) - gridSize / 2, (y * gridSize) - gridSize / 2, getOrbType(distVec.length));
-		}
-	}
-
-	function getOrbType(dist:Float) {
-
-		//Calculate a weight for each type of orb. The weight is then added to a rand range. This is the orb chance
-		//The orb with the highest chance is spawned
-		var weight = util.gauss(dist, 1.0, 0.0, 20.0);
-
-		return 'Lazy';
-
-		//dist ranges from 0 to 1000
-
-		// var orbRand = M.frand();
-
-		// if(orbRand < 0.01) {
-		// 	return 'Happy';
-		// }
-		// else if(orbRand < 0.10) {
-		// 	return 'Snitch';
-		// }
-		// else if(orbRand < 0.20) {
-		// 	return 'Block';
-		// }
-		// else {
-		// 	return 'Lazy';
-		// }
+		addOrb((x * gridSize) - gridSize / 2, (y * gridSize) - gridSize / 2);
 	}
 
 	override public function onDispose() {

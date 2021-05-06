@@ -41,7 +41,7 @@ class World extends Process {
 
 		background = new Background();
 
-		target = Vector2.fromPolar(M.frandRange(0, 2 * M.PI), 100000);
+		target = Vector2.fromPolar(M.frandRange(0, 2 * M.PI), 50000);
 
 		delayer.addF('create_stuff', () -> {
 			player = new en.Player(0, 0);
@@ -118,7 +118,7 @@ class World extends Process {
 		player.reset();
 		orbManager.reset();
 
-		target = Vector2.fromPolar(M.frandRange(0, 2 * M.PI), 100000);
+		target = Vector2.fromPolar(M.frandRange(0, 2 * M.PI), 50000);
 
 	}	
 

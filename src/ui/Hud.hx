@@ -44,7 +44,7 @@ class Hud extends Process {
 	override function fixedUpdate() {
 		var distVec = new Vector2(world.target.x - world.player.centerX, world.target.y - world.player.centerY);
 
-		distText.text = Math.floor(distVec.length / 100) + "m to Target";
+		distText.text = Math.floor(distVec.length / 50) + "m to Target";
 	}
 
 	override function update() {

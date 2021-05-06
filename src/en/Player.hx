@@ -89,7 +89,7 @@ class Player extends Entity {
 		if(charging == true) {
 			charging = false;
 			var newVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
-			body.velocity = newVec.normal * charge * 1.2;
+			body.velocity = newVec.normal * charge * 1.3;
 			alignToVelocity();
 			
 			body.velocity.copyTo(prevLanceVel);

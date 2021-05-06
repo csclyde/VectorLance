@@ -10,7 +10,7 @@ class NuttyOrb extends en.Orb {
 		super(sx, sy, physWorld);
 		
 		radius = 22;
-		energy = 80;
+		energy = 25;
 		body = new Body({
 			x: sx,
 			y: sy,
