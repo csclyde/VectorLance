@@ -10,6 +10,7 @@ class App extends hxd.App {
 	public var world: World;
 	public var console: Console;
 	public var audio: Audio;
+	public var util: Util;
 
 	static function main() {
 		new App();
@@ -51,6 +52,7 @@ class App extends hxd.App {
 		audio = new Audio();
 		world = new World();
 		fx = new Fx();
+		util = new Util();
 		onResize();
 	}
 

@@ -90,42 +90,49 @@ class OrbManager extends Process {
 
 	function testGrid(x:Int, y:Int) {
 		var gridKey = "x" + x + "y" + y;
-		var distVec = new Vector2(x, y);
-
+		
 		//bail if its already been tested
 		if(testedGrids[gridKey]) {
 			return;
 		}
 
+		
 		//mark that we tested this grid
 		testedGrids[gridKey] = true;
-
+		
 		var randSpawn = M.frand();
-
+		
 		//4 pct chance of any orb spawning here
 		if(randSpawn < 0.04) {
+			var distVec = new Vector2(x, y);
 			addOrb((x * gridSize) - gridSize / 2, (y * gridSize) - gridSize / 2, getOrbType(distVec.length));
 		}
-
-
 	}
 
 	function getOrbType(dist:Float) {
 
-		var orbRand = M.frand();
+		//Calculate a weight for each type of orb. The weight is then added to a rand range. This is the orb chance
+		//The orb with the highest chance is spawned
+		var weight = util.gauss(dist, 1.0, 0.0, 20.0);
 
-		if(orbRand < 0.01) {
-			return 'Happy';
-		}
-		else if(orbRand < 0.10) {
-			return 'Snitch';
-		}
-		else if(orbRand < 0.20) {
-			return 'Block';
-		}
-		else {
-			return 'Lazy';
-		}
+		return 'Lazy';
+
+		//dist ranges from 0 to 1000
+
+		// var orbRand = M.frand();
+
+		// if(orbRand < 0.01) {
+		// 	return 'Happy';
+		// }
+		// else if(orbRand < 0.10) {
+		// 	return 'Snitch';
+		// }
+		// else if(orbRand < 0.20) {
+		// 	return 'Block';
+		// }
+		// else {
+		// 	return 'Lazy';
+		// }
 	}
 
 	override public function onDispose() {

@@ -15,6 +15,7 @@ class Process {
 	public var events(get,never) : EventRouter; inline function get_events() return App.inst.events;
 	public var console(get,never) : Console; inline function get_console() return App.inst.console;
 	public var audio(get,never) : Audio; inline function get_audio() return App.inst.audio;
+	public var util(get,never) : Util; inline function get_util() return App.inst.util;
 
 	public static var FIXED_UPDATE_FPS = 30;
 
