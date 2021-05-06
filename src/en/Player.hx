@@ -12,6 +12,7 @@ class Player extends Entity {
 	public var chargeRate = 0.25;
 	public var chargeMax = 10;
 	public var prevLanceVel: Vector2;
+	public var velCopy: Vector2;
 
 	public function new(sx, sy) {
 		super(sx, sy);
@@ -27,7 +28,7 @@ class Player extends Entity {
 			elasticity: 0.2,
 			mass: 1.5,
 			kinematic: false,
-			drag_length: 0.02,
+			drag_length: 0.03,
 			shapes: [
 				{
 					type: CIRCLE,
@@ -53,6 +54,8 @@ class Player extends Entity {
 		});
 
     	//body.entity = this;
+
+		velCopy = new Vector2(0, 0);
 
 		events.subscribe('charge_vector', chargeVector);
 		events.subscribe('launch_vector', launchVector);
@@ -119,6 +122,8 @@ class Player extends Entity {
 		if(charge > chargeMax) {
 			charge = chargeMax;
 		}
+
+		body.velocity.copyTo(velCopy);
 
 		g.clear();
 		g.lineStyle(1, 0x0000FF);

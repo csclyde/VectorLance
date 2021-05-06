@@ -86,9 +86,23 @@ class World extends Process {
 				
 				if(angleDiff > 170 && angleDiff < 190) {
 					if(orbEntity != null) orbEntity.explode();
+
+					world.player.velCopy.copyTo(world.player.body.velocity);
+					world.player.body.velocity *= 1.2;
+
+					// var newVel = world.player.body.velocity * 1.5;
+					// world.player.body.velocity.set(newVel.x, newVel.y);
+
 				}
 				else if(angleDiff > 130 && angleDiff < 230) {
 					if(orbEntity != null) orbEntity.explode();
+
+					world.player.velCopy.copyTo(world.player.body.velocity);
+					world.player.body.velocity *= 1.2;
+
+
+					// var newVel = world.player.body.velocity * 1.5;
+					// world.player.body.velocity.set(newVel.x, newVel.y);
 
 					// delayer.addMs('explode_orb', () -> {
 					// }, 100);
