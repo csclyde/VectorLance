@@ -188,33 +188,35 @@ class OrbManager extends Process {
 		g.clear();
 		g.beginFill(0xFFFFFF);
 
-		looseEnergyOrbs.filter((e) -> return !e.destroyed);
+		looseEnergyOrbs = looseEnergyOrbs.filter((e) -> return !e.destroyed);
 
 		for(e in looseEnergyOrbs) {
 			
 			//var accelVec = Vector2.fromPolar(e.pos.angleWith(playerPos), 3);
 			//e.vel = Vector2.lerp(e.vel, accelVec, 0.2);
 			
-			if(world.player.centerX < e.pos.x) {
-				e.vel.x -= 0.01;
-			}
-			else if(world.player.centerX > e.pos.x) {
-				e.vel.x += 0.01;
-			}
+			// if(world.player.centerX < e.pos.x) {
+			// 	e.vel.x -= 0.01;
+			// }
+			// else if(world.player.centerX > e.pos.x) {
+			// 	e.vel.x += 0.01;
+			// }
 
-			if(world.player.centerY < e.pos.y) {
-				e.vel.y -= 0.01;
-			}
-			else if(world.player.centerY > e.pos.y) {
-				e.vel.y += 0.01;
-			}
+			// if(world.player.centerY < e.pos.y) {
+			// 	e.vel.y -= 0.01;
+			// }
+			// else if(world.player.centerY > e.pos.y) {
+			// 	e.vel.y += 0.01;
+			// }
 
 			e.pos.set(e.pos.x + e.vel.x, e.pos.y + e.vel.y);
-			//g.drawCircle(e.pos.x, e.pos.y, 4);
+			g.drawCircle(e.pos.x, e.pos.y, 4);
 
-			var distVec = new Vector2(world.player.centerX - e.pos.x, world.player.centerY - e.pos.y);
+			var distVec = new Vector2(world.player.centerX - e.pos.x + world.player.body.velocity.x, world.player.centerY - e.pos.y + world.player.body.velocity.y);
+			e.vel = Vector2.lerp(e.vel, distVec, 0.003);
 
-			if(distVec.length < 100) {
+
+			if(distVec.length < 20) {
 				e.destroyed = true;
 			}
 
