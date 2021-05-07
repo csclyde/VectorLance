@@ -51,11 +51,6 @@ class World extends Process {
 
 			reset();
 		}, 1 );
-
-	}
-
-	function cullDistantOrbs() {
-
 	}
 
 	function onCollision(a:Body, b:Body, c:Array<CollisionData>) {

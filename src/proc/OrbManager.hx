@@ -88,20 +88,13 @@ class OrbManager extends Process {
 			else { choice = 'Zigzag'; }
 			spawnThreshold = 0.04;
 		}
-		else if(mLen < 800) {
+		else if(mLen < 820) {
 			choice = 'Zigzag';
 			spawnThreshold = 0.10;
 		}
-		else if(mLen < 900) {
-			choice = 'Zigzag';
-			spawnThreshold = 0.04;
-		}
-		else if(mLen < 1000) {
-			choice = 'Zigzag';
-			spawnThreshold = 0.02;
-		}
 		else {
-
+			choice = 'Happy';
+			spawnThreshold = 0.15;
 		}
 
 		if(M.frand() > spawnThreshold) {
