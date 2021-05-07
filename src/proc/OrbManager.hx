@@ -20,7 +20,7 @@ class OrbManager extends Process {
 	public var looseEnergyOrbs: Array<EnergyOrb>;
 
 	public function new() {
-		super(game);
+		super(world);
 
 		g = new h2d.Graphics();
 		world.root.add(g, Const.MIDGROUND_OBJECTS);

@@ -5,11 +5,15 @@ import hxmath.math.Vector2;
 class Hud extends Process {
 	var flow : h2d.Flow;
 	public var g : h2d.Graphics;
+	public var logo: h2d.Bitmap;
 
 	var energyMarker:Float;
 	var energyChargeRate = 0.005;
 
 	var distText: h2d.Text;
+	var menuText: h2d.Text;
+
+	var inTitle = true;
 
 	public function new() {
 		super(game);
@@ -18,6 +22,7 @@ class Hud extends Process {
 
 		g = new h2d.Graphics();
 		root.add(g, Const.UI_LAYER);
+		g.alpha = 0;
 
 		reset();
 
@@ -28,9 +33,22 @@ class Hud extends Process {
 		distText.textAlign = Center;
 		distText.x = camera.pxWidth / 2;
 		distText.y = 10;
-
-		// add to any parent, in this case we append to root
 		root.add(distText, Const.UI_LAYER);
+		distText.alpha = 0;
+
+		logo = new h2d.Bitmap(hxd.Res.logo.toTile());
+		logo.x = (camera.pxWidth / 2) - (logo.tile.width / 2);
+		logo.y = 200;
+		root.add(logo, Const.UI_LAYER);
+
+		events.subscribe('launch_vector', (params:Dynamic) -> {
+			if(inTitle) {
+				tw.createMs(logo.alpha, 0, TEaseOut, 1000);
+				tw.createMs(distText.alpha, 1, TEaseOut, 1000);
+				tw.createMs(g.alpha, 1, TEaseOut, 1000);
+				inTitle = false;
+			}
+		});
 	}
 
 	override function onResize() {
