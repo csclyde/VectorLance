@@ -39,6 +39,7 @@ class OrbManager extends Process {
 
 		orbs = [];
 		testedGrids = [];
+		looseEnergyOrbs = [];
 	}
 
 	public function addOrb(x, y) {
