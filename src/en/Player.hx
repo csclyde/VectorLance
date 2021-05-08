@@ -13,6 +13,7 @@ class Player extends Entity {
 	public var chargeMax = 10;
 	public var prevLanceVel: Vector2;
 	public var velCopy: Vector2;
+	public var mouseVec: Vector2;
 	public var aimVec: Vector2;
 
 	public function new(sx, sy) {
@@ -57,6 +58,7 @@ class Player extends Entity {
     	//body.entity = this;
 
 		velCopy = new Vector2(0, 0);
+		mouseVec = new Vector2(0, 0);
 		aimVec = new Vector2(0, 0);
 
 		events.subscribe('charge_vector', chargeVector);
@@ -92,6 +94,8 @@ class Player extends Entity {
 
 	function launchVector(params: Dynamic) {
 		if(charging == true) {
+
+			var activeOrbs = world.physWorld.dynamics().filter((b:Body) -> return b.active);
 			charging = false;
 			var newVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
 			body.velocity = newVec.normal * charge * 1.3;
@@ -125,7 +129,9 @@ class Player extends Entity {
 		centerX = body.x;
 		centerY = body.y;
 		
-
+		mouseVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
+		aimVec = mouseVec.normal * Math.max(charge, 1) * 15;
+		
 		if(charging) {
 			charge += chargeRate * tmod;
 			body.drag_length = 0.3;
@@ -186,9 +192,6 @@ class Player extends Entity {
 		g.lineTo(targetVec.x + centerX + sprig2.x, targetVec.y + centerY + sprig2.y);
 
 		// AIMING ARROW
-		var mouseVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
-		aimVec = mouseVec.normal * Math.max(charge, 1) * 15;
-
 		g.lineStyle(1, 0xFF0000);
 		g.moveTo(centerX, centerY);
 		g.lineTo(aimVec.x + centerX, aimVec.y + centerY);

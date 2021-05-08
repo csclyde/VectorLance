@@ -54,6 +54,8 @@ class App extends hxd.App {
 		fx = new Fx();
 		util = new Util();
 		onResize();
+
+		Process.PROFILING = true;
 	}
 
 	override function onResize() {

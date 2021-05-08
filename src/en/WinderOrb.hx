@@ -45,7 +45,9 @@ class WinderOrb extends en.Orb {
 
     public override function update() {
 		super.update();
+	}
 
+	public override function render() {
 		body.velocity = Vector2.fromPolar(body.velocity.normal.angle + Math.sin(game.stime) * Math.PI / 200, 3.0);
 
 		g.lineStyle(2, 0xFFFF00);

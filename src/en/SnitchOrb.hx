@@ -44,7 +44,9 @@ class SnitchOrb extends en.Orb {
 
     public override function update() {
 		super.update();
+	}
 
+	public override function render() {
 		g.lineStyle(3, 0xFFD700);
 		g.drawEllipse(centerX, centerY, this.radius + Math.sin(game.stime * 10) * 1, this.radius + Math.sin(game.stime * 10) * -1);
 	}

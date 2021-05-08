@@ -44,7 +44,9 @@ class BlockOrb extends en.Orb {
 
     public override function update() {
 		super.update();
+	}
 
+	public override function render() {
 		g.lineStyle(2, 0xFF0000);
 
 		var r:Rect = cast body.shape;
@@ -64,6 +66,5 @@ class BlockOrb extends en.Orb {
 		var vl = count - 1;
 		g.moveTo(vertices[vl].x, vertices[vl].y);
 		g.lineTo(vertices[0].x, vertices[0].y);
-
 	}
 }

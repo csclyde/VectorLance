@@ -206,16 +206,20 @@ class OrbManager extends Process {
 			// }
 
 			e.pos.set(e.pos.x + e.vel.x, e.pos.y + e.vel.y);
-			g.drawCircle(e.pos.x, e.pos.y, 4);
-
-			var distVec = new Vector2(world.player.centerX - e.pos.x + world.player.body.velocity.x, world.player.centerY - e.pos.y + world.player.body.velocity.y);
 			
-			
-			e.vel = Vector2.lerp(e.vel, distVec, 0.01);
+			if(camera.coordsOnScreen(e.pos.x, e.pos.y, 20)) {
+				g.drawCircle(e.pos.x, e.pos.y, 4);
+	
+				var distVec = new Vector2(world.player.centerX - e.pos.x + world.player.body.velocity.x, world.player.centerY - e.pos.y + world.player.body.velocity.y);
+				
+				e.vel = Vector2.lerp(e.vel, distVec, 0.01);
+	
+				if(distVec.length < 20) {
+					e.destroyed = true;
+				}
 
-			if(distVec.length < 20) {
-				e.destroyed = true;
 			}
+
 
 
 		}

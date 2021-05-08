@@ -49,6 +49,19 @@ class World extends Process {
 			camera.trackEntity(player);
 			orbManager = new OrbManager();
 
+			// draw targets
+			//g.clear();
+			g.lineStyle(2, 0xFFFFFF);
+			g.drawCircle(0, 0, 72);
+			g.drawCircle(0, 0, 64);
+			g.drawCircle(0, 0, 56);
+			g.drawCircle(0, 0, 48);
+
+			g.drawCircle(target.x, target.y, 72);
+			g.drawCircle(target.x, target.y, 64);
+			g.drawCircle(target.x, target.y, 56);
+			g.drawCircle(target.x, target.y, 48);
+
 			reset();
 		}, 0 );
 	}
@@ -161,18 +174,6 @@ class World extends Process {
 
 	override function postUpdate() {
 		super.postUpdate();
-
-		// draw targets
-		g.lineStyle(2, 0xFFFFFF);
-		g.drawCircle(0, 0, 72);
-		g.drawCircle(0, 0, 64);
-		g.drawCircle(0, 0, 56);
-		g.drawCircle(0, 0, 48);
-
-		g.drawCircle(target.x, target.y, 72);
-		g.drawCircle(target.x, target.y, 64);
-		g.drawCircle(target.x, target.y, 56);
-		g.drawCircle(target.x, target.y, 48);
 
 		//debug.draw(physWorld);
 	}

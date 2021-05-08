@@ -1,5 +1,6 @@
 package ui;
 
+import hxd.Timer;
 import hxmath.math.Vector2;
 
 class Hud extends Process {
@@ -11,7 +12,7 @@ class Hud extends Process {
 	var energyChargeRate = 0.001;
 
 	var distText: h2d.Text;
-	var menuText: h2d.Text;
+	var fpsText: h2d.Text;
 
 	var inTitle = true;
 
@@ -35,6 +36,13 @@ class Hud extends Process {
 		distText.y = 10;
 		root.add(distText, Const.UI_LAYER);
 		distText.alpha = 0;
+
+		fpsText = new h2d.Text(Assets.fontSmall);
+		fpsText.text = "60 FPS";
+		fpsText.textAlign = Left;
+		fpsText.x = 10;
+		fpsText.y = 50;
+		root.add(fpsText, Const.UI_LAYER);
 
 		logo = new h2d.Bitmap(hxd.Res.logo.toTile());
 		logo.x = (camera.pxWidth / 2) - (logo.tile.width / 2);
@@ -63,6 +71,14 @@ class Hud extends Process {
 		var distVec = new Vector2(world.target.x - world.player.centerX, world.target.y - world.player.centerY);
 
 		distText.text = Math.floor(distVec.length / 50) + "m to Target";
+		fpsText.text = Math.floor(Timer.fps()) + ' FPS \n\n';
+
+		fpsText.text += Entity.ALL.length + ' entities \n\n';
+		fpsText.text += Entity.AllActive().length + ' entities \n\n';
+
+		for(p in Process.getSortedProfilerTimes().filter(set -> return set.value >= 1.0)) {
+			fpsText.text += p.key + ': ' + p.value + '\n';
+		}
 	}
 
 	override function update() {

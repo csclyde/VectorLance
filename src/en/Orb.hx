@@ -25,6 +25,10 @@ class Orb extends Entity {
 		energyOrbs = [];
 	}
 
+	public override function isAlive() {
+		return !destroyed && body.active;
+	}
+
 	public function generateEnergy() {
 		energyOrbs = [for(i in 0...energy) {
 			pos: Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), M.frandRange(-radius, radius)),
@@ -32,6 +36,8 @@ class Orb extends Entity {
 			destroyed: false
 		}];
 	}
+
+	public function render() {}
 
 	public override function preUpdate() {}
     public override function postUpdate() {}
@@ -42,23 +48,28 @@ class Orb extends Entity {
 		centerY = body.y;
 
 		g.clear();
-		g.beginFill(0xFFFFFF);
-
-		for(e in energyOrbs) {
-			e.pos.set(e.pos.x + e.vel.x, e.pos.y + e.vel.y);
-
-			if(e.pos.length >= radius - 5) {
-				e.vel = Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), (1 / radius) * 30);
+		
+		if(camera.entityOnScreen(this, 200)) {
+			g.beginFill(0xFFFFFF);
+	
+			for(e in energyOrbs) {
+				e.pos.set(e.pos.x + e.vel.x, e.pos.y + e.vel.y);
+	
+				if(e.pos.length >= radius - 5) {
+					e.vel = Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), (1 / radius) * 30);
+				}
+	
+				if(e.pos.length > radius - 5) {
+					e.pos = e.pos.normal * (radius - 5);
+				}
+	
+				g.drawCircle(e.pos.x + centerX, e.pos.y + centerY, 4);
 			}
-
-			if(e.pos.length > radius - 5) {
-				e.pos = e.pos.normal * (radius - 5);
-			}
-
-			g.drawCircle(e.pos.x + centerX, e.pos.y + centerY, 4);
+	
+			g.endFill();
+			
+			render();
 		}
-
-		g.endFill();
 	}
 
 	public function explode() {

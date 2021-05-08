@@ -4,6 +4,10 @@ class Entity {
     public static var ALL : Array<Entity> = [];
     public static var GC : Array<Entity> = [];
 
+	public static function AllActive() {
+		return ALL.filter(e -> return e.isAlive());
+	}
+
 	// Various getters to access all important stuff easily
 	public var game(get,never) : Game; inline function get_game() return App.inst.game;
 	public var fx(get,never) : Fx; inline function get_fx() return App.inst.fx;
@@ -41,7 +45,7 @@ class Entity {
 		reset();
     }
 
-	public inline function isAlive() {
+	public function isAlive() {
 		return !destroyed;
 	}
 

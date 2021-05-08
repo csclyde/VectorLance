@@ -43,7 +43,9 @@ class LazyOrb extends en.Orb {
 
     public override function update() {
 		super.update();
+	}
 
+	public override function render() {
 		g.lineStyle(2, 0x00FF00);
 		g.drawEllipse(centerX, centerY, this.radius + (Math.sin(game.stime * Math.PI)), this.radius + Math.sin(game.stime * 10) * -2);
 		//g.drawPieInner(centerX, centerY, this.radius, 0, Math.PI * 1.5, Math.PI);

@@ -81,7 +81,9 @@ class Game extends Process {
 	override function update() {
 		super.update();
 
-		for(e in Entity.ALL) if(!e.destroyed) e.update();
+		for(e in Entity.AllActive()) {
+			e.update();
+		}
 
 		if(!ui.Modal.hasAny()) {
 			if(input.ca.isKeyboardPressed(K.ESCAPE))
