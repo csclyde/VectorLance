@@ -8,7 +8,7 @@ class Hud extends Process {
 	public var logo: h2d.Bitmap;
 
 	var energyMarker:Float;
-	var energyChargeRate = 0.005;
+	var energyChargeRate = 0.001;
 
 	var distText: h2d.Text;
 	var menuText: h2d.Text;
@@ -86,21 +86,35 @@ class Hud extends Process {
 	override function postUpdate() {
 		super.postUpdate();
 
-		var barWidth = game.energy.getNormalizedMaxEnergy() * 200;
-		var energyWidth = game.energy.getNormalizedEnergy() * 200;
+		var containerWidth = game.energy.getNormalizedMaxEnergy() * 200;
+		var barWidth = (energyMarker) * 200;
+		var targetWidth = (game.energy.getNormalizedEnergy() - ((world.player.charge) / game.energy.getMaxEnergy())) * 200;
 
-		if(energyWidth < 0) energyWidth = 0;
+		if(barWidth < 0) barWidth = 0;
 
+		// energy bar outline
 		g.clear();
 		g.lineStyle(1, 0x0000FF);
-		g.drawRect(10, 10, barWidth + 6, 30);
-		g.drawRect(12, 12, barWidth + 2, 26);
+		g.drawRect(10, 10, containerWidth + 6, 30);
+		g.drawRect(12, 12, containerWidth + 2, 26);
 
+		// energy bar
 		g.lineStyle(0, 0x0000FF);
-
 		g.beginFill(0xFFFFFF);
-		g.drawRect(14, 14, energyWidth, 24);
+		g.drawRect(14, 14, barWidth, 24);
 		g.endFill();
+
+		if(targetWidth > barWidth) {
+			g.beginFill(0x808080);
+			g.drawRect(14 + barWidth, 14, targetWidth - barWidth, 24);
+			g.endFill();
+		}
+		else if(targetWidth < barWidth) {
+			g.beginFill(0x808080);
+			g.drawRect(14 + barWidth - (barWidth - targetWidth), 14, (barWidth - targetWidth), 24);
+			g.endFill();
+		}
+
 
 		g.lineStyle(1, 0xFF0000);
 		g.drawCircle(input.mouseX, input.mouseY, 5);

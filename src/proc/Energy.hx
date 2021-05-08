@@ -18,11 +18,7 @@ class Energy extends Process {
 	}
 
 	public function getNormalizedEnergy() {
-		try {
-			return (currentEnergy - world.player.charge) / maxEnergy;
-		} catch(e) {
-			return (currentEnergy) / maxEnergy;
-		}
+		return currentEnergy / maxEnergy;
 	}
 
 	public function getMaxEnergy() {
@@ -46,7 +42,7 @@ class Energy extends Process {
 	}
 
 	public function removeEnergy(amount:Float) {
-		currentEnergy -= amount;
+		//currentEnergy -= amount;
 	}
 
 	override function reset() {

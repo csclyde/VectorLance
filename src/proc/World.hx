@@ -50,7 +50,7 @@ class World extends Process {
 			orbManager = new OrbManager();
 
 			reset();
-		}, 1 );
+		}, 0 );
 	}
 
 	function onCollision(a:Body, b:Body, c:Array<CollisionData>) {

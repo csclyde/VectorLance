@@ -140,6 +140,8 @@ class Player extends Entity {
 		body.velocity.copyTo(velCopy);
 
 		g.clear();
+
+		// LANCE BODY
 		g.lineStyle(1, 0x0000FF);
 
 		var ang = prevLanceVel.angle + (Math.PI / 2);
@@ -166,11 +168,12 @@ class Player extends Entity {
 		g.addVertex(centerX + rightRotX, centerY + rightRotY, 0.5, 0.0, 0.5, 1.0);
 		g.addVertex(centerX + tipRotX, centerY + tipRotY, 1.0, 0.0, 0.0, 1.0);
 
+		// TARGET ARROW
 		var targetVec = new Vector2(world.target.x - centerX, world.target.y - centerY);
-		targetVec = targetVec.normal * 80;
+		targetVec = targetVec.normal * 160;
 
 		g.lineStyle(1, 0xFFFFFF);
-		g.moveTo(centerX, centerY);
+		g.moveTo(targetVec.x / 2 + centerX, targetVec.y / 2 + centerY);
 		g.lineTo(targetVec.x + centerX, targetVec.y + centerY);
 
 		var sprig1 = Vector2.fromPolar(targetVec.angle + (Math.PI / 4) * 3, 10);
@@ -182,6 +185,7 @@ class Player extends Entity {
 		g.moveTo(targetVec.x + centerX, targetVec.y + centerY);
 		g.lineTo(targetVec.x + centerX + sprig2.x, targetVec.y + centerY + sprig2.y);
 
+		// AIMING ARROW
 		var mouseVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
 		aimVec = mouseVec.normal * Math.max(charge, 1) * 15;
 
