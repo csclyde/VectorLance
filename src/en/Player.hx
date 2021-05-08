@@ -13,6 +13,7 @@ class Player extends Entity {
 	public var chargeMax = 10;
 	public var prevLanceVel: Vector2;
 	public var velCopy: Vector2;
+	public var aimVec: Vector2;
 
 	public function new(sx, sy) {
 		super(sx, sy);
@@ -28,7 +29,7 @@ class Player extends Entity {
 			elasticity: 0.2,
 			mass: 1.5,
 			kinematic: false,
-			drag_length: 0.03,
+			drag_length: 0.02,
 			shapes: [
 				{
 					type: CIRCLE,
@@ -56,6 +57,7 @@ class Player extends Entity {
     	//body.entity = this;
 
 		velCopy = new Vector2(0, 0);
+		aimVec = new Vector2(0, 0);
 
 		events.subscribe('charge_vector', chargeVector);
 		events.subscribe('launch_vector', launchVector);
@@ -84,7 +86,7 @@ class Player extends Entity {
 		if(game.energy.getEnergy() > 0) {
 			charging = true;
 			charge = 1;
-			this.body.velocity.set(0, 0);
+			//this.body.velocity.set(0, 0);
 		}
 	}
 
@@ -111,12 +113,24 @@ class Player extends Entity {
 		body.rotation = Math.atan2(body.velocity.y, body.velocity.x) * (180 / Math.PI) + 90;
 	}
 
+	public override function getCameraAnchorX() {
+		return centerX + aimVec.x + body.velocity.x * 10;
+	}
+
+	public override function getCameraAnchorY() {
+		return centerY + aimVec.y + body.velocity.y * 10;
+	}
+
     public override function update() {
 		centerX = body.x;
 		centerY = body.y;
+		
 
 		if(charging) {
 			charge += chargeRate * tmod;
+			body.drag_length = 0.3;
+		} else {
+			body.drag_length = 0.02;
 		}
 
 		if(charge > chargeMax) {
@@ -169,7 +183,7 @@ class Player extends Entity {
 		g.lineTo(targetVec.x + centerX + sprig2.x, targetVec.y + centerY + sprig2.y);
 
 		var mouseVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
-		var aimVec = mouseVec.normal * Math.max(charge, 1) * 15;
+		aimVec = mouseVec.normal * Math.max(charge, 1) * 15;
 
 		g.lineStyle(1, 0xFF0000);
 		g.moveTo(centerX, centerY);

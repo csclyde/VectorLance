@@ -89,7 +89,7 @@ class World extends Process {
 					// world.player.body.velocity.set(newVel.x, newVel.y);
 
 				}
-				else if(angleDiff > 130 && angleDiff < 230) {
+				else if(angleDiff > 115 && angleDiff < 245) {
 					if(orbEntity != null) orbEntity.explode();
 
 					world.player.velCopy.copyTo(world.player.body.velocity);
@@ -106,9 +106,6 @@ class World extends Process {
 					// delayer.addMs('speed_up', () -> {
 					// 	tw.createMs(worldSpeed, 1.0, TEaseOut, 300);
 					// }, 500);
-				}
-				else if(angleDiff > 120 && angleDiff < 240) {
-					player.alignToVelocity();
 				}
 				else {
 					player.alignToVelocity();

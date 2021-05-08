@@ -72,8 +72,8 @@ class Camera extends Process {
 
 	public function recenter() {
 		if(target != null) {
-			focus.x = target.centerX;
-			focus.y = target.centerY;
+			focus.x = target.getCameraAnchorX();
+			focus.y = target.getCameraAnchorY();
 		}
 	}
 
@@ -123,8 +123,8 @@ class Camera extends Process {
 		if(target!=null) {
 			var s = 0.006;
 			var deadZone = 1;
-			var tx = target.centerX;
-			var ty = target.centerY;
+			var tx = target.getCameraAnchorX();
+			var ty = target.getCameraAnchorY();
 
 			var d = M.dist(focus.x, focus.y, tx, ty);
 			if(d>=deadZone) {

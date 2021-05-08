@@ -126,10 +126,8 @@ class OrbManager extends Process {
 
 	function cullDistantOrbs() {
 		for(orb in orbs) {
-			if(!camera.entityOnScreen(orb, gridSize * 4)) {
+			if(orb.body.active && !camera.entityOnScreen(orb, gridSize * 4)) {
 				orb.body.active = false;
-			} else {
-				orb.body.active = true;
 			}
 		}
 	}
@@ -207,8 +205,9 @@ class OrbManager extends Process {
 			g.drawCircle(e.pos.x, e.pos.y, 4);
 
 			var distVec = new Vector2(world.player.centerX - e.pos.x + world.player.body.velocity.x, world.player.centerY - e.pos.y + world.player.body.velocity.y);
-			e.vel = Vector2.lerp(e.vel, distVec, 0.003);
-
+			
+			
+			e.vel = Vector2.lerp(e.vel, distVec, 0.006);
 
 			if(distVec.length < 20) {
 				e.destroyed = true;

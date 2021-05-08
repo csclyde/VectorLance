@@ -45,6 +45,9 @@ class Entity {
 		return !destroyed;
 	}
 
+	public function getCameraAnchorX() { return centerX; }
+	public function getCameraAnchorY() { return centerY; }
+
 	public function is<T:Entity>(c:Class<T>) return Std.isOfType(this, c);
 	public function as<T:Entity>(c:Class<T>) : T return Std.downcast(this, c);
 
