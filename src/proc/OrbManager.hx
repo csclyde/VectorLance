@@ -129,6 +129,10 @@ class OrbManager extends Process {
 			if(orb.body.active && !camera.entityOnScreen(orb, gridSize * 4)) {
 				orb.body.active = false;
 			}
+
+			if(!orb.body.active && camera.entityOnScreen(orb, gridSize * 3)) {
+				orb.body.active = true;
+			}
 		}
 	}
 
@@ -207,7 +211,7 @@ class OrbManager extends Process {
 			var distVec = new Vector2(world.player.centerX - e.pos.x + world.player.body.velocity.x, world.player.centerY - e.pos.y + world.player.body.velocity.y);
 			
 			
-			e.vel = Vector2.lerp(e.vel, distVec, 0.006);
+			e.vel = Vector2.lerp(e.vel, distVec, 0.01);
 
 			if(distVec.length < 20) {
 				e.destroyed = true;
