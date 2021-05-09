@@ -71,8 +71,8 @@ class Hud extends Process {
 		var distVec = new Vector2(world.target.x - world.player.centerX, world.target.y - world.player.centerY);
 
 		distText.text = Math.floor(distVec.length / 50) + "m to Target";
-		debugText.text = Math.floor(Timer.fps()) + ' FPS \n\n';
 
+		debugText.text = Math.floor(Timer.fps()) + ' FPS \n\n';
 		debugText.text += Entity.ALL.length + ' entities \n\n';
 		debugText.text += Entity.AllActive().length + ' entities \n\n';
 
