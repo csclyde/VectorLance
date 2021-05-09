@@ -72,13 +72,14 @@ class Hud extends Process {
 
 		distText.text = Math.floor(distVec.length / 50) + "m to Target";
 
-		debugText.text = Math.floor(Timer.fps()) + ' FPS \n\n';
-		debugText.text += Entity.ALL.length + ' entities \n\n';
-		debugText.text += Entity.AllActive().length + ' entities \n\n';
+		// debugText.text = camera.focus.x + '';
+		// debugText.text = Math.floor(Timer.fps()) + ' FPS \n\n';
+		// debugText.text += Entity.ALL.length + ' entities \n\n';
+		// debugText.text += Entity.AllActive().length + ' entities \n\n';
 
-		for(p in Process.getSortedProfilerTimes().filter(set -> return set.value >= 1.0)) {
-			debugText.text += p.key + ': ' + p.value + '\n';
-		}
+		// for(p in Process.getSortedProfilerTimes().filter(set -> return set.value >= 1.0)) {
+		// 	debugText.text += p.key + ': ' + p.value + '\n';
+		// }
 	}
 
 	override function update() {
