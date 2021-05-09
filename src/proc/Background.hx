@@ -23,7 +23,7 @@ class Background extends Process {
 				var newStar = {
 					x: M.frandRange(0, camera.pxWidth),
 					y: M.frandRange(0, camera.pxHeight),
-					z: M.frand() * 2,
+					z: M.frandRange(0.2, 0.8),
 				}
 
 				newStar.x /= newStar.z;
@@ -61,8 +61,9 @@ class Background extends Process {
 			if (offsetPosY < camera.top) { s.y += camera.pxHeight/s.z; }
 			if (offsetPosY > camera.bottom) { s.y -= camera.pxHeight/s.z; }
 				
-			g.lineStyle(1, 0xFFFFFF, M.frand());
-			g.drawCircle(offsetPosX, offsetPosY, 1);
+			//g.lineStyle(1, 0xFFFFFF, M.frand());
+			g.beginFill(0xFFFFFF, M.frand());
+			g.drawCircle(offsetPosX, offsetPosY, 2);
 		}
 	}
 }

@@ -70,7 +70,7 @@ class Hud extends Process {
 	override function fixedUpdate() {
 		var distVec = new Vector2(world.target.x - world.player.centerX, world.target.y - world.player.centerY);
 
-		distText.text = Math.floor(distVec.length / 50) + "m to Target";
+		distText.text = Math.floor(distVec.length / 50) + '';
 
 		// debugText.text = camera.focus.x + '';
 		// debugText.text = Math.floor(Timer.fps()) + ' FPS \n\n';
@@ -132,8 +132,81 @@ class Hud extends Process {
 			g.endFill();
 		}
 
-
 		g.lineStyle(1, 0xFF0000);
 		g.drawCircle(input.mouseX, input.mouseY, 5);
+
+		var tx = (camera.pxWidth / 2) + 20;
+		var ty = 20;
+		var ch = 40;
+		var chh = 20;
+		var cw = 30;
+		var cwh = 15;
+		var sw = 35;
+
+		// T
+		g.moveTo(tx, ty);
+		g.lineTo(tx + cw, ty);
+		g.moveTo(tx + cwh, ty);
+		g.lineTo(tx + cwh, ty + ch);
+		tx += sw;
+
+		// O
+		g.drawEllipse(tx + cwh, ty + chh, cwh, chh);
+		tx += sw;
+
+		// SPACE
+		tx += sw;
+
+		// T
+		g.moveTo(tx, ty);
+		g.lineTo(tx + cw, ty);
+		g.moveTo(tx + cwh, ty);
+		g.lineTo(tx + cwh, ty + ch);
+		tx += sw;
+
+		// A
+		g.moveTo(tx, ty + ch);
+		g.lineTo(tx, ty + chh);
+		g.lineTo(tx + cwh, ty);
+		g.lineTo(tx + cw, ty + chh);
+		g.lineTo(tx + cw, ty + ch);
+		g.moveTo(tx, ty + chh);
+		g.lineTo(tx + cw, ty + chh);
+		tx += sw;
+
+		// R
+		g.moveTo(tx, ty + ch);
+		g.lineTo(tx, ty);
+		g.lineTo(tx + cw, ty);
+		g.lineTo(tx + cw, ty + chh);
+		g.lineTo(tx, ty + chh);
+		g.lineTo(tx + cw, ty + ch);
+		tx += sw;
+
+		// G
+		g.moveTo(tx + cw, ty);
+		g.lineTo(tx, ty);
+		g.lineTo(tx, ty + ch);
+		g.lineTo(tx + cw, ty + ch);
+		g.lineTo(tx + cw, ty + chh);
+		g.lineTo(tx + cwh, ty + chh);
+		tx += sw;
+
+		// E
+		g.moveTo(tx + cw, ty);
+		g.lineTo(tx, ty);
+		g.lineTo(tx, ty + ch);
+		g.lineTo(tx + cw, ty + ch);
+		g.moveTo(tx, ty + chh);
+		g.lineTo(tx + cwh, ty + chh);
+		tx += sw;
+
+		// T
+		g.moveTo(tx, ty);
+		g.lineTo(tx + cw, ty);
+		g.moveTo(tx + cwh, ty);
+		g.lineTo(tx + cwh, ty + ch);
+		tx += sw;
+
 	}
 }
