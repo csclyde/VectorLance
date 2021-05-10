@@ -142,12 +142,12 @@ class Player extends Entity {
 		mouseVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
 		aimVec = mouseVec.normal * Math.max(charge, 1) * 15;
 		
-		if(charging) {
-			charge += chargeRate * tmod;
-			body.drag_length = 0.3;
-		} else {
-			body.drag_length = 0.02;
-		}
+		// if(charging) {
+		// 	charge += chargeRate * tmod;
+		// 	body.drag_length = 0.3;
+		// } else {
+		// 	body.drag_length = 0.02;
+		// }
 
 		if(charge > chargeMax) {
 			charge = chargeMax;
