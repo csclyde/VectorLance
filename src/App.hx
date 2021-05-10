@@ -1,3 +1,6 @@
+import h2d.filter.Glow;
+import format.pdf.Crypt;
+
 class App extends hxd.App {
 	public static var inst : App;
 

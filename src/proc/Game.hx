@@ -1,5 +1,7 @@
 package proc;
 
+import format.gif.Data.ColorTable;
+import format.pdf.Crypt;
 import h2d.filter.Glow;
 import h2d.filter.Bloom;
 

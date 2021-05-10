@@ -1,11 +1,14 @@
 package en;
 
+import h2d.filter.Glow;
 import hxmath.math.Vector2;
 import echo.Body;
 
 class Player extends Entity {
 	public var body:Body;
-	public var g : h2d.Graphics;
+	public var gShip : h2d.Graphics;
+	public var gAim : h2d.Graphics;
+	public var gTarget : h2d.Graphics;
 
 	public var charge : Float;
 	public var charging : Bool;
@@ -19,10 +22,17 @@ class Player extends Entity {
 	public function new(sx, sy) {
 		super(sx, sy);
 
-		g = new h2d.Graphics();
-		//g.filter = new h2d.filter.Glow(0x0000FF, 0.7, 5.0, 1.7, 100.0, true );
+		gShip = new h2d.Graphics();
+		gAim = new h2d.Graphics();
+		gTarget = new h2d.Graphics();
 
-		world.root.add(g, Const.MIDGROUND_OBJECTS);
+		world.root.add(gShip, Const.MIDGROUND_OBJECTS);
+		world.root.add(gAim, Const.MIDGROUND_OBJECTS);
+		world.root.add(gTarget, Const.MIDGROUND_OBJECTS);
+
+		gShip.filter = new Glow(0x0000FF, 0.6, 15.0, 2.3, 20.0, true);
+		gAim.filter = new Glow(0xFF0000, 0.6, 15.0, 2.3, 20.0, true);
+		gTarget.filter = new Glow(0xFFFFFF, 0.6, 15.0, 2.3, 20.0, true);
 
 		body = new Body({
 			x: sx,
@@ -145,10 +155,12 @@ class Player extends Entity {
 
 		body.velocity.copyTo(velCopy);
 
-		g.clear();
+		gShip.clear();
+		gAim.clear();
+		gTarget.clear();
 
 		// LANCE BODY
-		g.lineStyle(1, 0x0000FF);
+		gShip.lineStyle(1, 0x0000FF);
 
 		var ang = prevLanceVel.angle + (Math.PI / 2);
 
@@ -168,42 +180,42 @@ class Player extends Entity {
 		var rightRotX = (10) * Math.cos(ang) - (40) * Math.sin(ang);
 		var rightRotY = (40) * Math.cos(ang) + (10) * Math.sin(ang);
 
-		g.addVertex(centerX + tipRotX, centerY + tipRotY, 1.0, 0.0, 0.0, 1.0);
-		g.addVertex(centerX + leftRotX, centerY + leftRotY, 0.5, 0.0, 0.5, 1.0);
-		g.addVertex(centerX + botRotX, centerY + botRotY, 0.5, 0.0, 0.5, 1.0);
-		g.addVertex(centerX + rightRotX, centerY + rightRotY, 0.5, 0.0, 0.5, 1.0);
-		g.addVertex(centerX + tipRotX, centerY + tipRotY, 1.0, 0.0, 0.0, 1.0);
+		gShip.addVertex(centerX + tipRotX, centerY + tipRotY, 1.0, 0.0, 0.0, 1.0);
+		gShip.addVertex(centerX + leftRotX, centerY + leftRotY, 0.5, 0.0, 0.5, 1.0);
+		gShip.addVertex(centerX + botRotX, centerY + botRotY, 0.5, 0.0, 0.5, 1.0);
+		gShip.addVertex(centerX + rightRotX, centerY + rightRotY, 0.5, 0.0, 0.5, 1.0);
+		gShip.addVertex(centerX + tipRotX, centerY + tipRotY, 1.0, 0.0, 0.0, 1.0);
 
 		// TARGET ARROW
 		var targetVec = new Vector2(world.target.x - centerX, world.target.y - centerY);
 		targetVec = targetVec.normal * 160;
 
-		g.lineStyle(1, 0xFFFFFF);
-		g.moveTo(targetVec.x / 2 + centerX, targetVec.y / 2 + centerY);
-		g.lineTo(targetVec.x + centerX, targetVec.y + centerY);
+		gTarget.lineStyle(1, 0xFFFFFF);
+		gTarget.moveTo(targetVec.x / 2 + centerX, targetVec.y / 2 + centerY);
+		gTarget.lineTo(targetVec.x + centerX, targetVec.y + centerY);
 
 		var sprig1 = Vector2.fromPolar(targetVec.angle + (Math.PI / 4) * 3, 10);
 		var sprig2 = Vector2.fromPolar(targetVec.angle + (Math.PI / 4) * 5, 10);
 
-		g.moveTo(targetVec.x + centerX, targetVec.y + centerY);
-		g.lineTo(targetVec.x + centerX + sprig1.x, targetVec.y + centerY + sprig1.y);
+		gTarget.moveTo(targetVec.x + centerX, targetVec.y + centerY);
+		gTarget.lineTo(targetVec.x + centerX + sprig1.x, targetVec.y + centerY + sprig1.y);
 
-		g.moveTo(targetVec.x + centerX, targetVec.y + centerY);
-		g.lineTo(targetVec.x + centerX + sprig2.x, targetVec.y + centerY + sprig2.y);
+		gTarget.moveTo(targetVec.x + centerX, targetVec.y + centerY);
+		gTarget.lineTo(targetVec.x + centerX + sprig2.x, targetVec.y + centerY + sprig2.y);
 
 		// AIMING ARROW
-		g.lineStyle(1, 0xFF0000);
-		g.moveTo(centerX, centerY);
-		g.lineTo(aimVec.x + centerX, aimVec.y + centerY);
+		gAim.lineStyle(1, 0xFF0000);
+		gAim.moveTo(centerX, centerY);
+		gAim.lineTo(aimVec.x + centerX, aimVec.y + centerY);
 
 		sprig1 = Vector2.fromPolar(aimVec.angle + (Math.PI / 4) * 3, 10);
 		sprig2 = Vector2.fromPolar(aimVec.angle + (Math.PI / 4) * 5, 10);
 
-		g.moveTo(aimVec.x + centerX, aimVec.y + centerY);
-		g.lineTo(aimVec.x + centerX + sprig1.x, aimVec.y + centerY + sprig1.y);
+		gAim.moveTo(aimVec.x + centerX, aimVec.y + centerY);
+		gAim.lineTo(aimVec.x + centerX + sprig1.x, aimVec.y + centerY + sprig1.y);
 
-		g.moveTo(aimVec.x + centerX, aimVec.y + centerY);
-		g.lineTo(aimVec.x + centerX + sprig2.x, aimVec.y + centerY + sprig2.y);
+		gAim.moveTo(aimVec.x + centerX, aimVec.y + centerY);
+		gAim.lineTo(aimVec.x + centerX + sprig2.x, aimVec.y + centerY + sprig2.y);
 
 	}
 }

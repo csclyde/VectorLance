@@ -7,6 +7,7 @@ import hxmath.math.Vector2;
 class Hud extends Process {
 	var flow : h2d.Flow;
 	public var g : h2d.Graphics;
+	public var gBorder : h2d.Graphics;
 	public var logo: h2d.Bitmap;
 
 	var energyMarker:Float;
@@ -25,6 +26,13 @@ class Hud extends Process {
 		g = new h2d.Graphics();
 		root.add(g, Const.UI_LAYER);
 		g.alpha = 0;
+		g.filter = new Glow(0xFFFFFF, 0.5, 10.0, 1.3, 20.0, true);
+
+		gBorder = new h2d.Graphics();
+		root.add(gBorder, Const.UI_LAYER);
+		gBorder.alpha = 0;
+		gBorder.filter = new Glow(0x0000FF, 0.5, 10.0, 1.3, 20.0, true);
+
 
 		reset();
 
@@ -55,6 +63,7 @@ class Hud extends Process {
 				tw.createMs(logo.alpha, 0, TEaseOut, 1000);
 				tw.createMs(distText.alpha, 1, TEaseOut, 1000);
 				tw.createMs(g.alpha, 1, TEaseOut, 1000);
+				tw.createMs(gBorder.alpha, 1, TEaseOut, 1000);
 				inTitle = false;
 			}
 		});
@@ -111,12 +120,13 @@ class Hud extends Process {
 		if(barWidth < 0) barWidth = 0;
 
 		// energy bar outline
-		g.clear();
-		g.lineStyle(1, 0x0000FF);
-		g.drawRect(10, 10, containerWidth + 6, 30);
-		g.drawRect(12, 12, containerWidth + 2, 26);
+		gBorder.clear();
+		gBorder.lineStyle(1, 0x0000FF);
+		gBorder.drawRect(10, 10, containerWidth + 6, 30);
+		gBorder.drawRect(12, 12, containerWidth + 2, 26);
 
 		// energy bar
+		g.clear();
 		g.lineStyle(0, 0x0000FF);
 		g.beginFill(0xFFFFFF);
 		g.drawRect(14, 14, barWidth, 24);
