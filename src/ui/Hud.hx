@@ -1,5 +1,6 @@
 package ui;
 
+import haxe.iterators.StringIterator;
 import hxd.Timer;
 import hxmath.math.Vector2;
 
@@ -70,7 +71,7 @@ class Hud extends Process {
 	override function fixedUpdate() {
 		var distVec = new Vector2(world.target.x - world.player.centerX, world.target.y - world.player.centerY);
 
-		distText.text = Math.floor(distVec.length / 50) + '';
+		//distText.text = Math.floor(distVec.length / 50) + '';
 
 		// debugText.text = camera.focus.x + '';
 		// debugText.text = Math.floor(Timer.fps()) + ' FPS \n\n';
@@ -132,16 +133,114 @@ class Hud extends Process {
 			g.endFill();
 		}
 
-		g.lineStyle(1, 0xFF0000);
+		g.lineStyle(2, 0xFFFFFF);
 		g.drawCircle(input.mouseX, input.mouseY, 5);
 
-		var tx = (camera.pxWidth / 2) + 20;
+		var tx = (camera.pxWidth / 2) - 160;
 		var ty = 20;
 		var ch = 40;
 		var chh = 20;
-		var cw = 30;
-		var cwh = 15;
-		var sw = 35;
+		var cw = 20;
+		var cwh = 10;
+		var sw = cw + 5;
+
+		var distVec = new Vector2(world.target.x - world.player.centerX, world.target.y - world.player.centerY);
+		var dist = Math.floor(distVec.length / 50) + '';
+
+		var iter = new StringIterator(dist);
+
+		for(i in 0...dist.length) {
+			var l = dist.charAt(i);
+
+			if(l == '0') {
+				g.moveTo(tx + cw, ty);
+				g.lineTo(tx, ty);
+				g.lineTo(tx, ty + ch);
+				g.lineTo(tx + cw, ty + ch);
+				g.lineTo(tx + cw, ty);
+				g.lineTo(tx, ty + ch);
+				tx += sw;
+			}
+			else if(l == '1') {
+				g.moveTo(tx, ty);
+				g.lineTo(tx + cwh, ty);
+				g.lineTo(tx + cwh, ty + ch);
+				g.moveTo(tx, ty + ch);
+				g.lineTo(tx + cw, ty + ch);
+				tx += sw;
+			}
+			else if(l == '2') {
+				g.moveTo(tx, ty);
+				g.lineTo(tx + cw, ty);
+				g.lineTo(tx + cw, ty + chh);
+				g.lineTo(tx, ty + chh);
+				g.lineTo(tx, ty + ch);
+				g.lineTo(tx + cw, ty + ch);
+				tx += sw;
+			}
+			else if(l == '3') {
+				g.moveTo(tx, ty);
+				g.lineTo(tx + cw, ty);
+				g.lineTo(tx + cw, ty + ch);
+				g.lineTo(tx, ty + ch);
+				g.moveTo(tx + cw, ty + chh);
+				g.lineTo(tx, ty + chh);
+				tx += sw;
+			}
+			else if(l == '4') {
+				g.moveTo(tx, ty);
+				g.lineTo(tx, ty + chh);
+				g.lineTo(tx + cw, ty + chh);
+				g.moveTo(tx + cw, ty);
+				g.lineTo(tx + cw, ty + ch);
+				tx += sw;
+			}
+			else if(l == '5') {
+				g.moveTo(tx + cw, ty);
+				g.lineTo(tx, ty);
+				g.lineTo(tx, ty + chh);
+				g.lineTo(tx + cw, ty + chh);
+				g.lineTo(tx + cw, ty + ch);
+				g.lineTo(tx, ty + ch);
+				tx += sw;
+			}
+			else if(l == '6') {
+				g.moveTo(tx + cw, ty);
+				g.lineTo(tx, ty);
+				g.lineTo(tx, ty + ch);
+				g.lineTo(tx + cw, ty + ch);
+				g.lineTo(tx + cw, ty + chh);
+				g.lineTo(tx, ty + chh);
+				tx += sw;
+			}
+			else if(l == '7') {
+				g.moveTo(tx, ty);
+				g.lineTo(tx + cw, ty);
+				g.lineTo(tx, ty + ch);
+				tx += sw;
+			}
+			else if(l == '8') {
+				g.moveTo(tx, ty);
+				g.lineTo(tx + cw, ty);
+				g.lineTo(tx + cw, ty + ch);
+				g.lineTo(tx, ty + ch);
+				g.lineTo(tx, ty);
+				g.moveTo(tx, ty + chh);
+				g.lineTo(tx + cw, ty + chh);
+				tx += sw;
+			}
+			else if(l == '9') {
+				g.moveTo(tx + cw, ty + ch);
+				g.lineTo(tx + cw, ty);
+				g.lineTo(tx, ty);
+				g.lineTo(tx, ty + chh);
+				g.lineTo(tx + cw, ty + chh);
+				tx += sw;
+			}
+
+		}
+
+		tx += sw;
 
 		// T
 		g.moveTo(tx, ty);
@@ -207,6 +306,5 @@ class Hud extends Process {
 		g.moveTo(tx + cwh, ty);
 		g.lineTo(tx + cwh, ty + ch);
 		tx += sw;
-
 	}
 }

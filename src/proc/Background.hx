@@ -4,6 +4,8 @@ typedef Star = {
 	x: Float,
 	y: Float,
 	z: Float,
+	size: Float,
+	bright: Float,
 }
 
 class Background extends Process {
@@ -24,6 +26,8 @@ class Background extends Process {
 					x: M.frandRange(0, camera.pxWidth),
 					y: M.frandRange(0, camera.pxHeight),
 					z: M.frandRange(0.2, 0.8),
+					size: M.frandRange(0.5, 2),
+					bright: M.frand()
 				}
 
 				newStar.x /= newStar.z;
@@ -62,8 +66,8 @@ class Background extends Process {
 			if (offsetPosY > camera.bottom) { s.y -= camera.pxHeight/s.z; }
 				
 			//g.lineStyle(1, 0xFFFFFF, M.frand());
-			g.beginFill(0xFFFFFF, M.frand());
-			g.drawCircle(offsetPosX, offsetPosY, 2);
+			g.beginFill(0xFFFFFF, s.bright);
+			g.drawCircle(offsetPosX, offsetPosY, s.size);
 		}
 	}
 }
