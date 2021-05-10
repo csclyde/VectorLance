@@ -9,7 +9,7 @@ class LazyOrb extends en.Orb {
 		
 		super(sx, sy, physWorld);
 
-		g.filter = new Glow(0x00FF00, 0.6, 15.0, 2.3, 20.0, true);
+		//g.filter = new Glow(0x00FF00, 0.6, 15.0, 2.3, 20.0, true);
 
 		
 		radius = 56;
@@ -50,7 +50,7 @@ class LazyOrb extends en.Orb {
 
 	public override function render() {
 		g.lineStyle(1, 0x00FF00);
-		g.drawEllipse(centerX, centerY, this.radius + (Math.sin(game.stime * Math.PI)), this.radius + Math.sin(game.stime * 10) * -2);
+		g.drawEllipse(centerX, centerY, this.radius + (Math.sin(game.stime * 10)) * 3, this.radius + Math.sin(game.stime * 10) * -3);
 		//g.drawPieInner(centerX, centerY, this.radius, 0, Math.PI * 1.5, Math.PI);
 	}
 }

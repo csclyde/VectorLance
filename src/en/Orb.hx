@@ -8,6 +8,7 @@ import proc.OrbManager;
 class Orb extends Entity {
 	public var body:Body;
 	public var g : h2d.Graphics;
+	public var gEnergy : h2d.Graphics;
 
 	public var energyOrbs: Array<EnergyOrb>;
 
@@ -19,8 +20,12 @@ class Orb extends Entity {
 		super(sx, sy);
 
 		g = new h2d.Graphics();
+		gEnergy = new h2d.Graphics();
 
 		world.root.add(g, Const.MIDGROUND_OBJECTS);
+		world.root.add(gEnergy, Const.MIDGROUND_OBJECTS);
+
+		//gEnergy.filter = new Glow(0xFFFFFF, 0.5, 10.0, 1.3, 20.0, true);
 
 		energyOrbs = [];
 	}
@@ -48,9 +53,10 @@ class Orb extends Entity {
 		centerY = body.y;
 
 		g.clear();
+		gEnergy.clear();
 		
 		if(camera.entityOnScreen(this, 200)) {
-			g.beginFill(0xFFFFFF);
+			gEnergy.beginFill(0xFFFFFF);
 	
 			for(e in energyOrbs) {
 				e.pos.set(e.pos.x + e.vel.x, e.pos.y + e.vel.y);
@@ -63,10 +69,10 @@ class Orb extends Entity {
 					e.pos = e.pos.normal * (radius - 5);
 				}
 	
-				g.drawCircle(e.pos.x + centerX, e.pos.y + centerY, 4);
+				gEnergy.drawCircle(e.pos.x + centerX, e.pos.y + centerY, 4);
 			}
 	
-			g.endFill();
+			gEnergy.endFill();
 			
 			render();
 		}
@@ -89,6 +95,7 @@ class Orb extends Entity {
 		super.destroy();
 
 		g.clear();
+		gEnergy.clear();
 		body.dispose();
 	}
 }

@@ -26,12 +26,12 @@ class Hud extends Process {
 		g = new h2d.Graphics();
 		root.add(g, Const.UI_LAYER);
 		g.alpha = 0;
-		g.filter = new Glow(0xFFFFFF, 0.5, 10.0, 1.3, 20.0, true);
+		// g.filter = new Glow(0xFFFFFF, 0.5, 10.0, 1.3, 20.0, true);
 
 		gBorder = new h2d.Graphics();
 		root.add(gBorder, Const.UI_LAYER);
 		gBorder.alpha = 0;
-		gBorder.filter = new Glow(0x0000FF, 0.5, 10.0, 1.3, 20.0, true);
+		// gBorder.filter = new Glow(0x0000FF, 0.5, 10.0, 1.3, 20.0, true);
 
 
 		reset();
@@ -143,7 +143,7 @@ class Hud extends Process {
 			g.endFill();
 		}
 
-		g.lineStyle(2, 0xFFFFFF);
+		g.lineStyle(1, 0xFFFFFF);
 		g.drawCircle(input.mouseX, input.mouseY, 5);
 
 		var tx = (camera.pxWidth / 2) - 160;
@@ -152,7 +152,7 @@ class Hud extends Process {
 		var chh = 20;
 		var cw = 20;
 		var cwh = 10;
-		var sw = cw + 5;
+		var sw = cw + 10;
 
 		var distVec = new Vector2(world.target.x - world.player.centerX, world.target.y - world.player.centerY);
 		var dist = Math.floor(distVec.length / 50) + '';

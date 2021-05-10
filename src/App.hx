@@ -1,6 +1,3 @@
-import h2d.filter.Glow;
-import format.pdf.Crypt;
-
 class App extends hxd.App {
 	public static var inst : App;
 
@@ -58,7 +55,13 @@ class App extends hxd.App {
 		util = new Util();
 		onResize();
 
-		Process.PROFILING = true;
+		// s2d.filter = new h2d.filter.Bloom(1.2, 3.0, 5.0, 1.2, 20.0);
+		// var filter: h2d.filter.Bloom;
+		// filter = cast(s2d.filter, h2d.filter.Bloom);
+		// filter.radius = 8.0;
+		// filter.gain = 2.0;
+
+		Process.PROFILING = false;
 	}
 
 	override function onResize() {

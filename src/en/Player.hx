@@ -30,9 +30,9 @@ class Player extends Entity {
 		world.root.add(gAim, Const.MIDGROUND_OBJECTS);
 		world.root.add(gTarget, Const.MIDGROUND_OBJECTS);
 
-		gShip.filter = new Glow(0x0000FF, 0.6, 15.0, 2.3, 20.0, true);
-		gAim.filter = new Glow(0xFF0000, 0.6, 15.0, 2.3, 20.0, true);
-		gTarget.filter = new Glow(0xFFFFFF, 0.6, 15.0, 2.3, 20.0, true);
+		// gShip.filter = new Glow(0x0000FF, 0.6, 15.0, 2.3, 20.0, true);
+		// gAim.filter = new Glow(0xFF0000, 0.6, 15.0, 2.3, 20.0, true);
+		// gTarget.filter = new Glow(0xFFFFFF, 0.6, 15.0, 2.3, 20.0, true);
 
 		body = new Body({
 			x: sx,
