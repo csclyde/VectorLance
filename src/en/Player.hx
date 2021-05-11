@@ -148,7 +148,7 @@ class Player extends Entity {
 		g.clear();
 
 		// LANCE BODY
-		g.lineStyle(3, 0xa32428);
+		g.lineStyle(2, 0xFF0000);
 
 		var ang = prevLanceVel.angle + (Math.PI / 2);
 
@@ -192,7 +192,7 @@ class Player extends Entity {
 		g.lineTo(targetVec.x + centerX + sprig2.x, targetVec.y + centerY + sprig2.y);
 
 		// AIMING ARROW
-		g.lineStyle(3, 0xa32428);
+		g.lineStyle(2, 0xFF0000);
 		g.moveTo(centerX, centerY);
 		g.lineTo(aimVec.x + centerX, aimVec.y + centerY);
 

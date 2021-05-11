@@ -43,7 +43,7 @@ class Hud extends Process {
 		debugText.textAlign = Left;
 		debugText.x = 10;
 		debugText.y = 50;
-		root.add(debugText, Const.UI_LAYER);
+		//root.add(debugText, Const.UI_LAYER);
 
 		logo = new h2d.Bitmap(hxd.Res.logo.toTile());
 		logo.x = (camera.pxWidth / 2) - (logo.tile.width / 2);
@@ -72,12 +72,6 @@ class Hud extends Process {
 		var distVec = new Vector2(world.target.x - world.player.centerX, world.target.y - world.player.centerY);
 
 		//distText.text = Math.floor(distVec.length / 50) + '';
-
-		debugText.text = 'Power: ' + App.inst.bloomFilter.power + '\n';
-		debugText.text += 'Amount: ' + App.inst.bloomFilter.amount + '\n';
-		debugText.text += 'Radius: ' + App.inst.bloomFilter.radius + '\n';
-		debugText.text += 'Gain: ' + App.inst.bloomFilter.gain + '\n';
-		debugText.text += 'Quality: ' + App.inst.bloomFilter.quality + '\n';
 		
 		// debugText.text = camera.focus.x + '';
 		// debugText.text = Math.floor(Timer.fps()) + ' FPS \n\n';
