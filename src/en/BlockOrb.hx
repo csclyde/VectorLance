@@ -47,7 +47,7 @@ class BlockOrb extends en.Orb {
 	}
 
 	public override function render() {
-		g.lineStyle(2, 0xFF0000);
+		g.lineStyle(3, 0xFF1818);
 
 		var r:Rect = cast body.shape;
 

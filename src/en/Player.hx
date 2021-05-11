@@ -6,9 +6,7 @@ import echo.Body;
 
 class Player extends Entity {
 	public var body:Body;
-	public var gShip : h2d.Graphics;
-	public var gAim : h2d.Graphics;
-	public var gTarget : h2d.Graphics;
+	public var g : h2d.Graphics;
 
 	public var charge : Float;
 	public var charging : Bool;
@@ -22,17 +20,9 @@ class Player extends Entity {
 	public function new(sx, sy) {
 		super(sx, sy);
 
-		gShip = new h2d.Graphics();
-		gAim = new h2d.Graphics();
-		gTarget = new h2d.Graphics();
+		g = new h2d.Graphics();
 
-		world.root.add(gShip, Const.MIDGROUND_OBJECTS);
-		world.root.add(gAim, Const.MIDGROUND_OBJECTS);
-		world.root.add(gTarget, Const.MIDGROUND_OBJECTS);
-
-		// gShip.filter = new Glow(0x0000FF, 0.6, 15.0, 2.3, 20.0, true);
-		// gAim.filter = new Glow(0xFF0000, 0.6, 15.0, 2.3, 20.0, true);
-		// gTarget.filter = new Glow(0xFFFFFF, 0.6, 15.0, 2.3, 20.0, true);
+		world.root.add(g, Const.MIDGROUND_OBJECTS);
 
 		body = new Body({
 			x: sx,
@@ -40,7 +30,7 @@ class Player extends Entity {
 			elasticity: 0.2,
 			mass: 1.5,
 			kinematic: false,
-			drag_length: 0.02,
+			drag_length: 0.03,
 			shapes: [
 				{
 					type: CIRCLE,
@@ -108,7 +98,7 @@ class Player extends Entity {
 			var activeOrbs = world.physWorld.dynamics().filter((b:Body) -> return b.active);
 			charging = false;
 			var newVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
-			body.velocity = newVec.normal * charge * 1.3;
+			body.velocity = newVec.normal * charge * 1.6;
 			alignToVelocity();
 			
 			body.velocity.copyTo(prevLanceVel);
@@ -128,11 +118,11 @@ class Player extends Entity {
 	}
 
 	public override function getCameraAnchorX() {
-		return centerX + aimVec.x + body.velocity.x * 10;
+		return centerX + aimVec.x + body.velocity.x * 15;
 	}
 
 	public override function getCameraAnchorY() {
-		return centerY + aimVec.y + body.velocity.y * 10;
+		return centerY + aimVec.y + body.velocity.y * 15;
 	}
 
     public override function update() {
@@ -142,12 +132,12 @@ class Player extends Entity {
 		mouseVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
 		aimVec = mouseVec.normal * Math.max(charge, 1) * 15;
 		
-		// if(charging) {
-		// 	charge += chargeRate * tmod;
-		// 	body.drag_length = 0.3;
-		// } else {
-		// 	body.drag_length = 0.02;
-		// }
+		if(charging) {
+			charge += chargeRate * tmod;
+			body.drag_length = 0.3;
+		} else {
+			body.drag_length = 0.02;
+		}
 
 		if(charge > chargeMax) {
 			charge = chargeMax;
@@ -155,12 +145,10 @@ class Player extends Entity {
 
 		body.velocity.copyTo(velCopy);
 
-		gShip.clear();
-		gAim.clear();
-		gTarget.clear();
+		g.clear();
 
 		// LANCE BODY
-		gShip.lineStyle(1, 0x0000FF);
+		g.lineStyle(3, 0xa32428);
 
 		var ang = prevLanceVel.angle + (Math.PI / 2);
 
@@ -180,42 +168,42 @@ class Player extends Entity {
 		var rightRotX = (10) * Math.cos(ang) - (40) * Math.sin(ang);
 		var rightRotY = (40) * Math.cos(ang) + (10) * Math.sin(ang);
 
-		gShip.addVertex(centerX + tipRotX, centerY + tipRotY, 1.0, 0.0, 0.0, 1.0);
-		gShip.addVertex(centerX + leftRotX, centerY + leftRotY, 0.5, 0.0, 0.5, 1.0);
-		gShip.addVertex(centerX + botRotX, centerY + botRotY, 0.5, 0.0, 0.5, 1.0);
-		gShip.addVertex(centerX + rightRotX, centerY + rightRotY, 0.5, 0.0, 0.5, 1.0);
-		gShip.addVertex(centerX + tipRotX, centerY + tipRotY, 1.0, 0.0, 0.0, 1.0);
+		g.addVertex(centerX + tipRotX, centerY + tipRotY, 1.0, 0.0, 0.0, 1.0);
+		g.addVertex(centerX + leftRotX, centerY + leftRotY, 0.5, 0.0, 0.5, 1.0);
+		g.addVertex(centerX + botRotX, centerY + botRotY, 0.5, 0.0, 0.5, 1.0);
+		g.addVertex(centerX + rightRotX, centerY + rightRotY, 0.5, 0.0, 0.5, 1.0);
+		g.addVertex(centerX + tipRotX, centerY + tipRotY, 1.0, 0.0, 0.0, 1.0);
 
 		// TARGET ARROW
 		var targetVec = new Vector2(world.target.x - centerX, world.target.y - centerY);
 		targetVec = targetVec.normal * 160;
 
-		gTarget.lineStyle(1, 0xFFFFFF);
-		gTarget.moveTo(targetVec.x / 2 + centerX, targetVec.y / 2 + centerY);
-		gTarget.lineTo(targetVec.x + centerX, targetVec.y + centerY);
+		g.lineStyle(2, 0xFFFFFF);
+		g.moveTo(targetVec.x / 2 + centerX, targetVec.y / 2 + centerY);
+		g.lineTo(targetVec.x + centerX, targetVec.y + centerY);
 
 		var sprig1 = Vector2.fromPolar(targetVec.angle + (Math.PI / 4) * 3, 10);
 		var sprig2 = Vector2.fromPolar(targetVec.angle + (Math.PI / 4) * 5, 10);
 
-		gTarget.moveTo(targetVec.x + centerX, targetVec.y + centerY);
-		gTarget.lineTo(targetVec.x + centerX + sprig1.x, targetVec.y + centerY + sprig1.y);
+		g.moveTo(targetVec.x + centerX, targetVec.y + centerY);
+		g.lineTo(targetVec.x + centerX + sprig1.x, targetVec.y + centerY + sprig1.y);
 
-		gTarget.moveTo(targetVec.x + centerX, targetVec.y + centerY);
-		gTarget.lineTo(targetVec.x + centerX + sprig2.x, targetVec.y + centerY + sprig2.y);
+		g.moveTo(targetVec.x + centerX, targetVec.y + centerY);
+		g.lineTo(targetVec.x + centerX + sprig2.x, targetVec.y + centerY + sprig2.y);
 
 		// AIMING ARROW
-		gAim.lineStyle(1, 0xFF0000);
-		gAim.moveTo(centerX, centerY);
-		gAim.lineTo(aimVec.x + centerX, aimVec.y + centerY);
+		g.lineStyle(3, 0xa32428);
+		g.moveTo(centerX, centerY);
+		g.lineTo(aimVec.x + centerX, aimVec.y + centerY);
 
 		sprig1 = Vector2.fromPolar(aimVec.angle + (Math.PI / 4) * 3, 10);
 		sprig2 = Vector2.fromPolar(aimVec.angle + (Math.PI / 4) * 5, 10);
 
-		gAim.moveTo(aimVec.x + centerX, aimVec.y + centerY);
-		gAim.lineTo(aimVec.x + centerX + sprig1.x, aimVec.y + centerY + sprig1.y);
+		g.moveTo(aimVec.x + centerX, aimVec.y + centerY);
+		g.lineTo(aimVec.x + centerX + sprig1.x, aimVec.y + centerY + sprig1.y);
 
-		gAim.moveTo(aimVec.x + centerX, aimVec.y + centerY);
-		gAim.lineTo(aimVec.x + centerX + sprig2.x, aimVec.y + centerY + sprig2.y);
+		g.moveTo(aimVec.x + centerX, aimVec.y + centerY);
+		g.lineTo(aimVec.x + centerX + sprig2.x, aimVec.y + centerY + sprig2.y);
 
 	}
 }

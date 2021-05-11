@@ -25,8 +25,6 @@ class Orb extends Entity {
 		world.root.add(g, Const.MIDGROUND_OBJECTS);
 		world.root.add(gEnergy, Const.MIDGROUND_OBJECTS);
 
-		//gEnergy.filter = new Glow(0xFFFFFF, 0.5, 10.0, 1.3, 20.0, true);
-
 		energyOrbs = [];
 	}
 

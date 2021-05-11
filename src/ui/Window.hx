@@ -7,7 +7,6 @@ class Window extends Process {
 		super(game);
 
 		createRootInLayers(game.root, Const.UI_LAYER);
-		root.filter = new h2d.filter.ColorMatrix(); // force pixel perfect rendering
 
 		win = new h2d.Flow(root);
 		win.backgroundTile = h2d.Tile.fromColor(0xffffff, 32,32);

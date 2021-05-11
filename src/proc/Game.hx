@@ -91,6 +91,38 @@ class Game extends Process {
 			if(input.ca.isKeyboardPressed(K.ESCAPE))
 				hxd.System.exit();
 		}
+
+		if(input.ca.isKeyboardPressed(K.NUMBER_1)) {
+			App.inst.bloomFilter.power += 0.1;
+		}
+		if(input.ca.isKeyboardPressed(K.NUMBER_2)) {
+			App.inst.bloomFilter.power -= 0.1;
+		}
+		if(input.ca.isKeyboardPressed(K.NUMBER_3)) {
+			App.inst.bloomFilter.amount += 0.1;
+		}
+		if(input.ca.isKeyboardPressed(K.NUMBER_4)) {
+			App.inst.bloomFilter.amount -= 0.1;
+		}
+		if(input.ca.isKeyboardPressed(K.NUMBER_5)) {
+			App.inst.bloomFilter.radius += 0.1;
+		}
+		if(input.ca.isKeyboardPressed(K.NUMBER_6)) {
+			App.inst.bloomFilter.radius -= 0.1;
+		}
+		if(input.ca.isKeyboardPressed(K.NUMBER_7)) {
+			App.inst.bloomFilter.gain += 0.1;
+		}
+		if(input.ca.isKeyboardPressed(K.NUMBER_8)) {
+			App.inst.bloomFilter.gain -= 0.1;
+		}
+		if(input.ca.isKeyboardPressed(K.NUMBER_9)) {
+			App.inst.bloomFilter.quality += 0.1;
+		}
+		if(input.ca.isKeyboardPressed(K.NUMBER_0)) {
+			App.inst.bloomFilter.quality -= 0.1;
+		}
+		
 	}
 }
 

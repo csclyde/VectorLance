@@ -1,3 +1,5 @@
+import h2d.filter.Bloom;
+
 class App extends hxd.App {
 	public static var inst : App;
 
@@ -11,6 +13,8 @@ class App extends hxd.App {
 	public var console: Console;
 	public var audio: Audio;
 	public var util: Util;
+
+	public var bloomFilter: Bloom;
 
 	static function main() {
 		new App();
@@ -55,11 +59,25 @@ class App extends hxd.App {
 		util = new Util();
 		onResize();
 
-		// s2d.filter = new h2d.filter.Bloom(1.2, 3.0, 5.0, 1.2, 20.0);
-		// var filter: h2d.filter.Bloom;
-		// filter = cast(s2d.filter, h2d.filter.Bloom);
-		// filter.radius = 8.0;
-		// filter.gain = 2.0;
+		var scanlineShader = new Scanline();
+		scanlineShader.resX = camera.pxWidth;
+		scanlineShader.resY = camera.pxHeight;
+		var scanlineFilter = new h2d.filter.Shader(scanlineShader);
+
+		var curveShader = new Curve();
+		curveShader.resX = camera.pxWidth;
+		curveShader.resY = camera.pxHeight;
+		var curveFilter = new h2d.filter.Shader(curveShader);
+
+		bloomFilter = new Bloom(2.0, 2.0, 2.0, 2.0, 20.0);
+		bloomFilter.power = 3.0;
+		bloomFilter.amount = 10.0;
+		bloomFilter.radius = 30.0;
+		bloomFilter.gain = 1.7;
+		bloomFilter.quality = 80.0;
+
+		var filterGroup = new Group([bloomFilter]);
+		s2d.filter = filterGroup;
 
 		Process.PROFILING = false;
 	}

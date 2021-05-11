@@ -8,9 +8,6 @@ class LazyOrb extends en.Orb {
 	public function new(sx, sy, physWorld: echo.World) {
 		
 		super(sx, sy, physWorld);
-
-		//g.filter = new Glow(0x00FF00, 0.6, 15.0, 2.3, 20.0, true);
-
 		
 		radius = 56;
 		energy = 8;
@@ -49,7 +46,7 @@ class LazyOrb extends en.Orb {
 	}
 
 	public override function render() {
-		g.lineStyle(1, 0x00FF00);
+		g.lineStyle(3, 0x39FF14);
 		g.drawEllipse(centerX, centerY, this.radius + (Math.sin(game.stime * 10)) * 3, this.radius + Math.sin(game.stime * 10) * -3);
 		//g.drawPieInner(centerX, centerY, this.radius, 0, Math.PI * 1.5, Math.PI);
 	}

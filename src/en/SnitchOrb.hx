@@ -11,8 +11,6 @@ class SnitchOrb extends en.Orb {
 		radius = 36;
 		energy = 15;
 
-		// g.filter = new Glow(0xFFD700, 0.6, 15.0, 2.3, 20.0, true);
-
 		body = new Body({
 			x: sx,
 			y: sy,
@@ -49,7 +47,7 @@ class SnitchOrb extends en.Orb {
 	}
 
 	public override function render() {
-		g.lineStyle(2, 0xFFD700);
+		g.lineStyle(3, 0xFFD700);
 		g.drawEllipse(centerX, centerY, this.radius + Math.sin(game.stime * 10) * 1, this.radius + Math.sin(game.stime * 10) * -1);
 	}
 }

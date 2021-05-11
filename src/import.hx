@@ -28,3 +28,6 @@ import proc.Game;
 import proc.World;
 
 import h2d.filter.Glow;
+import h2d.filter.Group;
+import eng.shdr.Scanline;
+import eng.shdr.Curve;

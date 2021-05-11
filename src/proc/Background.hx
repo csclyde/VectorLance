@@ -65,7 +65,6 @@ class Background extends Process {
 			if (offsetPosY < camera.top) { s.y += camera.pxHeight/s.z; }
 			if (offsetPosY > camera.bottom) { s.y -= camera.pxHeight/s.z; }
 				
-			//g.lineStyle(1, 0xFFFFFF, M.frand());
 			g.beginFill(0xFFFFFF, s.bright);
 			g.drawCircle(offsetPosX, offsetPosY, s.size);
 		}

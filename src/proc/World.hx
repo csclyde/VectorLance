@@ -51,7 +51,7 @@ class World extends Process {
 
 			// draw targets
 			//g.clear();
-			g.lineStyle(2, 0xFFFFFF);
+			g.lineStyle(1, 0xFFFFFF);
 			g.drawCircle(0, 0, 72);
 			g.drawCircle(0, 0, 64);
 			g.drawCircle(0, 0, 56);
