@@ -16,6 +16,8 @@ class Orb extends Entity {
 	public var energy = 0;
 	public var breakable = true;
 
+	public var explosion: Emitter;
+
 	public function new(sx, sy, physWorld: echo.World) {
 		super(sx, sy);
 
@@ -24,6 +26,11 @@ class Orb extends Entity {
 
 		world.root.add(g, Const.MIDGROUND_OBJECTS);
 		world.root.add(gEnergy, Const.MIDGROUND_OBJECTS);
+
+		explosion = new Emitter();
+		explosion.load(haxe.Json.parse(hxd.Res.particles.Orb.entry.getText()), hxd.Res.particles.Orb.entry.path);
+
+		world.root.add(explosion, Const.FOREGROUND_EFFECTS);
 
 		energyOrbs = [];
 	}
@@ -85,6 +92,10 @@ class Orb extends Entity {
 
 		world.orbManager.looseEnergyOrbs = world.orbManager.looseEnergyOrbs.concat(energyOrbs);
 		energyOrbs = [];
+
+		// explosion.x = centerX;
+		// explosion.y = centerY;
+		// explosion.play();
 
         destroy();
     }
