@@ -98,7 +98,7 @@ class Player extends Entity {
 			var activeOrbs = world.physWorld.dynamics().filter((b:Body) -> return b.active);
 			charging = false;
 			var newVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
-			body.velocity = newVec.normal * charge * 1.6;
+			body.velocity = newVec.normal * charge * 1.8;
 			alignToVelocity();
 			
 			body.velocity.copyTo(prevLanceVel);
@@ -136,7 +136,7 @@ class Player extends Entity {
 			charge += chargeRate * tmod;
 			body.drag_length = 0.3;
 		} else {
-			body.drag_length = 0.02;
+			body.drag_length = 0.05;
 		}
 
 		if(charge > chargeMax) {
@@ -148,7 +148,7 @@ class Player extends Entity {
 		g.clear();
 
 		// LANCE BODY
-		g.lineStyle(2, 0xFF0000);
+		g.lineStyle(2, 0x0000FF);
 
 		var ang = prevLanceVel.angle + (Math.PI / 2);
 

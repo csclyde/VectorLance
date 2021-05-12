@@ -109,6 +109,7 @@ class Hud extends Process {
 		var targetWidth = (game.energy.getNormalizedEnergy() - ((world.player.charge) / game.energy.getMaxEnergy())) * 200;
 
 		if(barWidth < 0) barWidth = 0;
+		if(targetWidth < 0) targetWidth = 0;
 
 		// energy bar outline
 		g.clear();
@@ -145,7 +146,7 @@ class Hud extends Process {
 		var sw = cw + 10;
 
 		var distVec = new Vector2(world.target.x - world.player.centerX, world.target.y - world.player.centerY);
-		var dist = Math.floor(distVec.length / 50) + '';
+		var dist = Math.floor(distVec.length / 100) + '';
 
 		var iter = new StringIterator(dist);
 

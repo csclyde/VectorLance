@@ -40,7 +40,7 @@ class ZigzagOrb extends en.Orb {
 	}
 
 	function changeDir() {
-		var newVel = Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), 3);
+		var newVel = Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), 6);
 		body.velocity.set(newVel.x, newVel.y);
 	}
 

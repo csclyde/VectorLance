@@ -45,10 +45,8 @@ class OrbManager extends Process {
 	public function addOrb(x, y) {
 		var newOrb:en.Orb;
 
-		//Calculate a weight for each type of orb. The weight is then added to a rand range. This is the orb chance
-		//The orb with the highest chance is spawned
 		var distVec = new Vector2(x, y);
-		var mLen = distVec.length / 50;
+		var mLen = distVec.length / 100;
 
 		var choice = 'Lazy';
 		var randHelp = M.frand();
@@ -65,37 +63,47 @@ class OrbManager extends Process {
 			spawnThreshold = 0.04;
 		}
 		else if(mLen < 300) {
-			if(randHelp < 0.60) { choice = 'Block'; } 
-			else if(randHelp < 0.75) { choice = 'Snitch'; } 
-			else { choice = 'Lazy'; }
-			spawnThreshold = 0.15;
+			if(randHelp < 0.75) { choice = 'Block'; } 
+			else { choice = 'Snitch'; }
+			spawnThreshold = 0.07;
 		}
 		else if(mLen < 400) {
+			if(randHelp < 0.90) { choice = 'Block'; } 
+			else { choice = 'Snitch'; } 
+			spawnThreshold = 0.15;
+		}
+		else if(mLen < 500) {
 			choice = 'Nutty';
 			spawnThreshold = 0.03;
 		}
-		else if(mLen < 500) {
+		else if(mLen < 600) {
 			if(randHelp < 0.05) { choice = 'Happy'; }
 			if(randHelp < 0.30) { choice = 'Winder'; }
 			else { choice = 'Nutty'; }
 			spawnThreshold = 0.03;
 		}
-		else if(mLen < 600) {
+		else if(mLen < 700) {
 			choice = 'Winder';
 			spawnThreshold = 0.04;
 		}
-		else if(mLen < 700) {
+		else if(mLen < 800) {
 			if(randHelp < 0.50) { choice = 'Winder'; }
 			else { choice = 'Zigzag'; }
-			spawnThreshold = 0.04;
+			spawnThreshold = 0.03;
 		}
-		else if(mLen < 820) {
+		else if(mLen < 900) {
 			choice = 'Zigzag';
-			spawnThreshold = 0.10;
+			spawnThreshold = 0.03;
+		}
+		else if(mLen < 1000) {
+			if(randHelp < 0.33) { choice = 'Winder'; }
+			if(randHelp < 0.33) { choice = 'Zigzag'; }
+			else { choice = 'Nutty'; }
+			spawnThreshold = 0.02;
 		}
 		else {
-			choice = 'Happy';
-			spawnThreshold = 0.15;
+			choice = 'Nutty';
+			spawnThreshold = 0.01;
 		}
 
 		if(M.frand() > spawnThreshold) {
