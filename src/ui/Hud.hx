@@ -155,6 +155,6 @@ class Hud extends Process {
 		g.lineStyle(1, 0xFFFFFF);
 		vecTex.drawText(tx, ty, world.currentDist + ' FROM ORIGIN');
 		g.lineStyle(1, 0xFF0000);
-		vecTex.drawText(tx + 800, ty, 'BEST ' + world.bestDist);
+		vecTex.drawText(tx + 80, ty + 48, 'BEST ' + world.bestDist);
 	}
 }

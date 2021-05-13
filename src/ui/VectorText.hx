@@ -15,10 +15,10 @@ class VectorText {
         this.g = graphics;
         tx = 0;
         ty = 0;
-        ch = 40;
-        chh = 20;
-        cw = 20;
-        cwh = 10;
+        ch = 32;
+        chh = 16;
+        cw = 16;
+        cwh = 8;
         sw = cw + 10;
     }
 

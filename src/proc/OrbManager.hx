@@ -217,10 +217,10 @@ class OrbManager extends Process {
 			if(camera.coordsOnScreen(e.pos.x, e.pos.y, 20)) {
 				// a vector pointing at the player
 
-				e.timestamp += 0.001;
+				e.timestamp += 0.005;
 
 				var playerVec = new Vector2(world.player.centerX - e.pos.x, world.player.centerY - e.pos.y);
-				var attr = playerVec.normal * e.timestamp;
+				var attr = playerVec.normal * e.timestamp * tmod;
 				e.vel.set(e.vel.x + attr.x, e.vel.y + attr.y);
 
 				e.pos.set(e.pos.x + e.vel.x, e.pos.y + e.vel.y);
