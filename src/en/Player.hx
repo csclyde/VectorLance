@@ -188,30 +188,13 @@ class Player extends Entity {
 		g.addVertex(centerX + rightRotX, centerY + rightRotY, 0.5, 0.0, 0.5, 1.0);
 		g.addVertex(centerX + tipRotX, centerY + tipRotY, 1.0, 0.0, 0.0, 1.0);
 
-		// TARGET ARROW
-		var targetVec = new Vector2(world.target.x - centerX, world.target.y - centerY);
-		targetVec = targetVec.normal * 160;
-
-		g.lineStyle(2, 0xFFFFFF);
-		g.moveTo(targetVec.x / 2 + centerX, targetVec.y / 2 + centerY);
-		g.lineTo(targetVec.x + centerX, targetVec.y + centerY);
-
-		var sprig1 = Vector2.fromPolar(targetVec.angle + (Math.PI / 4) * 3, 10);
-		var sprig2 = Vector2.fromPolar(targetVec.angle + (Math.PI / 4) * 5, 10);
-
-		g.moveTo(targetVec.x + centerX, targetVec.y + centerY);
-		g.lineTo(targetVec.x + centerX + sprig1.x, targetVec.y + centerY + sprig1.y);
-
-		g.moveTo(targetVec.x + centerX, targetVec.y + centerY);
-		g.lineTo(targetVec.x + centerX + sprig2.x, targetVec.y + centerY + sprig2.y);
-
 		// AIMING ARROW
 		g.lineStyle(2, 0xFF0000);
 		g.moveTo(centerX, centerY);
 		g.lineTo(aimVec.x + centerX, aimVec.y + centerY);
 
-		sprig1 = Vector2.fromPolar(aimVec.angle + (Math.PI / 4) * 3, 10);
-		sprig2 = Vector2.fromPolar(aimVec.angle + (Math.PI / 4) * 5, 10);
+		var sprig1 = Vector2.fromPolar(aimVec.angle + (Math.PI / 4) * 3, 10);
+		var sprig2 = Vector2.fromPolar(aimVec.angle + (Math.PI / 4) * 5, 10);
 
 		g.moveTo(aimVec.x + centerX, aimVec.y + centerY);
 		g.lineTo(aimVec.x + centerX + sprig1.x, aimVec.y + centerY + sprig1.y);

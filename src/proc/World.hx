@@ -19,8 +19,6 @@ class World extends Process {
 	public var player : en.Player;
 	public var orbManager: OrbManager;
 
-	public var target: Vector2;
-
 	public function new() {
 		super(game);
 
@@ -41,8 +39,6 @@ class World extends Process {
 
 		background = new Background();
 
-		target = Vector2.fromPolar(M.frandRange(0, 2 * M.PI), 100000);
-
 		delayer.addF('create_stuff', () -> {
 			player = new en.Player(0, 0);
 			physWorld.add(player.body);
@@ -56,11 +52,6 @@ class World extends Process {
 			g.drawCircle(0, 0, 64);
 			g.drawCircle(0, 0, 56);
 			g.drawCircle(0, 0, 48);
-
-			g.drawCircle(target.x, target.y, 72);
-			g.drawCircle(target.x, target.y, 64);
-			g.drawCircle(target.x, target.y, 56);
-			g.drawCircle(target.x, target.y, 48);
 
 			reset();
 		}, 0 );
@@ -136,9 +127,6 @@ class World extends Process {
 
 		player.reset();
 		orbManager.reset();
-
-		target = Vector2.fromPolar(M.frandRange(0, 2 * M.PI), 100000);
-
 	}	
 
 	function render() {
@@ -162,12 +150,6 @@ class World extends Process {
 		super.fixedUpdate();
 
 		if(game.energy.getEnergy() <= 0 && player.body.velocity.length < 0.001) {
-			game.reset();
-		}
-
-		var distVec = new Vector2(world.target.x - world.player.centerX, world.target.y - world.player.centerY);
-
-		if(distVec.length < 20) {
 			game.reset();
 		}
 	}

@@ -1,5 +1,6 @@
 package ui;
 
+import hxmath.math.MathTypes.Vector2Type;
 import haxe.iterators.StringIterator;
 import hxd.Timer;
 import hxmath.math.Vector2;
@@ -16,6 +17,8 @@ class Hud extends Process {
 	var debugText: h2d.Text;
 
 	var inTitle = true;
+
+	var vecTex: VectorText;
 
 	public function new() {
 		super(game);
@@ -50,6 +53,8 @@ class Hud extends Process {
 		logo.y = 200;
 		root.add(logo, Const.UI_LAYER);
 
+		vecTex = new VectorText(g);
+
 		events.subscribe('launch_vector', (params:Dynamic) -> {
 			if(inTitle) {
 				tw.createMs(logo.alpha, 0, TEaseOut, 1000);
@@ -69,7 +74,6 @@ class Hud extends Process {
 	}
 
 	override function fixedUpdate() {
-		var distVec = new Vector2(world.target.x - world.player.centerX, world.target.y - world.player.centerY);
 
 		//distText.text = Math.floor(distVec.length / 50) + '';
 		
@@ -137,7 +141,7 @@ class Hud extends Process {
 		g.lineStyle(2, 0xFFFFFF);
 		g.drawCircle(input.mouseX, input.mouseY, 5);
 
-		var tx = (camera.pxWidth / 2) - 160;
+		var tx = Math.floor((camera.pxWidth / 2) - 160);
 		var ty = 20;
 		var ch = 40;
 		var chh = 20;
@@ -145,167 +149,12 @@ class Hud extends Process {
 		var cwh = 10;
 		var sw = cw + 10;
 
-		var distVec = new Vector2(world.target.x - world.player.centerX, world.target.y - world.player.centerY);
+		var distVec = new Vector2(world.player.centerX, world.player.centerY);
 		var dist = Math.floor(distVec.length / 100) + '';
 
-		var iter = new StringIterator(dist);
-
-		for(i in 0...dist.length) {
-			var l = dist.charAt(i);
-
-			if(l == '0') {
-				g.moveTo(tx + cw, ty);
-				g.lineTo(tx, ty);
-				g.lineTo(tx, ty + ch);
-				g.lineTo(tx + cw, ty + ch);
-				g.lineTo(tx + cw, ty);
-				g.lineTo(tx, ty + ch);
-				tx += sw;
-			}
-			else if(l == '1') {
-				g.moveTo(tx, ty);
-				g.lineTo(tx + cwh, ty);
-				g.lineTo(tx + cwh, ty + ch);
-				g.moveTo(tx, ty + ch);
-				g.lineTo(tx + cw, ty + ch);
-				tx += sw;
-			}
-			else if(l == '2') {
-				g.moveTo(tx, ty);
-				g.lineTo(tx + cw, ty);
-				g.lineTo(tx + cw, ty + chh);
-				g.lineTo(tx, ty + chh);
-				g.lineTo(tx, ty + ch);
-				g.lineTo(tx + cw, ty + ch);
-				tx += sw;
-			}
-			else if(l == '3') {
-				g.moveTo(tx, ty);
-				g.lineTo(tx + cw, ty);
-				g.lineTo(tx + cw, ty + ch);
-				g.lineTo(tx, ty + ch);
-				g.moveTo(tx + cw, ty + chh);
-				g.lineTo(tx, ty + chh);
-				tx += sw;
-			}
-			else if(l == '4') {
-				g.moveTo(tx, ty);
-				g.lineTo(tx, ty + chh);
-				g.lineTo(tx + cw, ty + chh);
-				g.moveTo(tx + cw, ty);
-				g.lineTo(tx + cw, ty + ch);
-				tx += sw;
-			}
-			else if(l == '5') {
-				g.moveTo(tx + cw, ty);
-				g.lineTo(tx, ty);
-				g.lineTo(tx, ty + chh);
-				g.lineTo(tx + cw, ty + chh);
-				g.lineTo(tx + cw, ty + ch);
-				g.lineTo(tx, ty + ch);
-				tx += sw;
-			}
-			else if(l == '6') {
-				g.moveTo(tx + cw, ty);
-				g.lineTo(tx, ty);
-				g.lineTo(tx, ty + ch);
-				g.lineTo(tx + cw, ty + ch);
-				g.lineTo(tx + cw, ty + chh);
-				g.lineTo(tx, ty + chh);
-				tx += sw;
-			}
-			else if(l == '7') {
-				g.moveTo(tx, ty);
-				g.lineTo(tx + cw, ty);
-				g.lineTo(tx, ty + ch);
-				tx += sw;
-			}
-			else if(l == '8') {
-				g.moveTo(tx, ty);
-				g.lineTo(tx + cw, ty);
-				g.lineTo(tx + cw, ty + ch);
-				g.lineTo(tx, ty + ch);
-				g.lineTo(tx, ty);
-				g.moveTo(tx, ty + chh);
-				g.lineTo(tx + cw, ty + chh);
-				tx += sw;
-			}
-			else if(l == '9') {
-				g.moveTo(tx + cw, ty + ch);
-				g.lineTo(tx + cw, ty);
-				g.lineTo(tx, ty);
-				g.lineTo(tx, ty + chh);
-				g.lineTo(tx + cw, ty + chh);
-				tx += sw;
-			}
-
-		}
-
-		tx += sw;
-
-		// T
-		g.moveTo(tx, ty);
-		g.lineTo(tx + cw, ty);
-		g.moveTo(tx + cwh, ty);
-		g.lineTo(tx + cwh, ty + ch);
-		tx += sw;
-
-		// O
-		g.drawEllipse(tx + cwh, ty + chh, cwh, chh);
-		tx += sw;
-
-		// SPACE
-		tx += sw;
-
-		// T
-		g.moveTo(tx, ty);
-		g.lineTo(tx + cw, ty);
-		g.moveTo(tx + cwh, ty);
-		g.lineTo(tx + cwh, ty + ch);
-		tx += sw;
-
-		// A
-		g.moveTo(tx, ty + ch);
-		g.lineTo(tx, ty + chh);
-		g.lineTo(tx + cwh, ty);
-		g.lineTo(tx + cw, ty + chh);
-		g.lineTo(tx + cw, ty + ch);
-		g.moveTo(tx, ty + chh);
-		g.lineTo(tx + cw, ty + chh);
-		tx += sw;
-
-		// R
-		g.moveTo(tx, ty + ch);
-		g.lineTo(tx, ty);
-		g.lineTo(tx + cw, ty);
-		g.lineTo(tx + cw, ty + chh);
-		g.lineTo(tx, ty + chh);
-		g.lineTo(tx + cw, ty + ch);
-		tx += sw;
-
-		// G
-		g.moveTo(tx + cw, ty);
-		g.lineTo(tx, ty);
-		g.lineTo(tx, ty + ch);
-		g.lineTo(tx + cw, ty + ch);
-		g.lineTo(tx + cw, ty + chh);
-		g.lineTo(tx + cwh, ty + chh);
-		tx += sw;
-
-		// E
-		g.moveTo(tx + cw, ty);
-		g.lineTo(tx, ty);
-		g.lineTo(tx, ty + ch);
-		g.lineTo(tx + cw, ty + ch);
-		g.moveTo(tx, ty + chh);
-		g.lineTo(tx + cwh, ty + chh);
-		tx += sw;
-
-		// T
-		g.moveTo(tx, ty);
-		g.lineTo(tx + cw, ty);
-		g.moveTo(tx + cwh, ty);
-		g.lineTo(tx + cwh, ty + ch);
-		tx += sw;
+		g.lineStyle(1, 0xFFFFFF);
+		vecTex.drawText(tx, ty, dist + ' FROM ORIGIN');
+		g.lineStyle(1, 0xFF0000);
+		vecTex.drawText(tx + 500, ty, 'BEST ' + dist);
 	}
 }
