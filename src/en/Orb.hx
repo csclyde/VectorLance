@@ -43,7 +43,8 @@ class Orb extends Entity {
 		energyOrbs = [for(i in 0...energy) {
 			pos: Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), M.frandRange(-radius, radius)),
 			vel: Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), (1 / radius) * 30),
-			destroyed: false
+			destroyed: false,
+			timestamp: 0.0,
 		}];
 	}
 
@@ -87,6 +88,7 @@ class Orb extends Entity {
 		game.energy.addEnergy(energy);
 
 		for(o in energyOrbs) {
+			o.vel = o.pos.normal * M.frandRange(1.5, 3);
 			o.pos.set(o.pos.x + centerX, o.pos.y + centerY);
 		}
 

@@ -1,6 +1,5 @@
 package proc;
 
-import haxe.ds.Vector;
 import echo.Body;
 import hxmath.math.Vector2;
 
@@ -8,6 +7,7 @@ typedef EnergyOrb = {
 	pos: Vector2,
 	vel: Vector2,
 	destroyed:Bool,
+	timestamp: Float,
 }
 
 class OrbManager extends Process {
@@ -213,23 +213,23 @@ class OrbManager extends Process {
 			// 	e.vel.y += 0.01;
 			// }
 
-			e.pos.set(e.pos.x + e.vel.x, e.pos.y + e.vel.y);
 			
 			if(camera.coordsOnScreen(e.pos.x, e.pos.y, 20)) {
+				// a vector pointing at the player
+
+				e.timestamp += 0.001;
+
+				var playerVec = new Vector2(world.player.centerX - e.pos.x, world.player.centerY - e.pos.y);
+				var attr = playerVec.normal * e.timestamp;
+				e.vel.set(e.vel.x + attr.x, e.vel.y + attr.y);
+
+				e.pos.set(e.pos.x + e.vel.x, e.pos.y + e.vel.y);
 				g.drawCircle(e.pos.x, e.pos.y, 4);
 	
-				var distVec = new Vector2(world.player.centerX - e.pos.x + world.player.body.velocity.x, world.player.centerY - e.pos.y + world.player.body.velocity.y);
-				
-				e.vel = Vector2.lerp(e.vel, distVec, 0.01);
-	
-				if(distVec.length < 20) {
+				if((playerVec.length / 10) < e.vel.length) {
 					e.destroyed = true;
 				}
-
 			}
-
-
-
 		}
 
 		g.endFill();
