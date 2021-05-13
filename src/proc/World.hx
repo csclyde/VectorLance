@@ -19,6 +19,9 @@ class World extends Process {
 	public var player : en.Player;
 	public var orbManager: OrbManager;
 
+	public var bestDist: Int;
+	public var currentDist: Int;
+
 	public function new() {
 		super(game);
 
@@ -129,10 +132,6 @@ class World extends Process {
 		orbManager.reset();
 	}	
 
-	function render() {
-		// Placeholder level render
-	}
-
 	override function preUpdate() {
 		physWorld.x = camera.left;
 		physWorld.y = camera.top;
@@ -148,6 +147,13 @@ class World extends Process {
 
 	override function fixedUpdate() {
 		super.fixedUpdate();
+
+		var distVec = new Vector2(world.player.centerX, world.player.centerY);
+		currentDist = Math.floor(distVec.length / 100);
+
+		if(currentDist > bestDist) {
+			bestDist = currentDist;
+		}
 
 		if(game.energy.getEnergy() <= 0 && player.body.velocity.length < 0.001) {
 			game.reset();

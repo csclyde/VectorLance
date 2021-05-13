@@ -149,12 +149,9 @@ class Hud extends Process {
 		var cwh = 10;
 		var sw = cw + 10;
 
-		var distVec = new Vector2(world.player.centerX, world.player.centerY);
-		var dist = Math.floor(distVec.length / 100) + '';
-
 		g.lineStyle(1, 0xFFFFFF);
-		vecTex.drawText(tx, ty, dist + ' FROM ORIGIN');
+		vecTex.drawText(tx, ty, world.currentDist + ' FROM ORIGIN');
 		g.lineStyle(1, 0xFF0000);
-		vecTex.drawText(tx + 500, ty, 'BEST ' + dist);
+		vecTex.drawText(tx + 800, ty, 'BEST ' + world.bestDist);
 	}
 }
