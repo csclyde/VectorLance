@@ -10,6 +10,7 @@ import eng.Input;
 import eng.Audio;
 import eng.Util;
 import eng.Emitter;
+import eng.CustomGraphics;
 
 import dn.M;
 import dn.Lib;

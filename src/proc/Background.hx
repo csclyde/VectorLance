@@ -9,7 +9,7 @@ typedef Star = {
 }
 
 class Background extends Process {
-	public var g : h2d.Graphics;
+	public var g : CustomGraphics;
 	public var bgTile: h2d.Tile;
 	public var stars: Array<Star>;
 
@@ -18,7 +18,7 @@ class Background extends Process {
 		stars = [];
 
 		delayer.addF('create_stuff', () -> {
-			g = new h2d.Graphics();
+			g = new CustomGraphics();
 			world.root.add(g, Const.BACKGROUND_OBJECTS);
 			
 			for(i in 0...600) {
@@ -48,8 +48,6 @@ class Background extends Process {
 	override function update() {
 		if(g == null) return;
 
-		g.tileWrap = true;
-
 		g.clear();
 
 		var offsetPosX:Float;
@@ -67,6 +65,7 @@ class Background extends Process {
 				
 			g.beginFill(0xFFFFFF, s.bright);
 			g.drawCircle(offsetPosX, offsetPosY, s.size);
+			g.endFill();
 		}
 	}
 }

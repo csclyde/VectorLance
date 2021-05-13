@@ -43,6 +43,8 @@ class App extends hxd.App {
 		hxd.Timer.wantedFPS = Const.FPS;
 		hxd.Timer.skip();
 		
+		Process.PROFILING = false;
+		
 		game = new Game(s2d);
 		events = new EventRouter();
 		input = new Input();
@@ -55,7 +57,6 @@ class App extends hxd.App {
 		util = new Util();
 		onResize();
 
-		Process.PROFILING = false;
 	}
 
 	override function onResize() {

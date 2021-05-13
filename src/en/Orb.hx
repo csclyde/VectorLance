@@ -8,7 +8,6 @@ import proc.OrbManager;
 class Orb extends Entity {
 	public var body:Body;
 	public var g : h2d.Graphics;
-	public var gEnergy : h2d.Graphics;
 
 	public var energyOrbs: Array<EnergyOrb>;
 
@@ -22,10 +21,8 @@ class Orb extends Entity {
 		super(sx, sy);
 
 		g = new h2d.Graphics();
-		gEnergy = new h2d.Graphics();
 
 		world.root.add(g, Const.MIDGROUND_OBJECTS);
-		world.root.add(gEnergy, Const.MIDGROUND_OBJECTS);
 
 		explosion = new Emitter();
 		explosion.load(haxe.Json.parse(hxd.Res.particles.Orb.entry.getText()), hxd.Res.particles.Orb.entry.path);
@@ -59,10 +56,9 @@ class Orb extends Entity {
 		centerY = body.y;
 
 		g.clear();
-		gEnergy.clear();
 		
 		if(camera.entityOnScreen(this, 200)) {
-			gEnergy.beginFill(0xFFFFFF);
+			g.beginFill(0xFFFFFF);
 	
 			for(e in energyOrbs) {
 				e.pos.set(e.pos.x + e.vel.x, e.pos.y + e.vel.y);
@@ -75,10 +71,10 @@ class Orb extends Entity {
 					e.pos = e.pos.normal * (radius - 5);
 				}
 	
-				gEnergy.drawCircle(e.pos.x + centerX, e.pos.y + centerY, 4);
+				g.drawCircle(e.pos.x + centerX, e.pos.y + centerY, 4);
 			}
 	
-			gEnergy.endFill();
+			g.endFill();
 			
 			render();
 		}
@@ -106,7 +102,7 @@ class Orb extends Entity {
 		super.destroy();
 
 		g.clear();
-		gEnergy.clear();
+		g.clear();
 		body.dispose();
 	}
 }

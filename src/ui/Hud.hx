@@ -41,12 +41,14 @@ class Hud extends Process {
 		root.add(distText, Const.UI_LAYER);
 		distText.alpha = 0;
 
-		debugText = new h2d.Text(Assets.fontMedium);
-		debugText.text = "60 FPS";
-		debugText.textAlign = Left;
-		debugText.x = 10;
-		debugText.y = 50;
-		//root.add(debugText, Const.UI_LAYER);
+		if(Process.PROFILING) {
+			debugText = new h2d.Text(Assets.fontSmall);
+			debugText.text = "60 FPS";
+			debugText.textAlign = Left;
+			debugText.x = 10;
+			debugText.y = 50;
+			root.add(debugText, Const.UI_LAYER);
+		}
 
 		logo = new h2d.Bitmap(hxd.Res.logo.toTile());
 		logo.x = (camera.pxWidth / 2) - (logo.tile.width / 2);
@@ -77,14 +79,15 @@ class Hud extends Process {
 
 		//distText.text = Math.floor(distVec.length / 50) + '';
 		
-		// debugText.text = camera.focus.x + '';
-		// debugText.text = Math.floor(Timer.fps()) + ' FPS \n\n';
-		// debugText.text += Entity.ALL.length + ' entities \n\n';
-		// debugText.text += Entity.AllActive().length + ' entities \n\n';
-
-		// for(p in Process.getSortedProfilerTimes().filter(set -> return set.value >= 1.0)) {
-		// 	debugText.text += p.key + ': ' + p.value + '\n';
-		// }
+		if(Process.PROFILING) {
+			debugText.text = Math.floor(Timer.fps()) + ' FPS \n\n';
+			debugText.text += Entity.ALL.length + ' entities \n';
+			debugText.text += Entity.AllActive().length + ' active \n\n';
+	
+			for(p in Process.getSortedProfilerTimes().filter(set -> return set.value >= 0.5)) {
+				debugText.text += p.key + ': ' + Math.floor(p.value * 100) / 100 + '\n';
+			}
+		}
 	}
 
 	override function update() {

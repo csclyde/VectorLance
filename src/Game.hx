@@ -61,6 +61,14 @@ class Game extends Process {
 		gc();
 	}
 
+	public function beginProfile(name:String) {
+		this.markProfilingStart(name);
+	}
+
+	public function endProfile(name:String) {
+		this.markProfilingEnd(name);
+	}
+
 	override function preUpdate() {
 		super.preUpdate();
 
