@@ -1,10 +1,11 @@
-package proc;
-
 import hxmath.math.Vector2;
 import echo.data.Data.CollisionData;
 import echo.util.Debug.HeapsDebug;
 import echo.Body;
 import echo.World;
+
+import proc.Background;
+import proc.OrbManager;
 
 class World extends Process {
 	public var pxWidth : Int;
