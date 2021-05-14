@@ -203,7 +203,7 @@ class VectorText {
                 g.lineTo(tx + cw, ty);
             }
             else if(l == 'O') {
-                g.drawEllipse(tx + cwh, ty + chh, cwh, chh);
+                g.drawEllipse(tx + cwh, ty + chh, cwh, chh, 0 , 6);
             }
             else if(l == 'P') {
                 g.moveTo(tx, ty + ch);
