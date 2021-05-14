@@ -17,7 +17,7 @@ class Process {
 	public var audio(get,never) : Audio; inline function get_audio() return App.inst.audio;
 	public var util(get,never) : Util; inline function get_util() return App.inst.util;
 
-	public static var FIXED_UPDATE_FPS = 30;
+	public static var FIXED_UPDATE_FPS = 60;
 
 	public static var CUSTOM_STAGE_WIDTH  = -1;
 	public static var CUSTOM_STAGE_HEIGHT = -1;

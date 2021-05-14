@@ -50,4 +50,8 @@ class SnitchOrb extends en.Orb {
 		g.lineStyle(3, 0xFFD700);
 		g.drawEllipse(centerX, centerY, this.radius + Math.sin(game.stime * 10) * 1, this.radius + Math.sin(game.stime * 10) * -1);
 	}
+
+	public override function getParticleColor() {
+		return 0xFFD700;
+	}
 }

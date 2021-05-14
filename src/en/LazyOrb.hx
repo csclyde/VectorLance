@@ -50,4 +50,8 @@ class LazyOrb extends en.Orb {
 		g.drawEllipse(centerX, centerY, this.radius + (Math.sin(game.stime * 10)) * 3, this.radius + Math.sin(game.stime * 10) * -3);
 		//g.drawPieInner(centerX, centerY, this.radius, 0, Math.PI * 1.5, Math.PI);
 	}
+
+	public override function getParticleColor() {
+		return 0x39FF14;
+	}
 }

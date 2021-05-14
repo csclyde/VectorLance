@@ -10,14 +10,24 @@ typedef EnergyOrb = {
 	timestamp: Float,
 }
 
+typedef OrbParticle = {
+	pos: Vector2,
+	vel: Vector2,
+	radius: Int,
+	color: Int,
+	lifespan: Float,
+	destroyed: Bool,
+}
+
 class OrbManager extends Process {
 	public var g : h2d.Graphics;
 	
 	public var orbs: Array<en.Orb>;
 	public var testedGrids: Map<String, Bool>;
 	var gridSize = 128;
-
+	
 	public var looseEnergyOrbs: Array<EnergyOrb>;
+	public var particles: Array<OrbParticle>;
 
 	public function new() {
 		super(world);
@@ -26,6 +36,7 @@ class OrbManager extends Process {
 		world.root.add(g, Const.MIDGROUND_OBJECTS);
 
 		looseEnergyOrbs = [];
+		particles = [];
 
 		reset();
 	}
@@ -174,6 +185,26 @@ class OrbManager extends Process {
 		addOrb((x * gridSize) - gridSize / 2, (y * gridSize) - gridSize / 2);
 	}
 
+	public function generateParticles(orb: en.Orb) {
+		var count = Math.floor(orb.radius / 1.5);
+
+		for(i in 0...count) {
+			var part = {
+				pos: Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), orb.radius),
+				vel: null,
+				radius: M.randRange(Math.floor(orb.radius / 20), Math.floor(orb.radius / 10)),
+				color: orb.getParticleColor(),
+				lifespan: M.frandRange(10, 30),
+				destroyed: false,
+			}
+
+			part.vel = part.pos.normal * M.frandRange(0.2, 1);
+			part.pos.set(part.pos.x + orb.centerX, part.pos.y + orb.centerY);
+
+			particles.push(part);
+		}
+	}
+
 	override public function onDispose() {
 		super.onDispose();
 	}
@@ -182,6 +213,7 @@ class OrbManager extends Process {
 		cullDistantOrbs();
 
 		orbs = Lambda.filter(orbs, (o) -> return o.isAlive());
+		particles = Lambda.filter(particles, (p) -> return !p.destroyed);
 
 		generateNewOrbs();
 	}
@@ -195,43 +227,40 @@ class OrbManager extends Process {
 		looseEnergyOrbs = looseEnergyOrbs.filter((e) -> return !e.destroyed);
 
 		for(e in looseEnergyOrbs) {
-			
-			//var accelVec = Vector2.fromPolar(e.pos.angleWith(playerPos), 3);
-			//e.vel = Vector2.lerp(e.vel, accelVec, 0.2);
-			
-			// if(world.player.centerX < e.pos.x) {
-			// 	e.vel.x -= 0.01;
-			// }
-			// else if(world.player.centerX > e.pos.x) {
-			// 	e.vel.x += 0.01;
-			// }
-
-			// if(world.player.centerY < e.pos.y) {
-			// 	e.vel.y -= 0.01;
-			// }
-			// else if(world.player.centerY > e.pos.y) {
-			// 	e.vel.y += 0.01;
-			// }
-
-			
 			if(camera.coordsOnScreen(e.pos.x, e.pos.y, 20)) {
 				// a vector pointing at the player
 
-				e.timestamp += 0.005;
+				e.timestamp += 0.02 * tmod;
 
 				var playerVec = new Vector2(world.player.centerX - e.pos.x, world.player.centerY - e.pos.y);
-				var attr = playerVec.normal * e.timestamp * tmod;
-				e.vel.set(e.vel.x + attr.x, e.vel.y + attr.y);
+				var attr = playerVec.normal * e.timestamp;
+				e.vel.set(e.vel.x + (attr.x * tmod), e.vel.y + (attr.y * tmod));
 
-				e.pos.set(e.pos.x + e.vel.x, e.pos.y + e.vel.y);
-				g.drawCircle(e.pos.x, e.pos.y, 4);
-	
-				if((playerVec.length / 10) < e.vel.length) {
+				e.pos.set(e.pos.x + (e.vel.x * tmod), e.pos.y + (e.vel.y * tmod));
+				
+				if(e.vel.length >= playerVec.length / 2) {
 					e.destroyed = true;
 				}
+
+				g.drawCircle(e.pos.x, e.pos.y, 4);
 			}
 		}
-
 		g.endFill();
+
+		for(p in particles) {
+			p.lifespan -= tmod;
+			
+			if(p.lifespan <= 0) {
+				p.destroyed = true;
+				continue;
+			}
+			
+			g.lineStyle(2, p.color);
+			p.pos.set(p.pos.x + (p.vel.x * tmod), p.pos.y + (p.vel.y * tmod));
+
+			g.drawCircle(p.pos.x, p.pos.y, p.radius);
+		
+		}
+
 	}
 }

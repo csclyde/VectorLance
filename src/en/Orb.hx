@@ -45,6 +45,10 @@ class Orb extends Entity {
 		}];
 	}
 
+	public function getParticleColor() {
+		return 0xFFFFFF;
+	}
+
 	public function render() {}
 
 	public override function preUpdate() {}
@@ -91,9 +95,7 @@ class Orb extends Entity {
 		world.orbManager.looseEnergyOrbs = world.orbManager.looseEnergyOrbs.concat(energyOrbs);
 		energyOrbs = [];
 
-		// explosion.x = centerX;
-		// explosion.y = centerY;
-		// explosion.play();
+		world.orbManager.generateParticles(this);
 
         destroy();
     }
