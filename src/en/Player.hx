@@ -17,12 +17,19 @@ class Player extends Entity {
 	public var mouseVec: Vector2;
 	public var aimVec: Vector2;
 
+	public var trail: Emitter;
+
 	public function new(sx, sy) {
 		super(sx, sy);
 
 		g = new h2d.Graphics();
 
 		world.root.add(g, Const.MIDGROUND_OBJECTS);
+
+		trail = new Emitter();
+		trail.load(haxe.Json.parse(hxd.Res.particles.ChargeTrail.entry.getText()), hxd.Res.particles.ChargeTrail.entry.path);
+
+		world.root.add(trail, Const.FOREGROUND_EFFECTS);
 
 		body = new Body({
 			x: sx,
@@ -104,8 +111,10 @@ class Player extends Entity {
 			body.velocity.copyTo(prevLanceVel);
 	
 			game.energy.removeEnergy(charge);
-
-			fx.generateJetParticles(30);
+	
+			trail.rotation = body.velocity.angle - (Math.PI / 2);
+			trail.setCount(Math.floor(charge * 3));
+			trail.play();
 
 			charge = 0;
 		}
@@ -130,6 +139,9 @@ class Player extends Entity {
     public override function update() {
 		centerX = body.x;
 		centerY = body.y;
+
+		trail.x = centerX;
+		trail.y = centerY;
 		
 		mouseVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
 		aimVec = mouseVec.normal * Math.max(charge, 1) * 15;
