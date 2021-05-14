@@ -1,5 +1,8 @@
 package eng;
 
+import dn.Cooldown;
+import dn.Delayer;
+
 class Entity {
     public static var ALL : Array<Entity> = [];
     public static var GC : Array<Entity> = [];

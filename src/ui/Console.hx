@@ -14,7 +14,7 @@ class Console extends Process {
 
 		h2dConsole = new h2d.Console(Assets.fontTiny, root);
 
-		h2dConsole.scale(2); // TODO smarter scaling for 4k screens
+		h2dConsole.scale(1); // TODO smarter scaling for 4k screens
 
 		// Settings
 		h2d.Console.HIDE_LOG_TIMEOUT = 30;

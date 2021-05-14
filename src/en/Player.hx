@@ -70,10 +70,12 @@ class Player extends Entity {
 
 		events.subscribe('charge_vector', chargeVector);
 		events.subscribe('launch_vector', launchVector);
+
+		events.subscribe('collect_energy', flashWhite);
 	}
 
 	public override function reset() {
-		charge = 1;
+		charge = 0;
 		prevLanceVel = new Vector2(0, -1);
 
 		centerX = 0;
@@ -96,13 +98,13 @@ class Player extends Entity {
 			charging = true;
 			charge = 1;
 			//this.body.velocity.set(0, 0);
+			world.cd.setMs('ghost_trails', 0);
+
 		}
 	}
 
 	function launchVector(params: Dynamic) {
 		if(charging == true) {
-
-			var activeOrbs = world.physWorld.dynamics().filter((b:Body) -> return b.active);
 			charging = false;
 			var newVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
 			body.velocity = newVec.normal * charge * 1.8;
@@ -115,6 +117,9 @@ class Player extends Entity {
 			trail.rotation = body.velocity.angle - (Math.PI / 2);
 			trail.setCount(Math.floor(charge * 3));
 			trail.play();
+
+			//camera.shakeS(2.0, 1.0);
+			world.cd.setMs('ghost_trails', 500);
 
 			charge = 0;
 		}
@@ -163,9 +168,19 @@ class Player extends Entity {
 
 		// LANCE BODY
 		if(charge > 0) {
-			drawLanceBody(aimVec.angle, 0x0000FF, 0.5);
+			drawLanceBody(centerX, centerY, aimVec.angle, 1.0);
 		} else {
-			drawLanceBody(prevLanceVel.angle, 0x0000FF, 0.5);
+			drawLanceBody(centerX, centerY, prevLanceVel.angle, 1.0);
+		}
+
+		if(world.cd.has('ghost_trails')) {
+			var ghostCount = Math.floor(Math.max(0, charge - 6));
+	
+			for(i in 0...5) {
+				var ghostPos = prevLanceVel.normal * -30 * i * world.cd.getRatio('ghost_trails');
+				var color = i % 2 == 0 ? 0xFF0000 : 0x0000FF;
+				drawLanceBody(ghostPos.x + centerX, ghostPos.y + centerY, prevLanceVel.angle, world.cd.getRatio('ghost_trails') * (1 / i), color);
+			}
 		}
 
 		// ORIGIN ARROW
@@ -201,12 +216,26 @@ class Player extends Entity {
 
 	}
 
-	function drawLanceBody(ang:Float, color:Int, alpha:Float) {
+	function flashWhite(params: Dynamic) {
+		world.cd.setMs('flashing', 50, false);
+	}
+
+	function drawLanceBody(x: Float, y: Float, angle:Float, alpha:Float, ?color:Int = 0x0000FF) {
+
+		if(charge >= chargeMax) {
+			if(Math.sin((world.uftime)) > 0.0) {
+				color = 0xFF0000;
+			}
+		}
+
+		if(world.cd.has('flashing')) {
+			color = 0xFFFFFF;
+		}
+
 		g.lineStyle(2, color, alpha);
-
-		ang += (Math.PI / 2);
-
-		var len = 50 - charge + Math.max(0, body.velocity.length - 12);
+		
+		var ang = angle + (Math.PI / 2);
+		var len = 50 - charge + Math.max(0, body.velocity.length - 12) * 2;
 		var wid = 20 + charge - Math.max(0, body.velocity.length - 12);
 		var dep = 15;
 		
@@ -227,10 +256,10 @@ class Player extends Entity {
 		var rightRotX = (wid) * Math.cos(ang) - (len) * Math.sin(ang);
 		var rightRotY = (len) * Math.cos(ang) + (wid) * Math.sin(ang);
 
-		g.addVertex(centerX + tipRotX, centerY + tipRotY, 1.0, 0.0, 0.0, alpha);
-		g.addVertex(centerX + leftRotX, centerY + leftRotY, 0.5, 0.0, 0.5, alpha);
-		g.addVertex(centerX + botRotX, centerY + botRotY, 0.5, 0.0, 0.5, alpha);
-		g.addVertex(centerX + rightRotX, centerY + rightRotY, 0.5, 0.0, 0.5, alpha);
-		g.addVertex(centerX + tipRotX, centerY + tipRotY, 1.0, 0.0, 0.0, alpha);
+		g.addVertex(x + tipRotX, y + tipRotY, 1.0, 0.0, 0.0, alpha);
+		g.addVertex(x + leftRotX, y + leftRotY, 0.5, 0.0, 0.5, alpha);
+		g.addVertex(x + botRotX, y + botRotY, 0.5, 0.0, 0.5, alpha);
+		g.addVertex(x + rightRotX, y + rightRotY, 0.5, 0.0, 0.5, alpha);
+		g.addVertex(x + tipRotX, y + tipRotY, 1.0, 0.0, 0.0, alpha);
 	}
 }

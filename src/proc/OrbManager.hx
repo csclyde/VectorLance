@@ -206,6 +206,7 @@ class OrbManager extends Process {
 				
 				if(e.vel.length >= playerVec.length / 2) {
 					e.destroyed = true;
+					events.send('collect_energy');
 				}
 
 				g.drawCircle(e.pos.x, e.pos.y, 4);
