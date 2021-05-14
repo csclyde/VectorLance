@@ -1,9 +1,7 @@
 package ui;
 
-import hxmath.math.MathTypes.Vector2Type;
-import haxe.iterators.StringIterator;
-import hxd.Timer;
 import hxmath.math.Vector2;
+import hxd.Timer;
 
 class Hud extends Process {
 	var flow : h2d.Flow;
@@ -13,12 +11,15 @@ class Hud extends Process {
 	var energyMarker:Float;
 	var energyChargeRate = 0.003;
 
-	var distText: h2d.Text;
 	var debugText: h2d.Text;
 
 	var inTitle = true;
 
 	var vecTex: VectorText;
+
+	var orbStreak: Int = 0;
+	var playerLaunchX:Int;
+	var playerLaunchY:Int;
 
 	public function new() {
 		super(game);
@@ -32,14 +33,6 @@ class Hud extends Process {
 		reset();
 
 		flow = new h2d.Flow(root);
-
-		distText = new h2d.Text(Assets.bubbleFont);
-		distText.text = "";
-		distText.textAlign = Center;
-		distText.x = camera.pxWidth / 2;
-		distText.y = 10;
-		root.add(distText, Const.UI_LAYER);
-		distText.alpha = 0;
 
 		if(Process.PROFILING) {
 			debugText = new h2d.Text(Assets.fontSmall);
@@ -60,10 +53,26 @@ class Hud extends Process {
 		events.subscribe('launch_vector', (params:Dynamic) -> {
 			if(inTitle) {
 				tw.createMs(logo.alpha, 0, TEaseOut, 1000);
-				tw.createMs(distText.alpha, 1, TEaseOut, 1000);
 				tw.createMs(g.alpha, 1, TEaseOut, 1000);
 				inTitle = false;
 			}
+		});
+
+		events.subscribe('orb_destroyed', (params:Dynamic) -> {
+			orbStreak += 1;
+			cd.setS('show_streak', 3);
+
+			var shotDistVec = new Vector2(params.x - playerLaunchX, params.y - playerLaunchY);
+
+			if(shotDistVec.length > 1000) {
+				cd.setS('show_longshot', 3);
+			}
+		});
+
+		events.subscribe('player_launch', (params:Dynamic) -> {
+			orbStreak = 0;
+			playerLaunchX = params.x;
+			playerLaunchY = params.y;
 		});
 	}
 
@@ -76,8 +85,6 @@ class Hud extends Process {
 	}
 
 	override function fixedUpdate() {
-
-		//distText.text = Math.floor(distVec.length / 50) + '';
 		
 		if(Process.PROFILING) {
 			debugText.text = Math.floor(Timer.fps()) + ' FPS \n\n';
@@ -156,5 +163,36 @@ class Hud extends Process {
 		vecTex.drawText(tx, ty, world.currentDist + ' FROM ORIGIN');
 		g.lineStyle(1, 0xFF0000);
 		vecTex.drawText(tx + 80, ty + 48, 'BEST ' + world.bestDist);
+
+		var xPos = Math.floor(camera.pxWidth / 2 - 80);
+		var yPos = camera.pxHeight - 64;
+
+		if(cd.has('show_longshot')) {
+			g.lineStyle(1, 0xFF0000);
+
+			vecTex.drawText(xPos - 20, yPos - 48, 'LONGSHOT');
+
+		}
+
+		if(cd.has('show_streak')) {
+			if(Math.sin(ftime / 2) > 0) {
+				g.lineStyle(1, 0xFF0000);
+			} else {
+				g.lineStyle(1, 0xFFFFFF);
+			}
+
+			if(orbStreak == 2) {
+				vecTex.drawText(xPos, yPos, 'DOUBLE');
+			} 
+			else if(orbStreak == 3) {
+				vecTex.drawText(xPos, yPos, 'TRIPLE');
+			}
+			else if(orbStreak == 4) {
+				vecTex.drawText(xPos, yPos, 'QUADRUPLE');
+			}
+			else if(orbStreak > 4) {
+				vecTex.drawText(xPos, yPos, 'MADNESS');
+			}
+		}
 	}
 }

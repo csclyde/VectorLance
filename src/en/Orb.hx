@@ -96,6 +96,7 @@ class Orb extends Entity {
 		energyOrbs = [];
 
 		fx.generateOrbParticles(this);
+		world.events.send('orb_destroyed', { x: centerX, y: centerY });
 
         destroy();
     }

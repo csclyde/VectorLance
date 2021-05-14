@@ -120,6 +120,7 @@ class Player extends Entity {
 
 			//camera.shakeS(2.0, 1.0);
 			world.cd.setMs('ghost_trails', 500);
+			world.events.send('player_launch', { x: centerX, y: centerY });
 
 			charge = 0;
 		}
@@ -167,15 +168,16 @@ class Player extends Entity {
 		g.clear();
 
 		// LANCE BODY
-		if(charge > 0) {
+		if(game.energy.getEnergy() <= 0) {
+			drawLanceBody(centerX, centerY, prevLanceVel.angle, Math.sin(ftime / body.velocity.length));
+		}
+		else if(charge > 0) {
 			drawLanceBody(centerX, centerY, aimVec.angle, 1.0);
 		} else {
 			drawLanceBody(centerX, centerY, prevLanceVel.angle, 1.0);
 		}
 
 		if(world.cd.has('ghost_trails')) {
-			var ghostCount = Math.floor(Math.max(0, charge - 6));
-	
 			for(i in 0...5) {
 				var ghostPos = prevLanceVel.normal * -30 * i * world.cd.getRatio('ghost_trails');
 				var color = i % 2 == 0 ? 0xFF0000 : 0x0000FF;

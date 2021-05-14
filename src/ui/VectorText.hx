@@ -132,7 +132,12 @@ class VectorText {
                 g.lineTo(tx + cw, ty + ch);
             }
             else if(l == 'D') {
-                
+                g.moveTo(tx, ty);
+                g.lineTo(tx + cwh, ty);
+                g.lineTo(tx + cw, ty + chh);
+                g.lineTo(tx + cwh, ty + ch);
+                g.lineTo(tx, ty + ch);
+                g.lineTo(tx, ty);
             }
             else if(l == 'E') {
                 g.moveTo(tx + cw, ty);
@@ -203,7 +208,7 @@ class VectorText {
                 g.lineTo(tx + cw, ty);
             }
             else if(l == 'O') {
-                g.drawEllipse(tx + cwh, ty + chh, cwh, chh, 0 , 6);
+                g.drawEllipse(tx + cwh, ty + chh, cwh, chh);
             }
             else if(l == 'P') {
                 g.moveTo(tx, ty + ch);
@@ -213,7 +218,13 @@ class VectorText {
                 g.lineTo(tx, ty + chh);
             }
             else if(l == 'Q') {
-                
+                g.moveTo(tx, ty);
+                g.lineTo(tx, ty + ch);
+                g.lineTo(tx + cw, ty + ch);
+                g.lineTo(tx + cw, ty);
+                g.lineTo(tx, ty);
+                g.moveTo(tx + cwh, ty + chh);
+                g.lineTo(tx + cw + cwh, ty + ch + chh);
             }
             else if(l == 'R') {
                 g.moveTo(tx, ty + ch);
@@ -238,7 +249,10 @@ class VectorText {
                 g.lineTo(tx + cwh, ty + ch);
             }
             else if(l == 'U') {
-                
+                g.moveTo(tx, ty);
+                g.lineTo(tx, ty + ch);
+                g.lineTo(tx + cw, ty + ch);
+                g.lineTo(tx + cw, ty);
             }
             else if(l == 'V') {
                 g.moveTo(tx, ty);
