@@ -12,6 +12,9 @@ import eng.Util;
 import eng.Emitter;
 import eng.CustomGraphics;
 
+import proc.Game;
+import proc.World;
+
 import dn.M;
 import dn.Lib;
 import dn.Color;

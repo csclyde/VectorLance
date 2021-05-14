@@ -45,8 +45,8 @@ class App extends hxd.App {
 		
 		Process.PROFILING = false;
 		
-		game = new Game(s2d);
 		events = new EventRouter();
+		game = new Game(s2d);
 		input = new Input();
 		camera = new Camera();
 		hud = new Hud();

@@ -21,7 +21,7 @@ class EventRouter {
         callbacks.push(newCallback);
     }
 
-    public function send(eventName: String, params: Dynamic) {
+    public function send(eventName: String, ?params: Dynamic = null) {
         var callbacks = events[eventName];
 
         if(callbacks == null) {

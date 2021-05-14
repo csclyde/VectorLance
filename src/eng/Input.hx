@@ -54,6 +54,10 @@ class Input extends Process {
 
 	override function update() {
 		super.update();
+
+		if(input.ca.isKeyboardPressed(K.ESCAPE)) {
+			events.send('exit_game');
+		}
 	}
 
 }

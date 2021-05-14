@@ -1,3 +1,5 @@
+package proc;
+
 import format.gif.Data.ColorTable;
 import format.pdf.Crypt;
 import h2d.filter.Glow;
@@ -21,6 +23,10 @@ class Game extends Process {
 		energy = new Energy();
 		
 		Process.resizeAll();
+
+		events.subscribe('exit_game', (params:Dynamic) -> {
+			hxd.System.exit();
+		});
 	}
 
 	public function onCdbReload() {}
@@ -93,11 +99,6 @@ class Game extends Process {
 
 		for(e in Entity.AllActive()) {
 			e.update();
-		}
-
-		if(!ui.Modal.hasAny()) {
-			if(input.ca.isKeyboardPressed(K.ESCAPE))
-				hxd.System.exit();
 		}
 	}
 }
