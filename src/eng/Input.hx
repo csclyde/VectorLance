@@ -58,6 +58,10 @@ class Input extends Process {
 		if(input.ca.isKeyboardPressed(K.ESCAPE)) {
 			events.send('exit_game');
 		}
+
+		if(input.ca.isKeyboardPressed(K.R)) {
+			events.send('restart_game');
+		}
 	}
 
 }

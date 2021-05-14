@@ -157,10 +157,6 @@ class World extends Process {
 		if(currentDist > bestDist) {
 			bestDist = currentDist;
 		}
-
-		if(game.energy.getEnergy() <= 0 && player.body.velocity.length < 0.001) {
-			game.reset();
-		}
 	}
 
 	override function postUpdate() {

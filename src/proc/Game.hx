@@ -27,6 +27,10 @@ class Game extends Process {
 		events.subscribe('exit_game', (params:Dynamic) -> {
 			hxd.System.exit();
 		});
+
+		events.subscribe('restart_game', (params:Dynamic) -> {
+			reset();
+		});
 	}
 
 	public function onCdbReload() {}
@@ -92,6 +96,10 @@ class Game extends Process {
 		super.fixedUpdate();
 
 		for(e in Entity.ALL) if(!e.destroyed) e.fixedUpdate();
+
+		if(energy.getEnergy() <= 0 && world.player.body.velocity.length < 0.001) {
+			reset();
+		}
 	}
 
 	override function update() {

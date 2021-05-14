@@ -42,15 +42,15 @@ class Player extends Entity {
 				{
 					type: CIRCLE,
 					radius: 2,
-					offset_y: -40,
+					offset_y: -50,
 				},
 				{
 					type: POLYGON,
 					vertices: [
-						new Vector2(0, -40),
-						new Vector2(-10, 40),
+						new Vector2(0, -50),
+						new Vector2(-20, 50),
 						new Vector2(0, 15),
-						new Vector2(10, 40),
+						new Vector2(20, 50),
 					]
 				},
 				// {
@@ -162,31 +162,11 @@ class Player extends Entity {
 		g.clear();
 
 		// LANCE BODY
-		g.lineStyle(2, 0x0000FF);
-
-		var ang = prevLanceVel.angle + (Math.PI / 2);
-
-		// lance tip: 0, -40
-		var tipRotX = (0) * Math.cos(ang) - (-40) * Math.sin(ang);
-		var tipRotY = (-40) * Math.cos(ang) + (0) * Math.sin(ang);
-
-		// left wing: -10, 40
-		var leftRotX = (-10) * Math.cos(ang) - (40) * Math.sin(ang);
-		var leftRotY = (40) * Math.cos(ang) + (-10) * Math.sin(ang);
-
-		// bottom: 0, 15
-		var botRotX = (0) * Math.cos(ang) - (15) * Math.sin(ang);
-		var botRotY = (15) * Math.cos(ang) + (0) * Math.sin(ang);
-
-		// right wing: 10, 40
-		var rightRotX = (10) * Math.cos(ang) - (40) * Math.sin(ang);
-		var rightRotY = (40) * Math.cos(ang) + (10) * Math.sin(ang);
-
-		g.addVertex(centerX + tipRotX, centerY + tipRotY, 1.0, 0.0, 0.0, 1.0);
-		g.addVertex(centerX + leftRotX, centerY + leftRotY, 0.5, 0.0, 0.5, 1.0);
-		g.addVertex(centerX + botRotX, centerY + botRotY, 0.5, 0.0, 0.5, 1.0);
-		g.addVertex(centerX + rightRotX, centerY + rightRotY, 0.5, 0.0, 0.5, 1.0);
-		g.addVertex(centerX + tipRotX, centerY + tipRotY, 1.0, 0.0, 0.0, 1.0);
+		if(charge > 0) {
+			drawLanceBody(aimVec.angle, 0x0000FF, 0.5);
+		} else {
+			drawLanceBody(prevLanceVel.angle, 0x0000FF, 0.5);
+		}
 
 		// ORIGIN ARROW
 		var originVec = new Vector2(-centerX, -centerY);
@@ -219,5 +199,38 @@ class Player extends Entity {
 		g.moveTo(aimVec.x + centerX, aimVec.y + centerY);
 		g.lineTo(aimVec.x + centerX + sprig2.x, aimVec.y + centerY + sprig2.y);
 
+	}
+
+	function drawLanceBody(ang:Float, color:Int, alpha:Float) {
+		g.lineStyle(2, color, alpha);
+
+		ang += (Math.PI / 2);
+
+		var len = 50 - charge + Math.max(0, body.velocity.length - 12);
+		var wid = 20 + charge - Math.max(0, body.velocity.length - 12);
+		var dep = 15;
+		
+
+		// lance tip: 0, -40
+		var tipRotX = (0) * Math.cos(ang) - (-len) * Math.sin(ang);
+		var tipRotY = (-len) * Math.cos(ang) + (0) * Math.sin(ang);
+
+		// left wing: -10, 40
+		var leftRotX = (-wid) * Math.cos(ang) - (len) * Math.sin(ang);
+		var leftRotY = (len) * Math.cos(ang) + (-wid) * Math.sin(ang);
+
+		// bottom: 0, 15
+		var botRotX = (0) * Math.cos(ang) - (dep) * Math.sin(ang);
+		var botRotY = (dep) * Math.cos(ang) + (0) * Math.sin(ang);
+
+		// right wing: 10, 40
+		var rightRotX = (wid) * Math.cos(ang) - (len) * Math.sin(ang);
+		var rightRotY = (len) * Math.cos(ang) + (wid) * Math.sin(ang);
+
+		g.addVertex(centerX + tipRotX, centerY + tipRotY, 1.0, 0.0, 0.0, alpha);
+		g.addVertex(centerX + leftRotX, centerY + leftRotY, 0.5, 0.0, 0.5, alpha);
+		g.addVertex(centerX + botRotX, centerY + botRotY, 0.5, 0.0, 0.5, alpha);
+		g.addVertex(centerX + rightRotX, centerY + rightRotY, 0.5, 0.0, 0.5, alpha);
+		g.addVertex(centerX + tipRotX, centerY + tipRotY, 1.0, 0.0, 0.0, alpha);
 	}
 }
