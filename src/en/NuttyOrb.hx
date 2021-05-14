@@ -48,4 +48,8 @@ class NuttyOrb extends en.Orb {
 		g.lineStyle(3, 0xC0C0C0);
 		g.drawEllipse(centerX, centerY, this.radius + Math.sin(game.stime * 10) * 4, this.radius + Math.sin(game.stime * 10) * -4);
 	}
+
+	public override function getParticleColor() {
+		return 0xC0C0C0;
+	}
 }

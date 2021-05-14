@@ -55,4 +55,12 @@ class WinderOrb extends en.Orb {
 		g.lineStyle(3, 0x00FFFF);
 		g.drawEllipse(centerX, centerY, this.radius + Math.sin(game.stime * 10) * -3, this.radius + Math.cos(game.stime * 10) * -3);
 	}
+
+	public override function getParticleColor() {
+		if(M.frand() > 0.5) {
+			return 0xFFFF00;
+		} else {
+			return 0x00FFFF;
+		}
+	}
 }

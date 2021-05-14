@@ -40,7 +40,7 @@ class ZigzagOrb extends en.Orb {
 	}
 
 	function changeDir() {
-		var newVel = Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), 6);
+		var newVel = Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), M.randRange(4, 10));
 		body.velocity.set(newVel.x, newVel.y);
 	}
 
@@ -63,5 +63,9 @@ class ZigzagOrb extends en.Orb {
 	public override function render() {
 		g.lineStyle(3, M.randRange(0x000000, 0xFFFFFF));
 		g.drawEllipse(centerX, centerY, this.radius + Math.sin(game.stime * 50) * 5, this.radius + Math.sin(game.stime * 50) * -5);
+	}
+
+	public override function getParticleColor() {
+		return M.randRange(0x000000, 0xFFFFFF);
 	}
 }
