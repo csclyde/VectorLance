@@ -10,15 +10,6 @@ typedef EnergyOrb = {
 	timestamp: Float,
 }
 
-typedef OrbParticle = {
-	pos: Vector2,
-	vel: Vector2,
-	radius: Int,
-	color: Int,
-	lifespan: Float,
-	destroyed: Bool,
-}
-
 class OrbManager extends Process {
 	public var g : h2d.Graphics;
 	
@@ -27,7 +18,6 @@ class OrbManager extends Process {
 	var gridSize = 128;
 	
 	public var looseEnergyOrbs: Array<EnergyOrb>;
-	public var particles: Array<OrbParticle>;
 
 	public function new() {
 		super(world);
@@ -36,7 +26,6 @@ class OrbManager extends Process {
 		world.root.add(g, Const.MIDGROUND_OBJECTS);
 
 		looseEnergyOrbs = [];
-		particles = [];
 
 		reset();
 	}
@@ -185,26 +174,6 @@ class OrbManager extends Process {
 		addOrb((x * gridSize) - gridSize / 2, (y * gridSize) - gridSize / 2);
 	}
 
-	public function generateParticles(orb: en.Orb) {
-		var count = Math.floor(orb.radius / 1.5);
-
-		for(i in 0...count) {
-			var part = {
-				pos: Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), orb.radius),
-				vel: null,
-				radius: M.randRange(Math.floor(orb.radius / 20), Math.floor(orb.radius / 10)),
-				color: orb.getParticleColor(),
-				lifespan: M.frandRange(10, 30),
-				destroyed: false,
-			}
-
-			part.vel = part.pos.normal * M.frandRange(0.2, 1);
-			part.pos.set(part.pos.x + orb.centerX, part.pos.y + orb.centerY);
-
-			particles.push(part);
-		}
-	}
-
 	override public function onDispose() {
 		super.onDispose();
 	}
@@ -213,14 +182,11 @@ class OrbManager extends Process {
 		cullDistantOrbs();
 
 		orbs = Lambda.filter(orbs, (o) -> return o.isAlive());
-		particles = Lambda.filter(particles, (p) -> return !p.destroyed);
 
 		generateNewOrbs();
 	}
 
 	override function update() {
-		super.update();
-
 		g.clear();
 		g.beginFill(0xFFFFFF);
 
@@ -246,21 +212,6 @@ class OrbManager extends Process {
 			}
 		}
 		g.endFill();
-
-		for(p in particles) {
-			p.lifespan -= tmod;
-			
-			if(p.lifespan <= 0) {
-				p.destroyed = true;
-				continue;
-			}
-			
-			g.lineStyle(2, p.color);
-			p.pos.set(p.pos.x + (p.vel.x * tmod), p.pos.y + (p.vel.y * tmod));
-
-			g.drawCircle(p.pos.x, p.pos.y, p.radius);
-		
-		}
 
 	}
 }

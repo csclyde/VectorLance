@@ -95,7 +95,7 @@ class Orb extends Entity {
 		world.orbManager.looseEnergyOrbs = world.orbManager.looseEnergyOrbs.concat(energyOrbs);
 		energyOrbs = [];
 
-		world.orbManager.generateParticles(this);
+		fx.generateOrbParticles(this);
 
         destroy();
     }

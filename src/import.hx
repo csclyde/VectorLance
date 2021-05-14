@@ -28,8 +28,3 @@ import tools.*;
 // Aliases
 import dn.Color as C;
 import hxd.Key as K;
-
-import h2d.filter.Glow;
-import h2d.filter.Group;
-import eng.shdr.Scanline;
-import eng.shdr.Curve;
