@@ -39,22 +39,20 @@ class Background extends Process {
 
 			}
 		}, 1 );
-
-		reset();
 	}
 
 	override function reset() {
-		
+
 	}
 
 	override function update() {
 		if(g == null) return;
 
-		g.clear();
-
 		var offsetPosX:Float;
 		var offsetPosY:Float;
 
+		g.clear();
+		
 		for(s in stars) {
 
 			offsetPosX = camera.focus.x + (s.x - camera.focus.x) * s.z;
@@ -69,5 +67,6 @@ class Background extends Process {
 			g.drawCircle(offsetPosX, offsetPosY, s.size);
 			g.endFill();
 		}
+		
 	}
 }

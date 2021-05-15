@@ -27,6 +27,7 @@ class Entity {
 
 	/** Unique identifier **/
 	public var uid(default,null) : Int;
+	public var name : String;
 
 	// Sprite transformations
 	public var sprScaleX = 1.0;
@@ -47,6 +48,10 @@ class Entity {
 
 		reset();
     }
+
+	public inline function getDisplayName() {
+		return name != null ? name : Type.getClassName(Type.getClass(this));
+	}
 
 	public function isAlive() {
 		return !destroyed;

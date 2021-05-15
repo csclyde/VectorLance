@@ -30,8 +30,6 @@ class Hud extends Process {
 		root.add(g, Const.UI_LAYER);
 		g.alpha = 0;
 
-		reset();
-
 		flow = new h2d.Flow(root);
 
 		if(Process.PROFILING) {
@@ -81,7 +79,7 @@ class Hud extends Process {
 	}
 
 	override function reset() {
-		energyMarker = game.energy.getNormalizedEnergy();
+		energyMarker = world.energy.getNormalizedEnergy();
 	}
 
 	override function fixedUpdate() {
@@ -91,24 +89,41 @@ class Hud extends Process {
 			debugText.text += Entity.ALL.length + ' entities \n';
 			debugText.text += Entity.AllActive().length + ' active \n\n';
 	
-			for(p in Process.getSortedProfilerTimes().filter(set -> return set.value >= 0.5)) {
+			for(p in Process.getSortedProfilerTimes().filter(set -> return set.value >= 0.1)) {
 				debugText.text += p.key + ': ' + Math.floor(p.value * 100) / 100 + '\n';
 			}
+
+			debugText.text += '\n';
+
+			function addProcText(procs:Array<Process>, level:Int) {
+				
+				for(proc in procs) {
+					for(i in 0...level) {
+						debugText.text += ' -';
+					}
+					debugText.text += ' ' + proc.getDisplayName() + '\n';
+
+					addProcText(proc.children, level + 1);
+				}
+			}
+
+			addProcText(Process.ROOTS, 0);
+
 		}
 	}
 
 	override function update() {
 
 		var energyStep = energyChargeRate * tmod;
-		var energyDiff = Math.abs(game.energy.getNormalizedEnergy() - energyMarker);
+		var energyDiff = Math.abs(world.energy.getNormalizedEnergy() - energyMarker);
 
 		if(energyDiff < energyStep) {
-			energyMarker = game.energy.getNormalizedEnergy();
+			energyMarker = world.energy.getNormalizedEnergy();
 		} else {
-			if(energyMarker < game.energy.getNormalizedEnergy()) {
+			if(energyMarker < world.energy.getNormalizedEnergy()) {
 				energyMarker += energyChargeRate * tmod;
 			}
-			else if(energyMarker > game.energy.getNormalizedEnergy()) {
+			else if(energyMarker > world.energy.getNormalizedEnergy()) {
 				energyMarker -= energyChargeRate * tmod;
 			}
 		}
@@ -118,9 +133,9 @@ class Hud extends Process {
 	override function postUpdate() {
 		super.postUpdate();
 
-		var containerWidth = game.energy.getNormalizedMaxEnergy() * 200;
+		var containerWidth = world.energy.getNormalizedMaxEnergy() * 200;
 		var barWidth = (energyMarker) * 200;
-		var targetWidth = (game.energy.getNormalizedEnergy() - ((world.player.charge) / game.energy.getMaxEnergy())) * 200;
+		var targetWidth = (world.energy.getNormalizedEnergy() - ((world.player.charge) / world.energy.getMaxEnergy())) * 200;
 
 		if(barWidth < 0) barWidth = 0;
 		if(targetWidth < 0) targetWidth = 0;

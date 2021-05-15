@@ -44,15 +44,15 @@ class App extends hxd.App {
 		hxd.Timer.skip();
 		
 		Process.PROFILING = false;
-		
+
 		events = new EventRouter();
 		game = new Game(s2d);
 		input = new Input();
 		camera = new Camera();
-		hud = new Hud();
 		console = new Console();
 		audio = new Audio();
 		world = new World();
+		hud = new Hud();
 		fx = new Fx();
 		util = new Util();
 		onResize();

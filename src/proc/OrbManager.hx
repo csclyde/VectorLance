@@ -181,7 +181,7 @@ class OrbManager extends Process {
 	override function fixedUpdate() {
 		cullDistantOrbs();
 
-		orbs = Lambda.filter(orbs, (o) -> return o.isAlive());
+		orbs = orbs.filter(o -> return o.isAlive());
 
 		generateNewOrbs();
 	}

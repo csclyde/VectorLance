@@ -85,7 +85,7 @@ class Orb extends Entity {
 	}
 
 	public function explode() {
-		game.energy.addEnergy(energy);
+		world.energy.addEnergy(energy);
 
 		for(o in energyOrbs) {
 			o.vel = o.pos.normal * M.frandRange(1.5, 3);

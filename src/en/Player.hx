@@ -94,7 +94,7 @@ class Player extends Entity {
 	public override function fixedUpdate() {}
 
 	function chargeVector(params: Dynamic) {
-		if(game.energy.getEnergy() > 0) {
+		if(world.energy.getEnergy() > 0) {
 			charging = true;
 			charge = 1;
 			//this.body.velocity.set(0, 0);
@@ -112,7 +112,7 @@ class Player extends Entity {
 			
 			body.velocity.copyTo(prevLanceVel);
 	
-			game.energy.removeEnergy(charge);
+			world.energy.removeEnergy(charge);
 	
 			trail.rotation = body.velocity.angle - (Math.PI / 2);
 			trail.setCount(Math.floor(charge * 3));
@@ -168,7 +168,7 @@ class Player extends Entity {
 		g.clear();
 
 		// LANCE BODY
-		if(game.energy.getEnergy() <= 0) {
+		if(world.energy.getEnergy() <= 0) {
 			drawLanceBody(centerX, centerY, prevLanceVel.angle, Math.sin(ftime / body.velocity.length));
 		}
 		else if(charge > 0) {

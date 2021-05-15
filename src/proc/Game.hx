@@ -1,15 +1,6 @@
 package proc;
 
-import format.gif.Data.ColorTable;
-import format.pdf.Crypt;
-import h2d.filter.Glow;
-import h2d.filter.Bloom;
-
-import proc.Energy;
-
 class Game extends Process {
-
-	public var energy: Energy;
 
 	public function new(s:h2d.Scene) {
 		super();
@@ -19,8 +10,6 @@ class Game extends Process {
 		// Engine settings
 		engine.backgroundColor = 0x000000;
         engine.fullScreen = true;
-
-		energy = new Energy();
 		
 		Process.resizeAll();
 
@@ -42,7 +31,6 @@ class Game extends Process {
 
 	override function reset() {
 		world.reset();
-		energy.reset();
 		hud.reset();
 		fx.reset();
 		camera.reset();
@@ -96,10 +84,6 @@ class Game extends Process {
 		super.fixedUpdate();
 
 		for(e in Entity.ALL) if(!e.destroyed) e.fixedUpdate();
-
-		if(energy.getEnergy() <= 0 && world.player.body.velocity.length < 0.001) {
-			reset();
-		}
 	}
 
 	override function update() {

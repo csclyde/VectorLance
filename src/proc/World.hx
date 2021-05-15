@@ -8,6 +8,7 @@ import echo.World;
 
 import proc.Background;
 import proc.OrbManager;
+import proc.Energy;
 
 class World extends Process {
 	public var pxWidth : Int;
@@ -18,9 +19,10 @@ class World extends Process {
 	public var debug:HeapsDebug;
 	public var g : h2d.Graphics;
 
-	public var background : Background;
 	public var player : en.Player;
+	public var background : Background;
 	public var orbManager: OrbManager;
+	public var energy: Energy;
 
 	public var bestDist: Int;
 	public var currentDist: Int;
@@ -50,9 +52,9 @@ class World extends Process {
 			physWorld.add(player.body);
 			camera.trackEntity(player);
 			orbManager = new OrbManager();
+			energy = new Energy();
 
 			// draw targets
-			//g.clear();
 			g.lineStyle(1, 0xFFFFFF);
 			g.drawCircle(0, 0, 72);
 			g.drawCircle(0, 0, 64);
@@ -60,7 +62,7 @@ class World extends Process {
 			g.drawCircle(0, 0, 48);
 
 			reset();
-		}, 0 );
+		}, 0);
 	}
 
 	function onCollision(a:Body, b:Body, c:Array<CollisionData>) {
@@ -132,7 +134,9 @@ class World extends Process {
 		worldSpeed = 1.0;
 
 		player.reset();
+		background.reset();
 		orbManager.reset();
+		energy.reset();
 	}	
 
 	override function preUpdate() {
@@ -156,6 +160,10 @@ class World extends Process {
 
 		if(currentDist > bestDist) {
 			bestDist = currentDist;
+		}
+
+		if(energy.getEnergy() <= 0 && world.player.body.velocity.length < 0.001) {
+			reset();
 		}
 	}
 

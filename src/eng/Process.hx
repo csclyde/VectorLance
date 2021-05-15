@@ -158,7 +158,7 @@ class Process {
 	inline function markProfilingStart(id:String) {
 		if(PROFILING) {
 			id = getDisplayName()+"."+id;
-			tmpProfilerTimes.set(id, haxe.Timer.stamp());
+			tmpProfilerTimes.set(id, haxe.Timer.stamp() * 1000);
 		}
 	}
 
@@ -166,12 +166,14 @@ class Process {
 		if(PROFILING) {
 			id = getDisplayName()+"."+id;
 			if(tmpProfilerTimes.exists(id)) {
-				var t = haxe.Timer.stamp()-tmpProfilerTimes.get(id);
+				var t = (haxe.Timer.stamp() * 1000) - tmpProfilerTimes.get(id);
 				tmpProfilerTimes.remove(id);
-				if(!PROFILER_TIMES.exists(id))
-					PROFILER_TIMES.set(id,t);
-				else
-					PROFILER_TIMES.set(id, PROFILER_TIMES.get(id)+t);
+				PROFILER_TIMES.set(id, t);
+
+				// if(!PROFILER_TIMES.exists(id))
+				// 	PROFILER_TIMES.set(id,t);
+				// else
+				// 	PROFILER_TIMES.set(id, PROFILER_TIMES.get(id)+t);
 			}
 		}
 	}
