@@ -47,6 +47,7 @@ class OrbManager extends Process {
 
 		var distVec = new Vector2(x, y);
 		var mLen = distVec.length / 100;
+		mLen = mLen % 1000;
 
 		var choice = 'Lazy';
 		var randHelp = M.frand();
@@ -68,7 +69,7 @@ class OrbManager extends Process {
 			spawnThreshold = 0.07;
 		}
 		else if(mLen < 400) {
-			if(randHelp < 0.90) { choice = 'Block'; } 
+			if(randHelp < 0.80) { choice = 'Block'; } 
 			else { choice = 'Snitch'; } 
 			spawnThreshold = 0.15;
 		}
@@ -110,7 +111,7 @@ class OrbManager extends Process {
 			return;
 		}
 		
-		switch(choice) {
+		switch('Winder') {
 			case 'Lazy': newOrb = new en.LazyOrb(x, y, world.physWorld);
 			case 'Snitch': newOrb = new en.SnitchOrb(x, y, world.physWorld);
 			case 'Block': newOrb = new en.BlockOrb(x, y, world.physWorld);

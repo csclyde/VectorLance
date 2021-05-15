@@ -10,7 +10,7 @@ class ZigzagOrb extends en.Orb {
 		super(sx, sy, physWorld);
 		
 		radius = 64;
-		energy = 8;
+		energy = 12;
 
 		body = new Body({
 			x: sx,
@@ -18,7 +18,7 @@ class ZigzagOrb extends en.Orb {
 			elasticity: 1,
 			mass: 0.8,
 			drag_length: 0.0,
-			max_velocity_length: 3,
+			max_velocity_length: 6,
 			shapes: [
 				{
 					type: CIRCLE,
@@ -40,7 +40,7 @@ class ZigzagOrb extends en.Orb {
 	}
 
 	function changeDir() {
-		var newVel = Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), M.randRange(4, 10));
+		var newVel = Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), M.randRange(3, 6));
 		body.velocity.set(newVel.x, newVel.y);
 	}
 
@@ -51,7 +51,7 @@ class ZigzagOrb extends en.Orb {
 
 		var randChoice = M.frand();
 
-		if(randChoice < 0.05) {
+		if(randChoice < 0.03) {
 			changeDir();
 		}
 	}

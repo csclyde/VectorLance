@@ -1,7 +1,5 @@
 package proc;
 
-import en.Player;
-
 class Energy extends Process {
 
 	var currentEnergy:Float;

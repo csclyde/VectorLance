@@ -5,12 +5,15 @@ import echo.Body;
 
 class WinderOrb extends en.Orb {
 
+	var offset: Float;
+
 	public function new(sx, sy, physWorld: echo.World) {
 		
 		super(sx, sy, physWorld);
 		
 		radius = 48;
 		energy = 10;
+		offset = M.frandRange(0, 100);
 		
 		body = new Body({
 			x: sx,
@@ -18,7 +21,7 @@ class WinderOrb extends en.Orb {
 			elasticity: 1,
 			mass: 0.8,
 			drag_length: 0.0,
-			max_velocity_length: 3,
+			max_velocity_length: 5,
 			shapes: [
 				{
 					type: CIRCLE,
@@ -32,7 +35,7 @@ class WinderOrb extends en.Orb {
 
 
 		var initialVel = new Vector2(M.frandRange(-100, 100), M.frandRange(-100, 100));
-		initialVel = initialVel.normal * 4;
+		initialVel = initialVel.normal * 5;
 
 		body.velocity = initialVel;
 
@@ -48,7 +51,8 @@ class WinderOrb extends en.Orb {
 	}
 
 	public override function render() {
-		body.velocity = Vector2.fromPolar(body.velocity.normal.angle + Math.sin(game.stime) * Math.PI / 200, 3.0);
+		var newVel = Vector2.fromPolar(body.velocity.normal.angle + Math.sin(game.stime + offset) * (game.stime / 1000), 5.0);
+		body.velocity.set(newVel.x, newVel.y);
 
 		g.lineStyle(3, 0xFFFF00);
 		g.drawEllipse(centerX, centerY, this.radius + Math.sin(game.stime * 10) * 3, this.radius + Math.cos(game.stime * 10) * 3);
