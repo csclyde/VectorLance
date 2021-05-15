@@ -111,7 +111,7 @@ class OrbManager extends Process {
 			return;
 		}
 		
-		switch('Winder') {
+		switch(choice) {
 			case 'Lazy': newOrb = new en.LazyOrb(x, y, world.physWorld);
 			case 'Snitch': newOrb = new en.SnitchOrb(x, y, world.physWorld);
 			case 'Block': newOrb = new en.BlockOrb(x, y, world.physWorld);
