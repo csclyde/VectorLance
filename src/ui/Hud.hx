@@ -187,7 +187,7 @@ class Hud extends Process {
 			vecTex.drawText(10, yPos, world.player.streak + 'X STREAK');
 		}
 
-		g.lineStyle(1, 0x00FF00);
-		vecTex.drawText(10, yPos - 40, world.score + ' POINTS');
+		// g.lineStyle(1, 0x00FF00);
+		// vecTex.drawText(10, yPos - 40, world.score + ' POINTS');
 	}
 }
