@@ -10,7 +10,6 @@ import eng.Input;
 import eng.Audio;
 import eng.Util;
 import eng.Emitter;
-import eng.CustomGraphics;
 
 import proc.Game;
 import proc.World;

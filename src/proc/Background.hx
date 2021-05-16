@@ -10,7 +10,7 @@ typedef Star = {
 }
 
 class Background extends Process {
-	public var g : CustomGraphics;
+	public var g : h2d.Graphics;
 	public var bgTile: h2d.Tile;
 	public var stars: Array<Star>;
 
@@ -19,7 +19,7 @@ class Background extends Process {
 		stars = [];
 
 		delayer.addF('create_stuff', () -> {
-			g = new CustomGraphics();
+			g = new h2d.Graphics();
 			world.root.add(g, Const.BACKGROUND_OBJECTS);
 			
 			for(i in 0...600) {
