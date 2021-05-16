@@ -46,11 +46,11 @@ class App extends hxd.App {
 		Process.PROFILING = false;
 
 		events = new EventRouter();
+		audio = new Audio();
 		game = new Game(s2d);
 		input = new Input();
 		camera = new Camera();
 		console = new Console();
-		audio = new Audio();
 		world = new World();
 		hud = new Hud();
 		fx = new Fx();

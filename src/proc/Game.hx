@@ -21,7 +21,7 @@ class Game extends Process {
 			reset();
 		});
 
-		hxd.Res.music.one.play(true);
+		audio.playMusic(hxd.Res.music.one);
 	}
 
 	public function onCdbReload() {}

@@ -113,8 +113,7 @@ class Player extends Entity {
 			//this.body.velocity.set(0, 0);
 			world.cd.setMs('ghost_trails', 0);
 
-			hxd.Res.sounds.charge.play();
-
+			audio.playSound(hxd.Res.sounds.charge);
 		}
 	}
 
@@ -145,8 +144,8 @@ class Player extends Entity {
 
 			hitOrb = false;
 
-			hxd.Res.sounds.charged.stop();
-			hxd.Res.sounds.launch.play();
+			audio.stopSound(hxd.Res.sounds.charged);
+			audio.playSound(hxd.Res.sounds.launch);
 		}
 	}
 
@@ -187,9 +186,9 @@ class Player extends Entity {
 
 		if(charge > chargeMax) {
 			charge = chargeMax;
-			hxd.Res.sounds.cock.play();
-			hxd.Res.sounds.charge.stop();
-			hxd.Res.sounds.charged.play(true);
+			audio.playSound(hxd.Res.sounds.cock);
+			audio.stopSound(hxd.Res.sounds.charge);
+			audio.playSound(hxd.Res.sounds.charged, true);
 
 		}
 
