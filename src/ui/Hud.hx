@@ -17,10 +17,6 @@ class Hud extends Process {
 
 	var vecTex: VectorText;
 
-	var orbStreak: Int = 0;
-	var playerLaunchX:Int;
-	var playerLaunchY:Int;
-
 	public function new() {
 		super(game);
 
@@ -54,23 +50,6 @@ class Hud extends Process {
 				tw.createMs(g.alpha, 1, TEaseOut, 1000);
 				inTitle = false;
 			}
-		});
-
-		events.subscribe('orb_destroyed', (params:Dynamic) -> {
-			orbStreak += 1;
-			cd.setS('show_streak', 3);
-
-			var shotDistVec = new Vector2(params.x - playerLaunchX, params.y - playerLaunchY);
-
-			if(shotDistVec.length > 1000) {
-				cd.setS('show_longshot', 3);
-			}
-		});
-
-		events.subscribe('player_launch', (params:Dynamic) -> {
-			orbStreak = 0;
-			playerLaunchX = params.x;
-			playerLaunchY = params.y;
 		});
 	}
 
@@ -168,11 +147,6 @@ class Hud extends Process {
 
 		var tx = Math.floor((camera.pxWidth / 2) - 160);
 		var ty = 20;
-		var ch = 40;
-		var chh = 20;
-		var cw = 20;
-		var cwh = 10;
-		var sw = cw + 10;
 
 		g.lineStyle(1, 0xFFFFFF);
 		vecTex.drawText(tx, ty, world.currentDist + ' FROM ORIGIN');
@@ -182,32 +156,38 @@ class Hud extends Process {
 		var xPos = Math.floor(camera.pxWidth / 2 - 80);
 		var yPos = camera.pxHeight - 64;
 
-		if(cd.has('show_longshot')) {
+		if(world.cd.has('show_longshot')) {
 			g.lineStyle(1, 0xFF0000);
-
 			vecTex.drawText(xPos - 20, yPos - 48, 'LONGSHOT');
-
 		}
 
-		if(cd.has('show_streak')) {
+		if(world.cd.has('show_streak')) {
 			if(Math.sin(ftime / 2) > 0) {
 				g.lineStyle(1, 0xFF0000);
 			} else {
 				g.lineStyle(1, 0xFFFFFF);
 			}
 
-			if(orbStreak == 2) {
+			if(world.orbStreak == 2) {
 				vecTex.drawText(xPos, yPos, 'DOUBLE');
 			} 
-			else if(orbStreak == 3) {
+			else if(world.orbStreak == 3) {
 				vecTex.drawText(xPos, yPos, 'TRIPLE');
 			}
-			else if(orbStreak == 4) {
+			else if(world.orbStreak == 4) {
 				vecTex.drawText(xPos, yPos, 'QUADRUPLE');
 			}
-			else if(orbStreak > 4) {
+			else if(world.orbStreak > 4) {
 				vecTex.drawText(xPos, yPos, 'MADNESS');
 			}
 		}
+
+		g.lineStyle(1, 0xFFFFFF);
+		if(world.player.streak > 1) {
+			vecTex.drawText(10, yPos, world.player.streak + 'X STREAK');
+		}
+
+		g.lineStyle(1, 0x00FF00);
+		vecTex.drawText(10, yPos - 40, world.score + ' POINTS');
 	}
 }

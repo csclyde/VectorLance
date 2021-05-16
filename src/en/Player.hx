@@ -19,6 +19,9 @@ class Player extends Entity {
 
 	public var trail: Emitter;
 
+	public var streak: Int;
+	public var hitOrb: Bool;
+
 	public function new(sx, sy) {
 		super(sx, sy);
 
@@ -72,11 +75,21 @@ class Player extends Entity {
 		events.subscribe('launch_vector', launchVector);
 
 		events.subscribe('collect_energy', flashWhite);
+
+		events.subscribe('orb_destroyed', (params:Dynamic) -> {
+			if(hitOrb == false) {
+				streak++;
+				hitOrb = true;
+			}
+		});
 	}
 
 	public override function reset() {
 		charge = 0;
 		prevLanceVel = new Vector2(0, -1);
+
+		streak = 0;
+		hitOrb = false;
 
 		centerX = 0;
 		centerY = 0;
@@ -125,6 +138,12 @@ class Player extends Entity {
 			world.events.send('player_launch', { x: centerX, y: centerY });
 
 			charge = 0;
+
+			if(hitOrb == false) {
+				streak = 0;
+			}
+
+			hitOrb = false;
 
 			hxd.Res.sounds.charged.stop();
 			hxd.Res.sounds.launch.play();
@@ -231,8 +250,8 @@ class Player extends Entity {
 
 	function flashWhite(params: Dynamic) {
 		world.cd.setMs('flashing', 50, false);
-		hxd.Res.sounds.energy.play();
 
+		audio.playSoundCd(hxd.Res.sounds.energy, 100);
 	}
 
 	function drawLanceBody(x: Float, y: Float, angle:Float, alpha:Float, ?color:Int = 0x0000FF) {

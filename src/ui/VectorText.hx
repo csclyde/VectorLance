@@ -187,7 +187,7 @@ class VectorText {
                 g.moveTo(tx, ty + chh);
                 g.lineTo(tx + cw, ty);
                 g.moveTo(tx, ty + chh);
-                g.lineTo(tx + cw, ty + chh);
+                g.lineTo(tx + cw, ty + ch);
             }
             else if(l == 'L') {
                 g.moveTo(tx, ty);

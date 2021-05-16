@@ -27,6 +27,11 @@ class World extends Process {
 	public var bestDist: Int;
 	public var currentDist: Int;
 
+	public var score: Int;
+	public var orbStreak: Int = 0;
+	var playerLaunchX:Int;
+	var playerLaunchY:Int;
+
 	public function new() {
 		super(game);
 
@@ -63,7 +68,39 @@ class World extends Process {
 
 			reset();
 		}, 0);
+
+		events.subscribe('collect_energy', (params: Dynamic) -> {
+			var longshotMulti = cd.has('show_longshot') ? 3 : 1;
+			score += 1 * player.streak * orbStreak * longshotMulti;
+		});
+
+		events.subscribe('orb_destroyed', (params:Dynamic) -> {
+			orbStreak += 1;
+			cd.setS('show_streak', 3);
+
+			var shotDistVec = new Vector2(params.x - playerLaunchX, params.y - playerLaunchY);
+
+			if(shotDistVec.length > 1000) {
+				cd.setS('show_longshot', 3);
+			}
+		});
+
+		events.subscribe('player_launch', (params:Dynamic) -> {
+			orbStreak = 0;
+			playerLaunchX = params.x;
+			playerLaunchY = params.y;
+		});
 	}
+
+	override function reset() {
+		worldSpeed = 1.0;
+		score = 0;
+
+		player.reset();
+		background.reset();
+		orbManager.reset();
+		energy.reset();
+	}	
 
 	function onCollision(a:Body, b:Body, c:Array<CollisionData>) {
 		
@@ -129,15 +166,6 @@ class World extends Process {
 			// 	delayer.addMs('speed_up', () -> tw.createMs(worldSpeed, 1.0, TEaseOut, 200), 200);
 		}
 	}
-
-	override function reset() {
-		worldSpeed = 1.0;
-
-		player.reset();
-		background.reset();
-		orbManager.reset();
-		energy.reset();
-	}	
 
 	override function preUpdate() {
 		physWorld.x = camera.left;
