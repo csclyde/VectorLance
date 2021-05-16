@@ -100,6 +100,8 @@ class Player extends Entity {
 			//this.body.velocity.set(0, 0);
 			world.cd.setMs('ghost_trails', 0);
 
+			hxd.Res.sounds.charge.play();
+
 		}
 	}
 
@@ -123,6 +125,9 @@ class Player extends Entity {
 			world.events.send('player_launch', { x: centerX, y: centerY });
 
 			charge = 0;
+
+			hxd.Res.sounds.charged.stop();
+			hxd.Res.sounds.launch.play();
 		}
 	}
 
@@ -153,7 +158,9 @@ class Player extends Entity {
 		aimVec = mouseVec.normal * Math.max(charge, 1) * 15;
 		
 		if(charging) {
-			charge += chargeRate * tmod;
+			if(charge < chargeMax) {
+				charge += chargeRate * tmod;
+			}
 			body.drag_length = 0.3;
 		} else {
 			body.drag_length = 0.05;
@@ -161,6 +168,10 @@ class Player extends Entity {
 
 		if(charge > chargeMax) {
 			charge = chargeMax;
+			hxd.Res.sounds.cock.play();
+			hxd.Res.sounds.charge.stop();
+			hxd.Res.sounds.charged.play(true);
+
 		}
 
 		body.velocity.copyTo(velCopy);
@@ -220,6 +231,8 @@ class Player extends Entity {
 
 	function flashWhite(params: Dynamic) {
 		world.cd.setMs('flashing', 50, false);
+		hxd.Res.sounds.energy.play();
+
 	}
 
 	function drawLanceBody(x: Float, y: Float, angle:Float, alpha:Float, ?color:Int = 0x0000FF) {

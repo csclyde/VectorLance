@@ -20,6 +20,8 @@ class Game extends Process {
 		events.subscribe('restart_game', (params:Dynamic) -> {
 			reset();
 		});
+
+		hxd.Res.music.one.play(true);
 	}
 
 	public function onCdbReload() {}
