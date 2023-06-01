@@ -181,7 +181,7 @@ class World extends Process {
 			bestDist = currentDist;
 		}
 
-		if(energy.getEnergy() <= 0 && world.player.body.velocity.length < 0.001) {
+		if(energy.getEnergy() <= 0 && world.player.body.velocity.length < 0.01) {
 			reset();
 		}
 	}

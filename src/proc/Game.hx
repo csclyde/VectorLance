@@ -20,7 +20,9 @@ class Game extends Process {
 			reset();
 		});
 
+		#if !web
 		audio.playMusic(hxd.Res.music.one);
+		#end
 	}
 
 	public function onCdbReload() {}

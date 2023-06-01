@@ -98,7 +98,9 @@ class Orb extends Entity {
 		fx.generateOrbParticles(this);
 		world.events.send('orb_destroyed', {x: centerX, y: centerY});
 
-		audio.playSound(hxd.Res.sounds.pop);
+		#if !web
+		audio.playSound(hxd.Res.snd.pop);
+		#end
 
 		destroy();
 	}

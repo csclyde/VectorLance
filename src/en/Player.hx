@@ -114,7 +114,9 @@ class Player extends Entity {
 			// this.body.velocity.set(0, 0);
 			world.cd.setMs('ghost_trails', 0);
 
-			audio.playSound(hxd.Res.sounds.charge);
+			#if !web
+			audio.playSound(hxd.Res.snd.charge);
+			#end
 		}
 	}
 
@@ -145,8 +147,10 @@ class Player extends Entity {
 
 			hitOrb = false;
 
-			audio.stopSound(hxd.Res.sounds.charged);
-			audio.playSound(hxd.Res.sounds.launch);
+			#if !web
+			audio.stopSound(hxd.Res.snd.charged);
+			audio.playSound(hxd.Res.snd.launch);
+			#end
 		}
 	}
 
@@ -187,9 +191,12 @@ class Player extends Entity {
 
 		if(charge > chargeMax) {
 			charge = chargeMax;
-			audio.playSound(hxd.Res.sounds.cock);
-			audio.stopSound(hxd.Res.sounds.charge);
-			audio.playSound(hxd.Res.sounds.charged, true);
+
+			#if !web
+			audio.playSound(hxd.Res.snd.cock);
+			audio.stopSound(hxd.Res.snd.charge);
+			audio.playSound(hxd.Res.snd.charged, true);
+			#end
 		}
 
 		velCopy = body.velocity.clone();
@@ -248,7 +255,9 @@ class Player extends Entity {
 	function flashWhite(params:Dynamic) {
 		world.cd.setMs('flashing', 50, false);
 
-		audio.playSoundCd(hxd.Res.sounds.energy, 100);
+		#if !web
+		audio.playSoundCd(hxd.Res.snd.energy, 100);
+		#end
 	}
 
 	function drawLanceBody(x:Float, y:Float, angle:Float, alpha:Float, ?color:Int = 0x0000FF) {
