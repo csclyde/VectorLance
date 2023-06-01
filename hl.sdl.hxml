@@ -1,2 +1,5 @@
-hl.hxml
+base.hxml
+-D windowSize=1920x1080
 -lib hlsdl
+
+-hl bin/client.hl

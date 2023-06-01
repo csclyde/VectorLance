@@ -1,26 +1,25 @@
 package en;
 
 import h2d.filter.Glow;
-import hxmath.math.Vector2;
 import echo.Body;
 
 class Player extends Entity {
 	public var body:Body;
-	public var g : h2d.Graphics;
+	public var g:h2d.Graphics;
 
-	public var charge : Float;
-	public var charging : Bool;
+	public var charge:Float;
+	public var charging:Bool;
 	public var chargeRate = 0.25;
 	public var chargeMax = 10;
-	public var prevLanceVel: Vector2;
-	public var velCopy: Vector2;
-	public var mouseVec: Vector2;
-	public var aimVec: Vector2;
+	public var prevLanceVel:Vector2;
+	public var velCopy:Vector2;
+	public var mouseVec:Vector2;
+	public var aimVec:Vector2;
 
-	public var trail: Emitter;
+	public var trail:Emitter;
 
-	public var streak: Int;
-	public var hitOrb: Bool;
+	public var streak:Int;
+	public var hitOrb:Bool;
 
 	public function new(sx, sy) {
 		super(sx, sy);
@@ -37,7 +36,9 @@ class Player extends Entity {
 		body = new Body({
 			x: sx,
 			y: sy,
-			elasticity: 0.2,
+			material: {
+				elasticity: 0.2,
+			},
 			mass: 1.5,
 			kinematic: false,
 			drag_length: 0.03,
@@ -65,7 +66,7 @@ class Player extends Entity {
 			]
 		});
 
-    	//body.entity = this;
+		// body.entity = this;
 
 		velCopy = new Vector2(0, 0);
 		mouseVec = new Vector2(0, 0);
@@ -103,38 +104,38 @@ class Player extends Entity {
 	}
 
 	public override function preUpdate() {}
-    public override function postUpdate() {}
+	public override function postUpdate() {}
 	public override function fixedUpdate() {}
 
-	function chargeVector(params: Dynamic) {
+	function chargeVector(params:Dynamic) {
 		if(world.energy.getEnergy() > 0) {
 			charging = true;
 			charge = 1;
-			//this.body.velocity.set(0, 0);
+			// this.body.velocity.set(0, 0);
 			world.cd.setMs('ghost_trails', 0);
 
 			audio.playSound(hxd.Res.sounds.charge);
 		}
 	}
 
-	function launchVector(params: Dynamic) {
+	function launchVector(params:Dynamic) {
 		if(charging == true) {
 			charging = false;
 			var newVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
 			body.velocity = newVec.normal * charge * 1.8;
 			alignToVelocity();
-			
-			body.velocity.copyTo(prevLanceVel);
-	
+
+			prevLanceVel = body.velocity.clone();
+
 			world.energy.removeEnergy(charge);
-	
-			trail.rotation = body.velocity.angle - (Math.PI / 2);
+
+			trail.rotation = body.velocity.radians - (Math.PI / 2);
 			trail.setCount(Math.floor(charge * 3));
 			trail.play();
 
-			//camera.shakeS(2.0, 1.0);
+			// camera.shakeS(2.0, 1.0);
 			world.cd.setMs('ghost_trails', 500);
-			world.events.send('player_launch', { x: centerX, y: centerY });
+			world.events.send('player_launch', {x: centerX, y: centerY});
 
 			charge = 0;
 
@@ -165,16 +166,16 @@ class Player extends Entity {
 		return centerY + aimVec.y + body.velocity.y * 15;
 	}
 
-    public override function update() {
+	public override function update() {
 		centerX = body.x;
 		centerY = body.y;
 
 		trail.x = centerX;
 		trail.y = centerY;
-		
+
 		mouseVec = new Vector2(input.mouseWorldX - body.x, input.mouseWorldY - body.y);
 		aimVec = mouseVec.normal * Math.max(charge, 1) * 15;
-		
+
 		if(charging) {
 			if(charge < chargeMax) {
 				charge += chargeRate * tmod;
@@ -189,28 +190,26 @@ class Player extends Entity {
 			audio.playSound(hxd.Res.sounds.cock);
 			audio.stopSound(hxd.Res.sounds.charge);
 			audio.playSound(hxd.Res.sounds.charged, true);
-
 		}
 
-		body.velocity.copyTo(velCopy);
+		velCopy = body.velocity.clone();
 
 		g.clear();
 
 		// LANCE BODY
 		if(world.energy.getEnergy() <= 0) {
-			drawLanceBody(centerX, centerY, prevLanceVel.angle, Math.sin(ftime / body.velocity.length));
-		}
-		else if(charge > 0) {
-			drawLanceBody(centerX, centerY, aimVec.angle, 1.0);
+			drawLanceBody(centerX, centerY, prevLanceVel.radians, Math.sin(ftime / body.velocity.length));
+		} else if(charge > 0) {
+			drawLanceBody(centerX, centerY, aimVec.radians, 1.0);
 		} else {
-			drawLanceBody(centerX, centerY, prevLanceVel.angle, 1.0);
+			drawLanceBody(centerX, centerY, prevLanceVel.radians, 1.0);
 		}
 
 		if(world.cd.has('ghost_trails')) {
 			for(i in 0...5) {
 				var ghostPos = prevLanceVel.normal * -30 * i * world.cd.getRatio('ghost_trails');
 				var color = i % 2 == 0 ? 0xFF0000 : 0x0000FF;
-				drawLanceBody(ghostPos.x + centerX, ghostPos.y + centerY, prevLanceVel.angle, world.cd.getRatio('ghost_trails') * (1 / i), color);
+				drawLanceBody(ghostPos.x + centerX, ghostPos.y + centerY, prevLanceVel.radians, world.cd.getRatio('ghost_trails') * (1 / i), color);
 			}
 		}
 
@@ -222,8 +221,8 @@ class Player extends Entity {
 		g.moveTo(originVec.x / 1.2 + centerX, originVec.y / 1.2 + centerY);
 		g.lineTo(originVec.x + centerX, originVec.y + centerY);
 
-		var sprig1 = Vector2.fromPolar(originVec.angle + (Math.PI / 4) * 3, 10);
-		var sprig2 = Vector2.fromPolar(originVec.angle + (Math.PI / 4) * 5, 10);
+		var sprig1 = Vector2.from_radians(originVec.radians + (Math.PI / 4) * 3, 10);
+		var sprig2 = Vector2.from_radians(originVec.radians + (Math.PI / 4) * 5, 10);
 
 		g.moveTo(originVec.x + centerX, originVec.y + centerY);
 		g.lineTo(originVec.x + centerX + sprig1.x, originVec.y + centerY + sprig1.y);
@@ -236,25 +235,23 @@ class Player extends Entity {
 		g.moveTo(centerX, centerY);
 		g.lineTo(aimVec.x + centerX, aimVec.y + centerY);
 
-		sprig1 = Vector2.fromPolar(aimVec.angle + (Math.PI / 4) * 3, 10);
-		sprig2 = Vector2.fromPolar(aimVec.angle + (Math.PI / 4) * 5, 10);
+		sprig1 = Vector2.from_radians(aimVec.radians + (Math.PI / 4) * 3, 10);
+		sprig2 = Vector2.from_radians(aimVec.radians + (Math.PI / 4) * 5, 10);
 
 		g.moveTo(aimVec.x + centerX, aimVec.y + centerY);
 		g.lineTo(aimVec.x + centerX + sprig1.x, aimVec.y + centerY + sprig1.y);
 
 		g.moveTo(aimVec.x + centerX, aimVec.y + centerY);
 		g.lineTo(aimVec.x + centerX + sprig2.x, aimVec.y + centerY + sprig2.y);
-
 	}
 
-	function flashWhite(params: Dynamic) {
+	function flashWhite(params:Dynamic) {
 		world.cd.setMs('flashing', 50, false);
 
 		audio.playSoundCd(hxd.Res.sounds.energy, 100);
 	}
 
-	function drawLanceBody(x: Float, y: Float, angle:Float, alpha:Float, ?color:Int = 0x0000FF) {
-
+	function drawLanceBody(x:Float, y:Float, angle:Float, alpha:Float, ?color:Int = 0x0000FF) {
 		if(charge >= chargeMax) {
 			if(Math.sin((world.uftime)) > 0.0) {
 				color = 0xFF0000;
@@ -266,12 +263,11 @@ class Player extends Entity {
 		}
 
 		g.lineStyle(2, color, alpha);
-		
+
 		var ang = angle + (Math.PI / 2);
 		var len = 50 - charge + Math.max(0, body.velocity.length - 12) * 2;
 		var wid = 20 + charge - Math.max(0, body.velocity.length - 12);
 		var dep = 15;
-		
 
 		// lance tip: 0, -40
 		var tipRotX = (0) * Math.cos(ang) - (-len) * Math.sin(ang);

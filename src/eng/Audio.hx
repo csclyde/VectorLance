@@ -1,8 +1,7 @@
 package eng;
 
 class Audio extends Process {
-
-	var snd: hxd.snd.Manager;
+	var snd:hxd.snd.Manager;
 
 	public function new() {
 		super(game);
@@ -28,7 +27,7 @@ class Audio extends Process {
 		sound.stop();
 	}
 
-	public function playSoundCd(sound:hxd.res.Sound, t: Int) {
+	public function playSoundCd(sound:hxd.res.Sound, t:Int) {
 		if(!cd.has('snd_wait')) {
 			playSound(sound);
 			cd.setMs('snd_wait', t);

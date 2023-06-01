@@ -1,23 +1,22 @@
 package proc;
 
 import echo.Body;
-import hxmath.math.Vector2;
 
 typedef EnergyOrb = {
-	pos: Vector2,
-	vel: Vector2,
+	pos:Vector2,
+	vel:Vector2,
 	destroyed:Bool,
-	timestamp: Float,
+	timestamp:Float,
 }
 
 class OrbManager extends Process {
-	public var g : h2d.Graphics;
-	
-	public var orbs: Array<en.Orb>;
-	public var testedGrids: Map<String, Bool>;
+	public var g:h2d.Graphics;
+
+	public var orbs:Array<en.Orb>;
+	public var testedGrids:Map<String, Bool>;
 	var gridSize = 128;
-	
-	public var looseEnergyOrbs: Array<EnergyOrb>;
+
+	public var looseEnergyOrbs:Array<EnergyOrb>;
 
 	public function new() {
 		super(world);
@@ -56,53 +55,66 @@ class OrbManager extends Process {
 		if(mLen < 100) {
 			choice = randHelp <= 0.05 ? 'Snitch' : 'Lazy';
 			spawnThreshold = 0.03;
-		}
-		else if(mLen < 200) {
-			if(randHelp < 0.5) { choice = 'Snitch'; } 
-			else if(randHelp < 0.60) { choice = 'Block'; }
-			else { choice = 'Lazy'; }
+		} else if(mLen < 200) {
+			if(randHelp < 0.5) {
+				choice = 'Snitch';
+			} else if(randHelp < 0.60) {
+				choice = 'Block';
+			} else {
+				choice = 'Lazy';
+			}
 			spawnThreshold = 0.04;
-		}
-		else if(mLen < 300) {
-			if(randHelp < 0.75) { choice = 'Block'; } 
-			else { choice = 'Snitch'; }
+		} else if(mLen < 300) {
+			if(randHelp < 0.75) {
+				choice = 'Block';
+			} else {
+				choice = 'Snitch';
+			}
 			spawnThreshold = 0.07;
-		}
-		else if(mLen < 400) {
-			if(randHelp < 0.80) { choice = 'Block'; } 
-			else { choice = 'Snitch'; } 
+		} else if(mLen < 400) {
+			if(randHelp < 0.80) {
+				choice = 'Block';
+			} else {
+				choice = 'Snitch';
+			}
 			spawnThreshold = 0.15;
-		}
-		else if(mLen < 500) {
+		} else if(mLen < 500) {
 			choice = 'Nutty';
 			spawnThreshold = 0.03;
-		}
-		else if(mLen < 600) {
-			if(randHelp < 0.05) { choice = 'Happy'; }
-			if(randHelp < 0.30) { choice = 'Winder'; }
-			else { choice = 'Nutty'; }
+		} else if(mLen < 600) {
+			if(randHelp < 0.05) {
+				choice = 'Happy';
+			}
+			if(randHelp < 0.30) {
+				choice = 'Winder';
+			} else {
+				choice = 'Nutty';
+			}
 			spawnThreshold = 0.03;
-		}
-		else if(mLen < 700) {
+		} else if(mLen < 700) {
 			choice = 'Winder';
 			spawnThreshold = 0.04;
-		}
-		else if(mLen < 800) {
-			if(randHelp < 0.50) { choice = 'Winder'; }
-			else { choice = 'Zigzag'; }
+		} else if(mLen < 800) {
+			if(randHelp < 0.50) {
+				choice = 'Winder';
+			} else {
+				choice = 'Zigzag';
+			}
 			spawnThreshold = 0.03;
-		}
-		else if(mLen < 900) {
+		} else if(mLen < 900) {
 			choice = 'Zigzag';
 			spawnThreshold = 0.03;
-		}
-		else if(mLen < 1000) {
-			if(randHelp < 0.33) { choice = 'Winder'; }
-			if(randHelp < 0.33) { choice = 'Zigzag'; }
-			else { choice = 'Nutty'; }
+		} else if(mLen < 1000) {
+			if(randHelp < 0.33) {
+				choice = 'Winder';
+			}
+			if(randHelp < 0.33) {
+				choice = 'Zigzag';
+			} else {
+				choice = 'Nutty';
+			}
 			spawnThreshold = 0.02;
-		}
-		else {
+		} else {
 			choice = 'Nutty';
 			spawnThreshold = 0.01;
 		}
@@ -110,18 +122,26 @@ class OrbManager extends Process {
 		if(M.frand() > spawnThreshold) {
 			return;
 		}
-		
+
 		switch(choice) {
-			case 'Lazy': newOrb = new en.LazyOrb(x, y, world.physWorld);
-			case 'Snitch': newOrb = new en.SnitchOrb(x, y, world.physWorld);
-			case 'Block': newOrb = new en.BlockOrb(x, y, world.physWorld);
-			case 'Happy': newOrb = new en.HappyOrb(x, y, world.physWorld);
-			case 'Nutty': newOrb = new en.NuttyOrb(x, y, world.physWorld);
-			case 'Winder': newOrb = new en.WinderOrb(x, y, world.physWorld);
-			case 'Zigzag': newOrb = new en.ZigzagOrb(x, y, world.physWorld);
-			default: newOrb = new en.LazyOrb(x, y, world.physWorld);
+			case 'Lazy':
+				newOrb = new en.LazyOrb(x, y, world.physWorld);
+			case 'Snitch':
+				newOrb = new en.SnitchOrb(x, y, world.physWorld);
+			case 'Block':
+				newOrb = new en.BlockOrb(x, y, world.physWorld);
+			case 'Happy':
+				newOrb = new en.HappyOrb(x, y, world.physWorld);
+			case 'Nutty':
+				newOrb = new en.NuttyOrb(x, y, world.physWorld);
+			case 'Winder':
+				newOrb = new en.WinderOrb(x, y, world.physWorld);
+			case 'Zigzag':
+				newOrb = new en.ZigzagOrb(x, y, world.physWorld);
+			default:
+				newOrb = new en.LazyOrb(x, y, world.physWorld);
 		}
-		
+
 		orbs.push(newOrb);
 	}
 
@@ -146,7 +166,6 @@ class OrbManager extends Process {
 	}
 
 	function generateNewOrbs() {
-
 		var gridLeft = Math.floor((camera.left - gridSize * 2) / gridSize);
 		var gridRight = Math.floor((camera.right + gridSize * 2) / gridSize);
 		var gridTop = Math.floor((camera.top - gridSize * 2) / gridSize);
@@ -161,17 +180,16 @@ class OrbManager extends Process {
 
 	function testGrid(x:Int, y:Int) {
 		var gridKey = "x" + x + "y" + y;
-		
-		//bail if its already been tested
+
+		// bail if its already been tested
 		if(testedGrids[gridKey]) {
 			return;
 		}
 
-		
-		//mark that we tested this grid
+		// mark that we tested this grid
 		testedGrids[gridKey] = true;
-		
-		//4 pct chance of any orb spawning here
+
+		// 4 pct chance of any orb spawning here
 		addOrb((x * gridSize) - gridSize / 2, (y * gridSize) - gridSize / 2);
 	}
 
@@ -204,7 +222,7 @@ class OrbManager extends Process {
 				e.vel.set(e.vel.x + (attr.x * tmod), e.vel.y + (attr.y * tmod));
 
 				e.pos.set(e.pos.x + (e.vel.x * tmod), e.pos.y + (e.vel.y * tmod));
-				
+
 				if(e.vel.length >= playerVec.length / 2) {
 					e.destroyed = true;
 					events.send('collect_energy');
@@ -214,6 +232,5 @@ class OrbManager extends Process {
 			}
 		}
 		g.endFill();
-
 	}
 }

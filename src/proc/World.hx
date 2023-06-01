@@ -1,34 +1,32 @@
 package proc;
 
-import hxmath.math.Vector2;
 import echo.data.Data.CollisionData;
 import echo.util.Debug.HeapsDebug;
 import echo.Body;
 import echo.World;
-
 import proc.Background;
 import proc.OrbManager;
 import proc.Energy;
 
 class World extends Process {
-	public var pxWidth : Int;
-	public var pxHeight : Int;
-	
+	public var pxWidth:Int;
+	public var pxHeight:Int;
+
 	public var physWorld:echo.World;
-	public var worldSpeed: Float;
+	public var worldSpeed:Float;
 	public var debug:HeapsDebug;
-	public var g : h2d.Graphics;
+	public var g:h2d.Graphics;
 
-	public var player : en.Player;
-	public var background : Background;
-	public var orbManager: OrbManager;
-	public var energy: Energy;
+	public var player:en.Player;
+	public var background:Background;
+	public var orbManager:OrbManager;
+	public var energy:Energy;
 
-	public var bestDist: Int;
-	public var currentDist: Int;
+	public var bestDist:Int;
+	public var currentDist:Int;
 
-	public var score: Int;
-	public var orbStreak: Int = 0;
+	public var score:Int;
+	public var orbStreak:Int = 0;
 	var playerLaunchX:Int;
 	var playerLaunchY:Int;
 
@@ -69,7 +67,7 @@ class World extends Process {
 			reset();
 		}, 0);
 
-		events.subscribe('collect_energy', (params: Dynamic) -> {
+		events.subscribe('collect_energy', (params:Dynamic) -> {
 			var longshotMulti = cd.has('show_longshot') ? 3 : 1;
 			score += 1 * player.streak * orbStreak * longshotMulti;
 		});
@@ -100,10 +98,9 @@ class World extends Process {
 		background.reset();
 		orbManager.reset();
 		energy.reset();
-	}	
+	}
 
 	function onCollision(a:Body, b:Body, c:Array<CollisionData>) {
-		
 		if(a == player.body) {
 			var lanceTip = null;
 			var orbShape = null;
@@ -113,7 +110,7 @@ class World extends Process {
 				return;
 			}
 
-			//if one of the coliding shapes is not solid, we are hitting the buffer around that shape
+			// if one of the coliding shapes is not solid, we are hitting the buffer around that shape
 			for(cd in c) {
 				if(cd.sa.solid && cd.sa.type == CIRCLE) {
 					lanceTip = cd.sa;
@@ -121,29 +118,25 @@ class World extends Process {
 				}
 			}
 
-			//if the lance tip was involved in the collision
+			// if the lance tip was involved in the collision
 			if(lanceTip != null) {
 				var orbVec = new Vector2(lanceTip.x - orbShape.x, lanceTip.y - orbShape.y);
 				var lanceVec = new Vector2(lanceTip.x - a.x, lanceTip.y - a.y);
-				var angleDiff = orbVec.angleWith(lanceVec) * (180 / Math.PI);
+				var angleDiff = Math.abs(orbVec.radians_between(lanceVec) * (180 / Math.PI));
 
-				
 				if(angleDiff > 170 && angleDiff < 190) {
 					if(orbEntity != null) orbEntity.explode();
 
-					world.player.velCopy.copyTo(world.player.body.velocity);
+					world.player.body.velocity = world.player.velCopy;
 					world.player.body.velocity *= 1.2;
 
 					// var newVel = world.player.body.velocity * 1.5;
 					// world.player.body.velocity.set(newVel.x, newVel.y);
-
-				}
-				else if(angleDiff > 115 && angleDiff < 245) {
+				} else if(angleDiff > 115 && angleDiff < 245) {
 					if(orbEntity != null) orbEntity.explode();
 
-					world.player.velCopy.copyTo(world.player.body.velocity);
+					world.player.body.velocity = world.player.velCopy;
 					world.player.body.velocity *= 1.2;
-
 
 					// var newVel = world.player.body.velocity * 1.5;
 					// world.player.body.velocity.set(newVel.x, newVel.y);
@@ -155,10 +148,8 @@ class World extends Process {
 					// delayer.addMs('speed_up', () -> {
 					// 	tw.createMs(worldSpeed, 1.0, TEaseOut, 300);
 					// }, 500);
-				}
-				else {
+				} else {
 					player.alignToVelocity();
-
 				}
 			}
 
@@ -168,10 +159,10 @@ class World extends Process {
 	}
 
 	override function preUpdate() {
-		physWorld.x = camera.left;
-		physWorld.y = camera.top;
-		physWorld.width = camera.pxWidth;
-		physWorld.height = camera.pxHeight;
+		physWorld.x = camera.left - 200;
+		physWorld.y = camera.top - 200;
+		physWorld.width = camera.pxWidth + 200;
+		physWorld.height = camera.pxHeight + 200;
 
 		physWorld.step(tmod * worldSpeed);
 	}
@@ -198,6 +189,6 @@ class World extends Process {
 	override function postUpdate() {
 		super.postUpdate();
 
-		//debug.draw(physWorld);
+		// debug.draw(physWorld);
 	}
 }

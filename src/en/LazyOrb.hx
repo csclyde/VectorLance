@@ -1,21 +1,20 @@
 package en;
 
-import hxmath.math.Vector2;
 import echo.Body;
 
 class LazyOrb extends en.Orb {
-
-	public function new(sx, sy, physWorld: echo.World) {
-		
+	public function new(sx, sy, physWorld:echo.World) {
 		super(sx, sy, physWorld);
-		
+
 		radius = 56;
 		energy = 8;
-		
+
 		body = new Body({
 			x: sx,
 			y: sy,
-			elasticity: 1,
+			material: {
+				elasticity: 1,
+			},
 			mass: 0.8,
 			drag_length: 0.0,
 			shapes: [
@@ -25,7 +24,7 @@ class LazyOrb extends en.Orb {
 				}
 			]
 		});
-    	//body.entity = this;
+		// body.entity = this;
 
 		physWorld.add(body);
 
@@ -38,17 +37,17 @@ class LazyOrb extends en.Orb {
 	}
 
 	public override function preUpdate() {}
-    public override function postUpdate() {}
+	public override function postUpdate() {}
 	public override function fixedUpdate() {}
 
-    public override function update() {
+	public override function update() {
 		super.update();
 	}
 
 	public override function render() {
 		g.lineStyle(3, 0x39FF14);
 		g.drawEllipse(centerX, centerY, this.radius + (Math.sin(game.stime * 10)) * 3, this.radius + Math.sin(game.stime * 10) * -3);
-		//g.drawPieInner(centerX, centerY, this.radius, 0, Math.PI * 1.5, Math.PI);
+		// g.drawPieInner(centerX, centerY, this.radius, 0, Math.PI * 1.5, Math.PI);
 	}
 
 	public override function getParticleColor() {

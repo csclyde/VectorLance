@@ -3,12 +3,12 @@ package eng;
 import dn.heaps.slib.*;
 
 class Assets {
-	public static var fontPixel : h2d.Font;
-	public static var fontTiny : h2d.Font;
-	public static var fontSmall : h2d.Font;
-	public static var fontMedium : h2d.Font;
-	public static var fontLarge : h2d.Font;
-	public static var bubbleFont : h2d.Font;
+	public static var fontPixel:h2d.Font;
+	public static var fontTiny:h2d.Font;
+	public static var fontSmall:h2d.Font;
+	public static var fontMedium:h2d.Font;
+	public static var fontLarge:h2d.Font;
+	public static var bubbleFont:h2d.Font;
 
 	static var initDone = false;
 	public static function init() {

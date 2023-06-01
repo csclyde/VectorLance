@@ -1,21 +1,20 @@
 package en;
 
-import hxmath.math.Vector2;
 import echo.Body;
 
 class ZigzagOrb extends en.Orb {
-
-	public function new(sx, sy, physWorld: echo.World) {
-		
+	public function new(sx, sy, physWorld:echo.World) {
 		super(sx, sy, physWorld);
-		
+
 		radius = 64;
 		energy = 12;
 
 		body = new Body({
 			x: sx,
 			y: sy,
-			elasticity: 1,
+			material: {
+				elasticity: 1,
+			},
 			mass: 0.8,
 			drag_length: 0.0,
 			max_velocity_length: 6,
@@ -26,10 +25,9 @@ class ZigzagOrb extends en.Orb {
 				}
 			]
 		});
-    	//body.entity = this;
+		// body.entity = this;
 
 		physWorld.add(body);
-
 
 		var initialVel = new Vector2(M.frandRange(-100, 100), M.frandRange(-100, 100));
 		initialVel = initialVel.normal * 3;
@@ -40,15 +38,14 @@ class ZigzagOrb extends en.Orb {
 	}
 
 	function changeDir() {
-		var newVel = Vector2.fromPolar(M.frandRange(0, 2 * Math.PI), M.randRange(3, 6));
+		var newVel = Vector2.from_radians(M.frandRange(0, 2 * Math.PI), M.randRange(3, 6));
 		body.velocity.set(newVel.x, newVel.y);
 	}
 
 	public override function preUpdate() {}
-    public override function postUpdate() {}
+	public override function postUpdate() {}
 
 	public override function fixedUpdate() {
-
 		var randChoice = M.frand();
 
 		if(randChoice < 0.03) {
@@ -56,7 +53,7 @@ class ZigzagOrb extends en.Orb {
 		}
 	}
 
-    public override function update() {
+	public override function update() {
 		super.update();
 	}
 

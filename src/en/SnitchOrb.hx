@@ -1,20 +1,20 @@
 package en;
 
-import hxmath.math.Vector2;
 import echo.Body;
 
 class SnitchOrb extends en.Orb {
-
-	public function new(sx, sy, physWorld: echo.World) {
+	public function new(sx, sy, physWorld:echo.World) {
 		super(sx, sy, physWorld);
-		
+
 		radius = 36;
 		energy = 15;
 
 		body = new Body({
 			x: sx,
 			y: sy,
-			elasticity: 1,
+			material: {
+				elasticity: 1,
+			},
 			mass: 0.8,
 			drag_length: 0.0,
 			shapes: [
@@ -24,9 +24,9 @@ class SnitchOrb extends en.Orb {
 				}
 			]
 		});
-    	//body.entity = this;
+		// body.entity = this;
 
-		//body.velocity.x = -1;
+		// body.velocity.x = -1;
 
 		var initialVel = new Vector2(M.frandRange(-100, 100), M.frandRange(-100, 100));
 		initialVel = initialVel.normal * 3;
@@ -39,10 +39,10 @@ class SnitchOrb extends en.Orb {
 	}
 
 	public override function preUpdate() {}
-    public override function postUpdate() {}
+	public override function postUpdate() {}
 	public override function fixedUpdate() {}
 
-    public override function update() {
+	public override function update() {
 		super.update();
 	}
 

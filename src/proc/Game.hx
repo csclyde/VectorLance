@@ -1,16 +1,15 @@
 package proc;
 
 class Game extends Process {
-
 	public function new(s:h2d.Scene) {
 		super();
 
-        createRoot(s);
+		createRoot(s);
 
 		// Engine settings
 		engine.backgroundColor = 0x000000;
-        engine.fullScreen = true;
-		
+		engine.fullScreen = true;
+
 		Process.resizeAll();
 
 		events.subscribe('exit_game', (params:Dynamic) -> {
@@ -46,7 +45,7 @@ class Game extends Process {
 		for(e in Entity.GC) {
 			e.dispose();
 		}
-		
+
 		Entity.GC = [];
 	}
 
@@ -96,4 +95,3 @@ class Game extends Process {
 		}
 	}
 }
-
